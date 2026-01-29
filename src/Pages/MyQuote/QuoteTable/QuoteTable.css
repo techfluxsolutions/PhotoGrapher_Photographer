@@ -1,0 +1,59 @@
+.quote-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  background: #fff;
+  border-radius: 10px;
+}
+
+.quote-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 1100px;
+}
+
+.quote-table th {
+  background: #f7f4f2;
+  color: #6b4f3f;
+  font-size: 14px;
+  padding: 12px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.quote-table td {
+  padding: 12px;
+  font-size: 13px;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  white-space: nowrap;
+}
+
+.quote-table tr:nth-child(even) {
+  background: #fafafa;
+}
+
+.email {
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat-btn {
+  background: #6b4f3f;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 8px;
+  cursor: pointer;
+}
+
+.chat-btn:hover {
+  opacity: 0.85;
+}
+
+/* 📱 Mobile */
+@media (max-width: 768px) {
+  .quote-table {
+    font-size: 12px;
+  }
+}

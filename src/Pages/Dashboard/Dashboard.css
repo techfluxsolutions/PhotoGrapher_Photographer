@@ -1,0 +1,48 @@
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.stat-card {
+  background: #fff;
+  padding: 16px;
+  border-radius: 10px;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.card {
+  background: #fff;
+  padding: 16px;
+  border-radius: 10px;
+}
+
+.booking-item,
+.quote-item {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+.status.completed {
+  color: green;
+  font-size: 12px;
+}
+
+
+.dashboard-title{
+  color: var(--color-primary);
+}
+.dashboard-subtitle{
+  color: var(--color-primary);
+  opacity: 50%;
+}
+.dashboard-text-color{
+  color: var(--color-primary);
+}

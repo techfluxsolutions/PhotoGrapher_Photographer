@@ -1,0 +1,73 @@
+/* Tabs Wrapper */
+.page-inner-wrapper {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.custom-tabs {
+  display: flex;
+  border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 20px;
+  gap: 15px;
+}
+
+/* Default (Inactive) Tab */
+.tab-item {
+  padding: 10px 25px;
+  background: #f3f4f6;     /* Light Gray like screenshot */
+  color: #000;
+  font-size: 17px;
+  font-weight: 600;
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+/* Hover effect on inactive tabs */
+.tab-item:hover {
+  background: #e5e7eb;     /* Lighter gray on hover */
+}
+
+/* Active Tab */
+.tab-item.active {
+  background: var(--color-primary) ;   /* Blue from screenshot */
+  color: #ffffff;
+}
+
+/* Remove hover effect for active tab */
+.tab-item.active:hover {
+  background: var(--color-primary);
+}
+
+
+/* for Table */
+.table-container {
+  background-color: #f8f9fa !important;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+.table th, 
+.table td {
+  vertical-align: middle;
+  font-size: 14px;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.btn-primary {
+  background-color: var(--color-primary) !important;
+  border: none !important;
+}
+
+.btn-outline-primary {
+  border-color: var(--color-primary) !important;
+  color: var(--color-primary)!important;
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--color-primary) !important;
+  color: white !important;
+}

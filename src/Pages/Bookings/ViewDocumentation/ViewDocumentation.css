@@ -1,0 +1,44 @@
+.doc-view-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.doc-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.doc-frame {
+  width: 100%;
+  height: 450px;
+  border-radius: 8px;
+  border: none;
+}
+
+.pagination-wrapper {
+  text-align: center;
+}
+
+.page-number {
+  display: inline-block;
+  margin: 0 5px;
+  padding: 6px 12px;
+  border: 1px solid #2F4CDD;
+  border-radius: 4px;
+  color: #2F4CDD;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.active-page {
+  background-color: #2F4CDD;
+  color: white;
+}
+
+.doc-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}

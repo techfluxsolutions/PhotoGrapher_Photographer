@@ -1,0 +1,99 @@
+/* ===== Overlay ===== */
+.edit-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(44, 30, 22, 0.75);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* ===== Modal ===== */
+.edit-modal {
+  position: relative;
+  background: #f7f3ee;
+  width: 92%;
+  max-width: 520px;
+  max-height: 90vh;
+  border-radius: 18px;
+  padding: 28px 28px 24px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  overflow-y: auto;
+  animation: modalFadeIn 0.25s ease;
+}
+
+/* ===== Animation ===== */
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ===== Heading ===== */
+.edit-modal h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #3c2b24;
+  margin-bottom: 22px;
+  text-align: center;
+}
+
+/* ===== Labels ===== */
+.edit-modal label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #5a3e32;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* ===== Inputs ===== */
+.edit-modal input {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  font-size: 15px;
+  border-radius: 10px;
+  border: 1px solid #cbb8a8;
+  background: #fff;
+}
+
+.edit-modal input:focus {
+  outline: none;
+  border-color: #4a3326;
+  box-shadow: 0 0 0 2px rgba(74, 51, 38, 0.15);
+}
+
+/* ===== Actions ===== */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+/* ===== Buttons ===== */
+.save-btn {
+  background: #4a3326;
+  color: #fff;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background: transparent;
+  border: 1px solid #cbb8a8;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+}

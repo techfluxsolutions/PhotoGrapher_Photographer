@@ -1,0 +1,126 @@
+.upcoming-card {
+  background: #fffaf6;
+  border-radius: 16px;
+  padding: 22px;
+}
+
+.card-title {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+  color: #4b2e1e;
+  margin-bottom: 20px;
+}
+
+/* Booking card */
+.booking-box {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  border: 1px solid #e7dcd3;
+  border-radius: 14px;
+  margin-bottom: 18px;
+  background: #ffffff;
+}
+
+/* Left section */
+.booking-left {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.event-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #4b2e1e;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.event-date {
+  font-size: 12px;
+  color: #8a7f78;
+}
+
+/* Rating */
+.rating-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rating-label {
+  font-size: 12px;
+  color: #6f625a;
+}
+
+.stars {
+  color: #ffc107;
+  font-size: 14px;
+}
+
+/* Buttons */
+.action-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.view-btn {
+  background: none;
+  border: none;
+  font-size: 12px;
+  color: #8a7f78;
+  cursor: pointer;
+}
+
+.chat-btn {
+  background: #4b2e1e;
+  color: #fff;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* Right section */
+.booking-right {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.status.completed {
+  font-size: 12px;
+  color: #2e7d32;
+  font-weight: 500;
+}
+
+.price {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4b2e1e;
+}
+
+.upcoming-booking-text {
+      font-size: 22px;
+    text-align: center;
+    font-weight: 500;
+    margin-bottom: 32px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .booking-box {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .booking-right {
+    align-items: flex-end;
+  }
+}
