@@ -9,7 +9,9 @@ const AddBookingModal = ({ isOpen, onClose, onSubmit }) => {
     event_location: "",
     booking_amount: "",
     booking_status: "pending",
-    payment_status: "pending",
+        payment_status: "pending",
+
+    // payment_status: "pending",
   });
 
   if (!isOpen) return null;
