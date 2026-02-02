@@ -3,8 +3,7 @@
 import React, { useEffect, useState } from "react";
 import "../../Template/LayoutMain/LayoutMain/Layout.css";
 import "./Bookings.css";
-import UpcommingBookingsTable from "./UpcommingBookingsTable/UpcommingBookingsTable";
-import PreviousBookingsTable from "./PreviousBookingsTable/PreviousBookingsTable";
+import BookingsTable from "./BookingsTable/BookingsTable";
 
 
 const Bookings = () => {
@@ -35,27 +34,9 @@ const Bookings = () => {
 >
   <div className="page-inner-wrapper">
 
-    <h2 className="mb-4">Shoot Bookings</h2>
+    <h2 className="mb-4">Bookings</h2>
 
-    {/* Tabs */}
-    <div className="custom-tabs">
-      <div
-        className={`tab-item ${activeTab === "upcomming" ? "active" : ""}`}
-        onClick={() => setActiveTab("upcomming")}
-      >
-        Upcomming Bookings
-      </div>
-
-      <div
-        className={`tab-item ${activeTab === "previous" ? "active" : ""}`}
-        onClick={() => setActiveTab("previous")}
-      >
-        Previous Bookings
-      </div>
-    </div>
-
-    {/* Table */}
-    {activeTab === "upcomming" ? <UpcommingBookingsTable /> : <PreviousBookingsTable />}
+    <BookingsTable/>
 
   </div>
 </div>

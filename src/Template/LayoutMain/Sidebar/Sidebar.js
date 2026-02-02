@@ -21,12 +21,21 @@ const Sidebar = ({ isOpen, onItemClick }) => {
     }
 
       // Bookings + Booking Chat  ✅ ADD THIS
+  // if (path === "/bookings") {
+  //   return (
+  //     location.pathname === "/bookings" ||
+  //     location.pathname.startsWith("/chat/booking")
+  //   );
+  // }
+
   if (path === "/bookings") {
-    return (
-      location.pathname === "/bookings" ||
-      location.pathname.startsWith("/chat/booking")
-    );
-  }
+  return (
+    location.pathname === "/bookings" ||
+    location.pathname.startsWith("/bookings/") || // ✅ gallery-upload included
+    location.pathname.startsWith("/chat/booking")
+  );
+}
+
   if (path === "/services") {
     return (
       location.pathname === "/services" ||
@@ -153,7 +162,7 @@ const Sidebar = ({ isOpen, onItemClick }) => {
 
   return (
     <div className={`sidebar ${isOpen ? "open" : "closed"}`}>
-      <ul className="sidebar-menu" style={{ marginTop: "8vh" }}>
+      <ul className="sidebar-menu" style={{ marginTop: "10vh" }}>
         {menuItems.map((item) => (
           // <Link to={item.path} key={item.path}>
           //   {/* <li
