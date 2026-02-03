@@ -99,14 +99,10 @@ import InternetChecker from "../utils/InternetChecker/InternetChecker";
 import ScrollToTop from "../utils/scrollToTop/ScrollToTop";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import Bookings from "../Pages/Bookings/Bookings";
-import GalleryAddPhotos from "../Pages/Bookings/GalleryAddPhotos/GalleryAddPhotos";
-import MyQuote from "../Pages/MyQuote/MyQuote";
 import Payment from "../Pages/Payment/Payment";
-import Customer from "../Pages/Customer/Customer";
-import Chats from "../Pages/Chats/Chats";
-import Services from "../Pages/Services/Services";
-import ServicesPricingPage from "../Pages/Services/ServicesPricingPage/ServicesPricingPage";
-import { ChatDataProvider } from "../Context/chatDataContext";
+import GalleryAddPhotos from "../Pages/Bookings/GalleryAddPhotos/GalleryAddPhotos";
+import ActionCentre from "../Pages/ActionCentre/ActionCentre";
+import Profile from "../Pages/Profile/Profile";
 
 const AppRoutes = () => {
   const [isOffline, setIsOffline] = useState(false);
@@ -142,9 +138,7 @@ const AppRoutes = () => {
         <Route
           element={
             <PrivateRoute>
-              <ChatDataProvider>
                 <Layout />
-              </ChatDataProvider>
             </PrivateRoute>
           }
         >
@@ -156,21 +150,9 @@ const AppRoutes = () => {
             path="/bookings/gallery-upload/:bookingId"
             element={<GalleryAddPhotos />}
           />
-
-          <Route path="/my-quote" element={<MyQuote />} />
-          <Route path="/payment" element={<Payment />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/services-pricing" element={<ServicesPricingPage />} />
-          <Route path="/customer" element={<Customer />} />
-
-          <Route
-            path="/chat/booking/:bookingId"
-            element={<Chats chatType="booking" />}
-          />
-          <Route
-            path="/chat/quote/:quoteId"
-            element={<Chats chatType="quote" />}
-          />
+          <Route path="/payment" element={<Payment />} /> 
+          <Route path="/profile" element={<Profile />} /> 
+          <Route path="/actionCentre" element={<ActionCentre />} /> 
         </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />

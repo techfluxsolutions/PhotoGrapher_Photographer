@@ -13,12 +13,12 @@ const EditBookingModal = ({ booking, isOpen, onClose, onSave }) => {
   "canceled",
 ];
 
-const PAYMENT_STATUSES = [
-  "pending",
-  "paid",
-  "partially paid",
-  "fully paid",
-];
+// const PAYMENT_STATUSES = [
+//   "pending",
+//   "paid",
+//   "partially paid",
+//   "fully paid",
+// ];
 
 
   useEffect(() => {
@@ -62,8 +62,7 @@ const PAYMENT_STATUSES = [
         </select>
       </div>
 
-      {/* Payment Status */}
-      <div className="form-group">
+      {/* <div className="form-group">
         <label>Payment Status</label>
         <select
           value={paymentStatus}
@@ -75,7 +74,7 @@ const PAYMENT_STATUSES = [
             </option>
           ))}
         </select>
-      </div>
+      </div> */}
 
 
       <div className="modal-actions">

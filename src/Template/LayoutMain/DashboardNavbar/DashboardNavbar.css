@@ -66,12 +66,23 @@
 
 /* for dropdown  */
 .profile-dropdown {
-  position: relative;
-  display: inline-block;
+  /* position: relative;
+  display: inline-block; */
+  display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 20px !important;
 }
 
 .profile-img {
   cursor: pointer;
+}
+.navbar-icon{
+    cursor: pointer;
+    height: 34px;
+    width: 34px;
 }
 
 .dropdown-menu {
@@ -121,6 +132,10 @@
 
 /* For mobile devices */
 @media (max-width: 768px) {
+  .navbar-icon{
+    height: 20px;
+    width: 20px;
+}
   .navbar-logo-mobile{
     position: relative;
     bottom: 27px;
@@ -163,8 +178,19 @@
   height: 18px;
   bottom: -3px;
 }
+
+.profile-dropdown {
+    gap: 6px;
+}
 /* For very small mobile screens */
 @media (max-width: 480px) {
+  .navbar-icon{
+    height: 20px;
+    width: 20px;
+}
+  .profile-dropdown {
+    gap: 6px;
+}
   .DineRightLogo_Dashboard {
     height: 10px;
   }

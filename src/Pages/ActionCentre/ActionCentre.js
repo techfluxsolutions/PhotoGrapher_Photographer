@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from "react";
-import "../../Template/LayoutMain/LayoutMain/Layout.css";
-import "./Bookings.css";
-import BookingsTable from "./BookingsTable/BookingsTable";
+import ActionCentreMain from "./ActionCentreMain/ActionCentreMain";
 
-
-const Bookings = () => {
+const ActionCentre = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
     const stored = sessionStorage.getItem("isSidebarOpen");
     return stored !== null ? JSON.parse(stored) : true;
   });
-
-  const [activeTab, setActiveTab] = useState("upcomming");
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -26,20 +21,20 @@ const Bookings = () => {
   }, [isSidebarOpen]);
 
   return (
-<div
-  className={`content-container ${isSidebarOpen ? "sidebar-open" : "sidebar-closed"}`}
-  style={{ marginTop: "100px" }}
->
-  <div className="page-inner-wrapper">
+    <div
+      className={`content-container ${
+        isSidebarOpen ? "sidebar-open" : "sidebar-closed"
+      }`}
+      style={{ marginTop: "100px" }}
+    >
+      <div className="page-inner-wrapper">
+        <h2 className="page-title mb-5 mt-2">Notification</h2>
 
-    <h2 className="mb-5 mt-2">Bookings</h2>
-
-    <BookingsTable/>
-
-  </div>
-</div>
-
+        {/* ✅ ONLY TABLE */}
+        <ActionCentreMain />
+      </div>
+    </div>
   );
 };
 
-export default Bookings;
+export default ActionCentre;

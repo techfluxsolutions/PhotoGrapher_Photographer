@@ -1,0 +1,150 @@
+/* ================= Page Background ================= */
+.profile-page-wrapper {
+  background: #fbfaf8;
+  padding: 24px;
+  min-height: 100vh;
+}
+
+/* ================= Level Tracker ================= */
+.level-tracker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 28px;
+  gap: 8px;
+}
+
+.tracker-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 12px;
+  color: #b0b0b0;
+}
+
+.tracker-step .dot {
+  width: 12px;
+  height: 12px;
+  background: #d6d6d6;
+  border-radius: 50%;
+  margin-bottom: 6px;
+}
+
+/* Active step */
+.tracker-step.active .dot {
+  background: #6b4f3f;
+}
+
+.tracker-step.active p {
+  color: #6b4f3f;
+  font-weight: 600;
+}
+
+/* Connecting line */
+.tracker-line {
+  width: 80px;
+  height: 2px;
+  background: #d6d6d6;
+}
+
+.active-line {
+  background: #6b4f3f;
+}
+
+/* ================= Profile Header ================= */
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.profile-avatar {
+  width: 48px;
+  height: 48px;
+  background: #e5e5e5;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.profile-header h2 {
+  margin: 0;
+  font-size: 18px;
+  color: #3a2a20;
+}
+
+.profile-header p {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: #8b8b8b;
+}
+
+/* ================= Cards ================= */
+.profile-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+/* Card Header (Save near title) */
+.card-header.compact {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  
+}
+
+.card-header.compact h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #8a8a8a;
+}
+
+/* Save Button */
+.save-btn {
+  background: #6b4f3f;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.save-btn:hover {
+  opacity: 0.9;
+}
+
+/* ================= Card Body ================= */
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.input-box {
+  background: #f7f7f7;
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 13px;
+  color: #b0b0b0;
+}
+
+.input-box.dropdown::after {
+  content: "▾";
+  float: right;
+  color: #b0b0b0;
+}
+
+/* ================= Mobile ================= */
+@media (max-width: 768px) {
+  .tracker-line {
+    width: 40px;
+  }
+}
