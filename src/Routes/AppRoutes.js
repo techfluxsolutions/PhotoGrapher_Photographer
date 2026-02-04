@@ -100,9 +100,9 @@ import ScrollToTop from "../utils/scrollToTop/ScrollToTop";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import Bookings from "../Pages/Bookings/Bookings";
 import Payment from "../Pages/Payment/Payment";
+import Profile from "../Pages/Profile/Profile";
 import GalleryAddPhotos from "../Pages/Bookings/GalleryAddPhotos/GalleryAddPhotos";
 import ActionCentre from "../Pages/ActionCentre/ActionCentre";
-import Profile from "../Pages/Profile/Profile";
 
 const AppRoutes = () => {
   const [isOffline, setIsOffline] = useState(false);
