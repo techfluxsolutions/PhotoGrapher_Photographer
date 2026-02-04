@@ -1,48 +1,73 @@
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+.todays-shoot-wrapper {
+  /* background: #f7f3ef; */
+  /* background: #fff; */
+  padding: 30px;
+  border-radius: 18px;
+  border: 1px solid #e1d6cd !important;
 }
 
-.stat-card {
-  background: #fff;
-  padding: 16px;
-  border-radius: 10px;
+.todays-title {
+  text-align: center;
+  font-weight: 600;
+  font-size: 24px;
+  color: #4b2e1e;
+  margin-bottom: 30px;
 }
 
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 16px;
-  margin-top: 20px;
-}
+/* Card */
+.shoot-card {
+  background: #ffff;
+  border: 1px solid #e1d6cd;
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
 
-.card {
-  background: #fff;
-  padding: 16px;
-  border-radius: 10px;
-}
-
-.booking-item,
-.quote-item {
   display: flex;
   justify-content: space-between;
-  margin-top: 12px;
+  align-items: center;
+
+  transition: 0.3s;
 }
 
-.status.completed {
-  color: green;
-  font-size: 12px;
+.shoot-card:hover {
+  background: #efe7e1;
 }
 
+/* Left */
+.shoot-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #4b2e1e;
+  margin-bottom: 6px;
+}
 
-.dashboard-title{
-  color: var(--color-primary);
+.shoot-sub {
+  font-size: 13px;
+  color: #8a7f78;
 }
-.dashboard-subtitle{
-  color: var(--color-primary);
-  opacity: 50%;
+
+.dot {
+  margin-left: 14px;
 }
-.dashboard-text-color{
-  color: var(--color-primary);
+
+/* Right */
+.shoot-time-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.shoot-time {
+  font-size: 14px;
+  font-weight: 600;
+  color: #4b2e1e;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.arrow-icon {
+  font-size: 18px;
+  color: #c1b6ae;
+  cursor: pointer;
 }

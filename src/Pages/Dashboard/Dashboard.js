@@ -88,12 +88,12 @@ const Dashboard = () => {
         {/* Main Grid */}
         <div className="row g-4">
           {/* Upcoming Bookings */}
-          <div className="col-12 col-lg-7">
+          <div className="col-12 col-lg-6">
             <UpcomingBookings />
           </div>
 
           {/* Latest Quotes */}
-          <div className="col-12 col-lg-5">
+          <div className="col-12 col-lg-6">
             <LatestQuotes />
           </div>
         </div>

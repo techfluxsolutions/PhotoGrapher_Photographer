@@ -1,128 +1,94 @@
-.quotes-card {
-  background: #fffaf6;
-  border-radius: 16px;
-  padding: 20px;
+.recent-payout-wrapper {
+  background: #ffff;
+  padding: 30px;
+  border-radius: 18px;
+  border: 1px solid #e1d6cd !important;
 }
 
-/* Header */
-.quotes-header {
+.recent-title {
+  text-align: center;
+  font-weight: 600;
+  font-size: 24px;
+  color: #4b2e1e;
+  margin-bottom: 30px;
+}
+
+/* Card */
+.payout-card {
+  background: #ffff;
+  border: 1px solid #e1d6cd;
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  transition: 0.3s;
 }
 
-.quotes-header h3 {
+.payout-card:hover {
+  background: #efe7e1;
+}
+
+/* Left */
+.payout-name {
   font-size: 18px;
   font-weight: 600;
   color: #4b2e1e;
+  margin-bottom: 6px;
 }
 
-.menu {
-  font-size: 20px;
-  cursor: pointer;
-  color: #7b6f67;
-}
-
-/* Quote row */
-.quote-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 14px;
-  border-radius: 12px;
-  margin-bottom: 10px;
-  background: #ffffff;
-}
-
-/* Left side */
-.quote-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.quote-left img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.avatar-placeholder {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: #d9d9d9;
-}
-
-/* Name + status */
-.quote-name {
-  font-size: 14px;
-  font-weight: 600;
-  color: #4b2e1e;
-}
-
-.quote-status {
-  font-size: 12px;
-  color: #39b54a;
-}
-
-/* Amount */
-.quote-amount {
-  font-size: 14px;
-  font-weight: 600;
-  color: #4b2e1e;
-  white-space: nowrap;
-}
-
-/* View more */
-/* Smooth expand */
-.quotes-list {
-  overflow: hidden;
-  transition: max-height 0.4s ease;
-}
-
-/* View more */
-.view-more {
-  text-align: center;
-  margin-top: 14px;
+.payout-sub {
   font-size: 13px;
   color: #8a7f78;
+}
+
+.dot {
+  margin-left: 14px;
+}
+
+/* Right */
+.payout-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.payout-amount {
+  font-size: 16px;
+  font-weight: 600;
+  color: #4b2e1e;
+}
+
+.payout-status {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.payout-status.paid {
+  color: #28af38;
+}
+
+.payout-status.partial {
+  color: #28af38;
+}
+
+.arrow-icon {
+  font-size: 18px;
+  color: #c1b6ae;
   cursor: pointer;
-  user-select: none;
+}
+
+/* View More */
+.view-more {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 14px;
+  color: #8a7f78;
+  cursor: pointer;
 }
 
 .view-more:hover {
   color: #4b2e1e;
-}
-
-.arrow {
-  display: block;
-  font-size: 14px;
-  transition: transform 0.3s ease;
-}
-
-.arrow.rotate {
-  transform: rotate(180deg);
-}
-
-.quotes-card{
-  background-color: var(--color-bg-main);
-  margin-bottom: 10px;
-}
-
-.arrow-icon-quote{
-      position: relative;
-    bottom: 12px;
-}
-/* Responsive */
-@media (max-width: 768px) {
-  .quote-row {
-    padding: 10px;
-  }
-
-  .quote-amount {
-    font-size: 13px;
-  }
 }

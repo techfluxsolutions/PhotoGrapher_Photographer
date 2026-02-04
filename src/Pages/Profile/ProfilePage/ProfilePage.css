@@ -1,11 +1,10 @@
-/* ================= Page Background ================= */
 .profile-page-wrapper {
   background: #fbfaf8;
   padding: 24px;
   min-height: 100vh;
 }
 
-/* ================= Level Tracker ================= */
+/* Tracker */
 .level-tracker {
   display: flex;
   align-items: center;
@@ -51,10 +50,9 @@
   background: #6b4f3f;
 }
 
-/* ================= Profile Header ================= */
+/* Header */
 .profile-header {
   display: flex;
-  align-items: center;
   gap: 16px;
   margin-bottom: 24px;
 }
@@ -67,62 +65,25 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
 }
 
-.profile-header h2 {
-  margin: 0;
-  font-size: 18px;
-  color: #3a2a20;
-}
-
-.profile-header p {
-  margin: 2px 0 0;
-  font-size: 13px;
-  color: #8b8b8b;
-}
-
-/* ================= Cards ================= */
+/* Cards */
 .profile-card {
-  background: #ffffff;
+  background: white;
   border-radius: 12px;
   padding: 16px;
   margin-bottom: 20px;
 }
 
-/* Card Header (Save near title) */
-.card-header.compact {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 14px;
-  
-}
-
-.card-header.compact h3 {
-  margin: 0;
+.section-title {
   font-size: 14px;
   font-weight: 600;
   color: #8a8a8a;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 6px;
+  margin-bottom: 14px;
 }
 
-/* Save Button */
-.save-btn {
-  background: #6b4f3f;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 4px 12px;
-  font-size: 12px;
-  cursor: pointer;
-  width: 400px;
-}
-
-.save-btn:hover {
-  opacity: 0.9;
-}
-
-/* ================= Card Body ================= */
 .card-body {
   display: flex;
   flex-direction: column;
@@ -131,8 +92,8 @@
 
 .input-box {
   background: #f7f7f7;
-  border-radius: 6px;
   padding: 12px;
+  border-radius: 6px;
   font-size: 13px;
   color: #b0b0b0;
 }
@@ -140,12 +101,49 @@
 .input-box.dropdown::after {
   content: "▾";
   float: right;
-  color: #b0b0b0;
 }
 
-/* ================= Mobile ================= */
-@media (max-width: 768px) {
-  .tracker-line {
-    width: 40px;
-  }
+.about-box {
+  height: 120px;
+}
+
+/* Services */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+}
+
+/* Pricing */
+.pricing-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.toggle-switch {
+  width: 46px;
+  height: 24px;
+  background: #00bcd4;
+  border-radius: 20px;
+}
+
+/* Radio */
+.radio-group {
+  display: flex;
+  gap: 20px;
+  font-size: 13px;
+}
+
+/* Save Button */
+.final-save-btn {
+  background: #5a3d2b;
+  color: white;
+  border: none;
+  padding: 16px;
+  width: 100%;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
 }
