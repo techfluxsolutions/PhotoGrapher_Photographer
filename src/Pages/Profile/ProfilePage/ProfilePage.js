@@ -69,7 +69,7 @@ const ProfilePage = () => {
         </div>
 
         {/* ✅ SINGLE SAVE BUTTON NEAR FORM */}
-        <div className="form-action">
+        <div className="form-action  mt-4" style={{textAlign:"center", width:"500px"}} >
           <button className="save-btn">Save</button>
         </div>
       </div>

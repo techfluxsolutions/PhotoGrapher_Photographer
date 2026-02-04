@@ -15,7 +15,7 @@ const withAuthorization = async (apiFunction, ...args) => {
 
 export async function LoginAPI(data) {
   // return withAuthorization(async () => {
-    const response = await axiosInstanceNoAuth.post("/api/admins/auth/login", data);
+    const response = await axiosInstanceNoAuth.post("/api/photographers/auth/login", data);
     return response;
   // });
 }

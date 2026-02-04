@@ -16,42 +16,9 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate=useNavigate()
 
-  //  const handleLoginClick = async (e) => {
-  //   e.preventDefault();
-  //   if (!email || !password) return;
-  //   setLoading(true);
+    const DEV_BYPASS = false; // 🔴 turn OFF in production
 
-  //   try {
-  //     const body = { 
-  //       email ,
-  //       password
-  //     };
-
-  //     const response = await LoginAPI(body);
-  //     // debug:
-  //     console.log("SIGN In", response?.data);
-
-  //     if (response?.data?.success && response?.status===200) {
-  //       const token = encryptData(response?.data?.data?.token)
-  //       sessionStorage.setItem("token",token)
-  //       sessionStorage.setItem("loggedIn",true)
-  //       toast.success(response?.data?.message)
-  //       navigate("/dashboard")
-  //     } else {
-  //       toast.error(response?.data?.message || "Login Failed!")
-  //     }
-  //   } catch (err) {
-  //     console.error(err);
-  //     toast.error(err.message || "Sign-up failed");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-
-  const DEV_BYPASS = false; // 🔴 turn OFF in production
-
-const handleLoginClick = async (e) => {
+  const handleLoginClick = async (e) => {
   e.preventDefault();
   if (!email || !password) return;
 
@@ -104,7 +71,7 @@ const handleLoginClick = async (e) => {
         <form className="login-form" onSubmit={handleLoginClick}>
           <h2 className="text-center mb-4 login-text"
           style={{fontWeight:"600"}}
-          >Admin - Login</h2>
+          >Photographer - Login</h2>
 
           <label className="login-label">Email </label>
           <input
@@ -134,6 +101,15 @@ const handleLoginClick = async (e) => {
               <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
             </button>
           </div>
+          <div className="forgot-password">
+          <span
+            onClick={() => navigate("/forgot-password")}
+            className="forgot-password-link"
+          >
+            Forgot Password?
+          </span>
+        </div>
+
 
           <div className="login-btn-container">
             <button type="submit" className="login-btn">

@@ -211,6 +211,7 @@ const DashboardNavbar = ({ toggleSidebar, isSidebarOpen }) => {
             width: "50px",
             cursor: "pointer",
           }}
+          onClick={() => navigate("/actionCentre")}
         />
         
          <img

@@ -115,6 +115,7 @@
   padding: 4px 12px;
   font-size: 12px;
   cursor: pointer;
+  width: 400px;
 }
 
 .save-btn:hover {
