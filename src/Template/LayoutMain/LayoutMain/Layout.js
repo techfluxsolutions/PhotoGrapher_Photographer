@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
 import DashboardNavbar from "../DashboardNavbar/DashboardNavbar";
 import Sidebar from "../Sidebar/Sidebar";
 import "./Layout.css";
-import { Outlet } from "react-router-dom";
 
 const Layout = () => {
   const getInitialSidebarState = () => {
