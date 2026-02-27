@@ -80,13 +80,8 @@ const Dashboard = () => {
           </p>
         </div>
 
-        {/* Stats */}
-        <div className="mb-4">
-          <StatsCards />
-        </div>
-
-        {/* Main Grid */}
-        <div className="row g-4">
+  {/* Main Grid */}
+        <div className="row g-4 mb-4">
           {/* Upcoming Bookings */}
           <div className="col-12 col-lg-6">
             <UpcomingBookings />
@@ -97,6 +92,14 @@ const Dashboard = () => {
             <LatestQuotes />
           </div>
         </div>
+
+
+        {/* Stats */}
+        <div className="mb-4">
+          <StatsCards />
+        </div>
+
+      
       </div>
     </div>
   );

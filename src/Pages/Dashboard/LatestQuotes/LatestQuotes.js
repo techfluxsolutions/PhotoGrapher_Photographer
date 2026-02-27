@@ -36,7 +36,7 @@ const LatestQuotes = () => {
 
   return (
     <div className="recent-payout-wrapper">
-      <h4 className="recent-title">Recent Payouts</h4>
+      <h4 className="recent-title">Upcoming Shoot</h4>
 
       {quotes.map((item, index) => (
         <div key={index} className="payout-card">

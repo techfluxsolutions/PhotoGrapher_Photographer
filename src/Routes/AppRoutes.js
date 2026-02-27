@@ -103,6 +103,7 @@ import Payment from "../Pages/Payment/Payment";
 import Profile from "../Pages/Profile/Profile";
 import GalleryAddPhotos from "../Pages/Bookings/GalleryAddPhotos/GalleryAddPhotos";
 import ActionCentre from "../Pages/ActionCentre/ActionCentre";
+import Calender from "../Pages/Calender/Calender";
 
 const AppRoutes = () => {
   const [isOffline, setIsOffline] = useState(false);
@@ -152,7 +153,9 @@ const AppRoutes = () => {
           />
           <Route path="/payment" element={<Payment />} /> 
           <Route path="/profile" element={<Profile />} /> 
-          <Route path="/actionCentre" element={<ActionCentre />} /> 
+          <Route path="/actionCentre" element={<ActionCentre />} />
+          <Route path="/calender" element={<Calender />} /> 
+ 
         </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />

@@ -129,7 +129,57 @@
   font-weight: bold; /* Optional: make text bold */
   margin-right: 10px;
 }
+.status-toggle-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  margin-top: 20px;
+}
 
+/* Text */
+.status-text {
+  font-size: 12px;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.status-text.active {
+  color: var(--primary-color);
+}
+
+.status-text.inactive {
+  color: #9ca3af;
+}
+
+/* Toggle Switch */
+.toggle-switch {
+  width: 36px;
+  height: 18px;
+  background-color: #d1d5db;
+  border-radius: 20px;
+  position: relative;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-switch.on {
+  background-color: var(--primary-color);
+}
+
+.toggle-knob {
+  width: 14px;
+  height: 14px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s ease;
+}
+
+.toggle-switch.on .toggle-knob {
+  transform: translateX(18px);
+}
 /* For mobile devices */
 @media (max-width: 768px) {
   .navbar-icon{

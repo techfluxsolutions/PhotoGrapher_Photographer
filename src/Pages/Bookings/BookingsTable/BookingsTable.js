@@ -134,7 +134,7 @@ import { useNavigate } from "react-router-dom";
 import EditBookingModal from "../EditBookingModal/EditBookingModal";
 
 import "./BookingsTable.css";
-import { getBookings } from "../../../utils/APIs/bookingsApis";
+import { getAcceptedBookings} from "../../../utils/APIs/bookingsApis";
 import Loader from "../../../Loader/Loader";
 
 const BookingsTable = ({ page: initialPage = 1, limit = 10 }) => {
@@ -156,7 +156,7 @@ const BookingsTable = ({ page: initialPage = 1, limit = 10 }) => {
     try {
       setLoading(true);
 
-      const res = await getBookings(page, limit);
+      const res = await getAcceptedBookings(page, limit);
 
       if (res?.data?.success) {
         const { bookings, meta } = res.data.data;

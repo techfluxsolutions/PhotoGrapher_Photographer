@@ -16,19 +16,20 @@ const withAuthorization = async (apiFunction, ...args) => {
 
 
 
-export const getAcceptedBookings = (page = 1, limit = 10) => {
+export const getPhotographerStatus = () => {
   return withAuthorization(async () => {
     return await axiosInstance.get(
-      `/api/photographers/bookings/accepted?page=${page}&limit=${limit}`
+      `/api/photographers/status`
     );
   });
 };
 
 
-export const updateBookingStatus = (bookingId, payload) => {
+// src/utils/APIs/photographerApis.js
+export const postPhotographerStatus = (payload) => {
   return withAuthorization(async () => {
-    return await axiosInstance.put(
-      `/api/photographers/bookings/${bookingId}`,
+    return await axiosInstance.post(
+      `/api/photographers/status`,
       payload
     );
   });
@@ -36,23 +37,3 @@ export const updateBookingStatus = (bookingId, payload) => {
 
 
 
-export const getPreviousBookingsAPI = (
-  fromDate,
-  toDate,
-  page = 1,
-  limit = 5
-) => {
-  return withAuthorization(async () => {
-    return axiosInstance.get(
-      `/api/admins/bookings/previous`,
-      {
-        params: {
-          fromDate,
-          toDate,
-          page,
-          limit,
-        },
-      }
-    );
-  });
-};

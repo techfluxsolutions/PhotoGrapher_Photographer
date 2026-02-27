@@ -70,7 +70,11 @@ const Sidebar = ({ isOpen, onItemClick }) => {
         />
       ),
     },
-
+{
+      name: "Calender View",
+      icon: <HiOutlineViewGrid size={20} />,
+      path: "/calender",
+    },
      {
       name: "Action Centre",
       path: "/actionCentre",
