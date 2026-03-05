@@ -86,6 +86,16 @@
 .btn-secondary:hover {
   background: #e5e7eb;
 }
+.status-confirmed,
+.status-completed {
+  color: #1f8b4c;
+}
+.status-canceled {
+  color: #d93025;
+}
+.status-pending {
+  color: #1a73e8;
+}
 
 /* Animation */
 @keyframes fadeIn {

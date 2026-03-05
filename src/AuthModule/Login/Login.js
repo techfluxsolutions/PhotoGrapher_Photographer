@@ -16,40 +16,48 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate=useNavigate()
 
-  //  const handleLoginClick = async (e) => {
-  //   e.preventDefault();
-  //   if (!email || !password) return;
-  //   setLoading(true);
+    const DEV_BYPASS = false; // 🔴 turn OFF in production
 
-  //   try {
-  //     const body = { 
-  //       email ,
-  //       password
-  //     };
+//   const handleLoginClick = async (e) => {
+//   e.preventDefault();
+//   if (!email || !password) return;
 
-  //     const response = await LoginAPI(body);
-  //     // debug:
-  //     console.log("SIGN In", response?.data);
+//   setLoading(true);
 
-  //     if (response?.data?.success && response?.status===200) {
-  //       const token = encryptData(response?.data?.data?.token)
-  //       sessionStorage.setItem("token",token)
-  //       sessionStorage.setItem("loggedIn",true)
-  //       toast.success(response?.data?.message)
-  //       navigate("/dashboard")
-  //     } else {
-  //       toast.error(response?.data?.message || "Login Failed!")
-  //     }
-  //   } catch (err) {
-  //     console.error(err);
-  //     toast.error(err.message || "Sign-up failed");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+//   try {
+//     const body = { email, password };
+//     const response = await LoginAPI(body);
 
-
-  const DEV_BYPASS = false; // 🔴 turn OFF in production
+//     if (response?.data?.success && response?.status === 200) {
+//       const token = encryptData(response?.data?.data?.token);
+//       sessionStorage.setItem("token", token);
+//       sessionStorage.setItem("loggedIn", "true");
+//       sessionStorage.setItem("myId",response?.data?.data?.admin?.id)
+//       toast.success(response?.data?.message);
+//       navigate("/dashboard");
+//     } else {
+//       if (DEV_BYPASS) {
+//         sessionStorage.setItem("token", "DEV_TOKEN");
+//         sessionStorage.setItem("loggedIn", "true");
+//         toast.warn("DEV MODE: Login bypassed");
+//         navigate("/dashboard");
+//       } else {
+//         toast.error(response?.data?.message || "Login Failed!");
+//       }
+//     }
+//   } catch (err) {
+//     if (DEV_BYPASS) {
+//       sessionStorage.setItem("token", "DEV_TOKEN");
+//       sessionStorage.setItem("loggedIn", "true");
+//       toast.warn("DEV MODE: API down, bypass login");
+//       navigate("/dashboard");
+//     } else {
+//       toast.error(err.message || "Login failed");
+//     }
+//   } finally {
+//     setLoading(false);
+//   }
+// };
 
 const handleLoginClick = async (e) => {
   e.preventDefault();
@@ -61,38 +69,33 @@ const handleLoginClick = async (e) => {
     const body = { email, password };
     const response = await LoginAPI(body);
 
-    if (response?.data?.success && response?.status === 200) {
+    // ✅ If login success
+    if (response?.status === 200 && response?.data?.data?.token) {
       const token = encryptData(response?.data?.data?.token);
+
       sessionStorage.setItem("token", token);
       sessionStorage.setItem("loggedIn", "true");
-      sessionStorage.setItem("myId",response?.data?.data?.admin?.id)
+      sessionStorage.setItem("myId", response?.data?.data?.admin?.id);
+
       toast.success(response?.data?.message);
       navigate("/dashboard");
     } else {
-      if (DEV_BYPASS) {
-        sessionStorage.setItem("token", "DEV_TOKEN");
-        sessionStorage.setItem("loggedIn", "true");
-        toast.warn("DEV MODE: Login bypassed");
-        navigate("/dashboard");
-      } else {
-        toast.error(response?.data?.message || "Login Failed!");
-      }
+      // ✅ Show backend message directly
+      toast.error(response?.data?.message || "Login Failed!");
     }
+
   } catch (err) {
-    if (DEV_BYPASS) {
-      sessionStorage.setItem("token", "DEV_TOKEN");
-      sessionStorage.setItem("loggedIn", "true");
-      toast.warn("DEV MODE: API down, bypass login");
-      navigate("/dashboard");
-    } else {
-      toast.error(err.message || "Login failed");
-    }
+    // ✅ If backend sends error response like:
+    // { message: "Invalid email or password" }
+
+    const errorMessage =
+      err?.response?.data?.message || err.message || "Login Failed!";
+
+    toast.error(errorMessage);
   } finally {
     setLoading(false);
   }
 };
-
-
 
   if(loading){
     return <Loader/>
@@ -104,7 +107,7 @@ const handleLoginClick = async (e) => {
         <form className="login-form" onSubmit={handleLoginClick}>
           <h2 className="text-center mb-4 login-text"
           style={{fontWeight:"600"}}
-          >Admin - Login</h2>
+          >Photographer - Login</h2>
 
           <label className="login-label">Email </label>
           <input
@@ -134,6 +137,15 @@ const handleLoginClick = async (e) => {
               <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
             </button>
           </div>
+          <div className="forgot-password">
+          <span
+            onClick={() => navigate("/forgot-password")}
+            className="forgot-password-link"
+          >
+            Forgot Password?
+          </span>
+        </div>
+
 
           <div className="login-btn-container">
             <button type="submit" className="login-btn">

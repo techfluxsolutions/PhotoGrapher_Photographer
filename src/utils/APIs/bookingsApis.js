@@ -16,24 +16,63 @@ const withAuthorization = async (apiFunction, ...args) => {
 
 
 
-
-
-// UPCOMING
-// /api/admins/bookings/upcoming?fromDate=2026-01-15&toDate=2026-12-31
-
-
-export const getUpcomingBookings = (fromDate, toDate, page, limit) => {
+export const getAcceptedBookings = (page = 1, limit = 10) => {
   return withAuthorization(async () => {
-    return axiosInstance.get(
-      `/api/admins/bookings/upcoming?fromDate=${fromDate}&toDate=${toDate}&page=${page}&limit=${limit}`
+    return await axiosInstance.get(
+      `/api/photographers/bookings/accepted?page=${page}&limit=${limit}`
+    );
+  });
+};
+
+export const getPendingBookings = (page = 1, limit = 10) => {
+  return withAuthorization(async () => {
+    return await axiosInstance.get(
+      `/api/photographers/bookings/pending?page=${page}&limit=${limit}`
+    );
+  });
+};
+export const getBookingHistory = (page = 1, limit = 10) => {
+  return withAuthorization(async () => {
+    return await axiosInstance.get(
+      `/api/photographers/bookings/completed?page=${page}&limit=${limit}`
+    );
+  });
+};
+
+export const updateBookingStatus = (bookingId, payload) => {
+  return withAuthorization(async () => {
+    return await axiosInstance.put(
+      `/api/photographers/bookings/${bookingId}`,
+      payload
     );
   });
 };
 
 
+export const acceptBookingRequest = (bookingId, payload) => {
+  return withAuthorization(async () => {
+    return await axiosInstance.patch(
+      `/api/photographers/bookings/${bookingId}/status`,
+      payload
+    );
+  });
+};
 
-// PREVIOUS
-// {{local}}/api/admins/bookings/previous?fromDate=2025-01-01&toDate=2026-01-14
+export const getAcceptedBookingById = (bookingId) => {
+  return withAuthorization(async () => {
+    return await axiosInstance.get(
+      `/api/photographers/bookings/${bookingId}`
+    );
+  });
+};
+
+export const cancelBooking = (bookingId) => {
+  return withAuthorization(async () => {
+    return await axiosInstance.delete(
+      `/api/photographers/bookings/${bookingId}`
+    );
+  });
+};
 
 export const getPreviousBookingsAPI = (
   fromDate,

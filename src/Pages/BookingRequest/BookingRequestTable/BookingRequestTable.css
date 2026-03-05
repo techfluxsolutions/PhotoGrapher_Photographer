@@ -1,0 +1,114 @@
+/* EXACT SAME AS QUOTE TABLE – JUST CLASS NAMES CHANGED */
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  background: #fff;
+  border-radius: 10px;
+}
+
+.bookings-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 1100px;
+}
+
+.bookings-table th {
+  background: #f7f4f2;
+  color: #6b4f3f;
+  font-size: 14px;
+  padding: 12px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.bookings-table td {
+  padding: 12px;
+  font-size: 13px;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  white-space: nowrap;
+}
+
+.bookings-table tr:nth-child(even) {
+  background: #fafafa;
+}
+
+/* Status (kept minimal – color handled by text) */
+.status {
+  font-weight: 600;
+}
+
+/* Icons behave like action buttons */
+.bookings-table svg {
+  cursor: pointer;
+  color: #6b4f3f;
+}
+
+.bookings-table svg:hover {
+  opacity: 0.85;
+}
+
+/* No data */
+.no-data {
+  text-align: center;
+  padding: 20px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+  gap: 5px;
+}
+.page-btn,
+.pagination button {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.page-btn.active {
+  opacity: 0.8;
+}
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+/* Action button (table row only) */
+.request-btn {
+  background: var(--primary-color, #4a3326);
+  color: #ffffff;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;       /* clean, not too round */
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.15s ease, opacity 0.15s ease;
+}
+
+/* Hover */
+.request-btn:hover {
+  background: #3b281e;     /* darker primary */
+}
+
+/* Click */
+.request-btn:active {
+  transform: scale(0.96);
+}
+
+/* Disabled (if used later) */
+.request-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .bookings-table {
+    font-size: 12px;
+  }
+}

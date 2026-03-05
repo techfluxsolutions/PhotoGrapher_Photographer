@@ -1,0 +1,89 @@
+.calendar-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.calendar-modal {
+  background: var(--white-color);
+  padding: 24px;
+  border-radius: 12px;
+  width: 420px;
+}
+
+/* Title */
+.modal-title {
+  margin-bottom: 14px;
+  color: var(--primary-color);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* Each row (label + value aligned from left) */
+.modal-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;                 /* ✅ controlled spacing */
+  margin-bottom: 14px;
+}
+
+/* Label */
+.modal-row span {
+  min-width: 120px;          /* ✅ aligns all values */
+  font-weight: 500;
+  color: var(--primary-color);
+}
+
+/* Value */
+.modal-row strong {
+  font-weight: 600;
+  color: #000;
+  word-break: break-word;
+}
+
+/* ===== Buttons Section ===== */
+.modal-actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 12px;
+}
+
+/* Shared button styles (same height & alignment) */
+.modal-actions button {
+  height: 42px;              /* ✅ same height */
+  padding: 0 18px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+/* Close button */
+.close-btn {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  border: none;
+}
+
+.close-btn:hover {
+  opacity: 0.9;
+}
+
+/* Navigate button */
+.go-booking-btn {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+
+.go-booking-btn:hover {
+  background-color: var(--tertiary-color);
+}

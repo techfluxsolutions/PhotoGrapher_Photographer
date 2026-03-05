@@ -1,0 +1,49 @@
+.cancel-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.cancel-modal {
+  background: var(--white-color);
+  padding: 24px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 420px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(74, 51, 38, 0.15);
+}
+
+.cancel-title {
+  margin-bottom: 20px;
+  color: var(--primary-color);
+  font-size: 16px;
+}
+
+.cancel-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.cancel-no-btn {
+  padding: 8px 18px;
+  background: var(--tertiary-color);
+  color: var(--primary-color);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.cancel-yes-btn {
+  padding: 8px 18px;
+  background: var(--primary-color);
+  color: var(--white-color);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}

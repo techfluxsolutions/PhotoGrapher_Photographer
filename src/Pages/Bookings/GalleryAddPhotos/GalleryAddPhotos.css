@@ -1,0 +1,112 @@
+.gallery-container {
+  max-width: 700px;
+  width: 100%;
+  margin: 60px auto;
+  padding: 24px;
+  background: var(--white-color);
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(74, 51, 38, 0.08);
+  margin-top: 90px;
+}
+
+/* ================= TEXT ================= */
+
+.client-name {
+  font-size: 18px;
+  margin-top: 8px;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.muted {
+  color: #9a9a9a;
+  margin-top: 4px;
+  font-size: 14px;
+}
+
+/* ================= UPLOAD BOX ================= */
+
+.upload-box {
+  margin: 40px 0;
+  padding: 40px 20px;
+  border: 2px dashed var(--tertiary-color);
+  text-align: center;
+  border-radius: 12px;
+  background: var(--secondary-color);
+  transition: 0.3s ease;
+}
+
+.upload-box:hover {
+  border-color: var(--primary-color);
+}
+
+/* ================= BUTTONS ================= */
+
+.upload-btn {
+  margin-top: 12px;
+  padding: 10px 20px;
+  border: none;
+  background: var(--primary-color);
+  color: var(--white-color);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  font-weight: 500;
+}
+
+.upload-btn:hover {
+  opacity: 0.9;
+}
+
+.submit-btn {
+  padding: 12px 26px;
+  background: var(--primary-color);
+  color: var(--white-color);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.3s ease;
+  display: block;
+  margin: 0 auto;
+}
+
+.submit-btn:hover {
+  opacity: 0.9;
+}
+
+/* ================= RESPONSIVE ================= */
+
+/* Tablet */
+@media (max-width: 992px) {
+  .gallery-container {
+    margin: 40px 20px;
+    padding: 20px;
+  }
+
+  .upload-box {
+    padding: 30px 15px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+  .gallery-container {
+    margin: 30px 15px;
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .client-name {
+    font-size: 16px;
+  }
+
+  .upload-box {
+    padding: 25px 15px;
+  }
+
+  .upload-btn,
+  .submit-btn {
+    width: 100%;
+  }
+}

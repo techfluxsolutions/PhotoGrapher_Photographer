@@ -1,0 +1,42 @@
+.requirement-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.requirement-modal {
+  background: var(--white-color);
+  width: 90%;
+  max-width: 500px;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 8px 20px rgba(74, 51, 38, 0.15);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.close-btn {
+  background: var(--primary-color);
+  color: var(--white-color);
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.requirement-content {
+  background: var(--secondary-color);
+  padding: 16px;
+  border-radius: 10px;
+  color: var(--primary-color);
+  line-height: 1.6;
+}

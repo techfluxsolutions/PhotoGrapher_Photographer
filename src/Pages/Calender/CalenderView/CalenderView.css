@@ -1,0 +1,102 @@
+/* ===== FullCalendar Theme ===== */
+
+/* Toolbar buttons */
+.fc .fc-button-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: var(--white-color);
+  text-transform: capitalize;
+}
+
+.fc .fc-button-primary:hover,
+.fc .fc-button-primary:focus {
+  background-color: #3b281f; /* slightly darker */
+  border-color: #3b281f;
+}
+
+.fc .fc-button-primary:disabled {
+  background-color: var(--tertiary-color);
+  border-color: var(--tertiary-color);
+  color: var(--primary-color);
+}
+
+/* Calendar background */
+.fc {
+  /* background-color: var(--secondary-color); */
+  border-radius: 12px;
+  padding: 12px;
+}
+
+/* Header title */
+.fc .fc-toolbar-title {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* Day headers (Sun, Mon...) */
+.fc .fc-col-header-cell-cushion {
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
+/* Date numbers */
+.fc .fc-daygrid-day-number {
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
+/* Today highlight */
+.fc .fc-day-today {
+  background-color: var(--tertiary-color) !important;
+}
+
+/* Event styling */
+.fc .fc-event {
+  background-color: var(--primary-color);
+  border: none;
+  color: var(--white-color) !important;
+  border-radius: 6px;
+  padding: 2px 4px;
+  font-size: 10px;
+}
+
+/* Hover effect on days */
+.fc .fc-daygrid-day:hover {
+  background-color: rgba(74, 51, 38, 0.08);
+  cursor: pointer;
+}
+
+/* Remove focus outline */
+.fc a {
+  text-decoration: none;
+}
+/* ✅ ACTIVE TOOLBAR BUTTON */
+.fc .fc-button-primary.fc-button-active,
+.fc .fc-button-primary:not(:disabled):active {
+  background-color: var(--secondary-color) !important;
+  border-color: var(--primary-color) !important;
+  color: var(--primary-color) !important;
+  outline: none;
+}
+/* Remove outline & focus ring from toolbar buttons */
+.fc .fc-button:focus,
+.fc .fc-button-primary:focus,
+.fc .fc-button:active,
+.fc .fc-button-primary:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+/* ❌ Disable pointer on empty dates */
+.fc .fc-daygrid-day {
+  cursor: default !important;
+}
+
+/* ❌ Disable pointer on date numbers */
+.fc .fc-daygrid-day-number {
+  cursor: default !important;
+}
+
+/* ✅ Pointer only on events */
+.fc .fc-event {
+  cursor: pointer !important;
+}

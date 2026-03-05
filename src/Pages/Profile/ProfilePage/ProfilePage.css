@@ -1,0 +1,206 @@
+.profile-page-wrapper {
+  background: #fbfaf8;
+  padding: 24px;
+  min-height: 100vh;
+}
+
+/* Tracker */
+.level-tracker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 28px;
+  gap: 8px;
+}
+
+.tracker-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 12px;
+  color: #b0b0b0;
+}
+
+.tracker-step .dot {
+  width: 12px;
+  height: 12px;
+  background: #d6d6d6;
+  border-radius: 50%;
+  margin-bottom: 6px;
+}
+
+.tracker-step.active .dot {
+  background: #6b4f3f;
+}
+
+.tracker-step.active p {
+  color: #6b4f3f;
+  font-weight: 600;
+}
+
+.tracker-line {
+  width: 80px;
+  height: 2px;
+  background: #d6d6d6;
+}
+
+.active-line {
+  background: #6b4f3f;
+}
+
+/* Header */
+.profile-header {
+  display: flex;
+  gap: 25px;
+  margin-bottom: 24px;
+  align-items: center;
+}
+
+.profile-avatar {
+  width: 48px;
+  height: 48px;
+  background: #e5e5e5;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: visible;
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-edit-icon {
+  position: absolute;
+  bottom: -6px;
+  right: -15px;
+  /* background: #5a3d2b; */
+  /* color: white; */
+  font-size: 10px;
+  padding: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+  /* box-shadow: 0 2px 6px rgba(0,0,0,0.2); */
+}
+
+
+/* Cards */
+.profile-card {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #8a8a8a;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 6px;
+  margin-bottom: 14px;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Input Box (Div + Input Compatible) */
+.input-box {
+  background: #f7f7f7;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #333;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* When input or textarea used */
+input.input-box,
+textarea.input-box {
+  border: none;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  background: #f7f7f7;
+  font-size: 13px;
+  color: #333;
+}
+
+input.input-box::placeholder,
+textarea.input-box::placeholder {
+  color: #b0b0b0;
+}
+
+input.input-box:focus,
+textarea.input-box:focus {
+  outline: none;
+  border: none;
+  background: #f7f7f7;
+}
+
+/* Dropdown Arrow */
+.input-box.dropdown {
+  position: relative;
+}
+
+.input-box.dropdown::after {
+  content: "▾";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+  pointer-events: none;
+}
+
+/* About Box */
+.about-box {
+  height: 120px;
+  resize: none;
+}
+
+/* Services */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+}
+
+.services-grid label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Radio */
+.radio-group {
+  display: flex;
+  gap: 20px;
+  font-size: 13px;
+}
+
+/* Save Button */
+.final-save-btn {
+  background: #5a3d2b;
+  color: white;
+  border: none;
+  padding: 16px;
+  width: 100%;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.final-save-btn:hover {
+  opacity: 0.9;
+}

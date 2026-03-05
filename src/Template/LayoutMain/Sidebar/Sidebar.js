@@ -21,12 +21,21 @@ const Sidebar = ({ isOpen, onItemClick }) => {
     }
 
       // Bookings + Booking Chat  ✅ ADD THIS
+  // if (path === "/bookings") {
+  //   return (
+  //     location.pathname === "/bookings" ||
+  //     location.pathname.startsWith("/chat/booking")
+  //   );
+  // }
+
   if (path === "/bookings") {
-    return (
-      location.pathname === "/bookings" ||
-      location.pathname.startsWith("/chat/booking")
-    );
-  }
+  return (
+    location.pathname === "/bookings" ||
+    location.pathname.startsWith("/bookings/") || // ✅ gallery-upload included
+    location.pathname.startsWith("/chat/booking")
+  );
+}
+
   if (path === "/services") {
     return (
       location.pathname === "/services" ||
@@ -44,106 +53,82 @@ const Sidebar = ({ isOpen, onItemClick }) => {
       icon: <HiOutlineViewGrid size={20} />,
       path: "/dashboard",
     },
+ {
+      name: "Booking Request",
+      path: "/bookingRequest",
+      icon: (
+        <img
+          src={
+            isActive("/bookingRequest")
+              ? "/Icons/Booking-active.png"
+              : hoveredPath === "/bookingRequest"
+                ? "/Icons/Booking-active.png"
+                : "/Icons/Booking-inactive.png"
+          }
+          alt="Booking Request"
+          className="sidebar-png-icon"
+        />
+      ),
+    },
+
     {
-      name: "Bookings",
+      name: "My Bookings",
       path: "/bookings",
       icon: (
         <img
           src={
             isActive("/bookings")
-              ? "/Icons/camera-active.png"
+              ? "/Icons/Booking-active.png"
               : hoveredPath === "/bookings"
-                ? "/Icons/camera-active.png"
-                : "/Icons/camera-inactive.png"
+                ? "/Icons/Booking-active.png"
+                : "/Icons/Booking-inactive.png"
           }
           alt="Bookings"
           className="sidebar-png-icon"
         />
       ),
     },
-    {
-      name: "My Quote",
-      path: "/my-quote",
-      icon: (
-        <img
-          // src={
-          //   location.pathname === "/my-quote"
-          //     ? "/Icons/quote-active.png"
-          //     : hoveredPath === "/my-quote"
-          //       ? "/Icons/quote-active.png"
-          //       : "/Icons/quote-inactive.png"
-          // }
-          src={
-            isActive("/my-quote")
-              ? "/Icons/quote-active.png"
-              : hoveredPath === "/my-quote"
-                ? "/Icons/quote-active.png"
-                : "/Icons/quote-inactive.png"
-          }
 
-          alt="my-quote"
-          className="sidebar-png-icon"
-        />
-      ),
+    
+{
+      name: "Calender View",
+      icon: <HiOutlineViewGrid size={20} />,
+      path: "/calender",
     },
-
      {
-      name: "Services",
-      path: "/services",
+      name: "Notification",
+      path: "/notification",
       icon: (
         <img
           src={
-            isActive("/services")
-              ? "/Icons/service-active.png"
-              : hoveredPath === "/services"
-                ? "/Icons/service-active.png"
-                : "/Icons/service-inactive.png"
+            location.pathname === "/notification"
+              ? "/Icons/Notification-active.png"
+              : hoveredPath === "/payment"
+                ? "/Icons/Notification-active.png"
+                : "/Icons/Notification-inactive.png"
           }
-          alt="service"
+          alt="actionCentre"
           className="sidebar-png-icon"
         />
       ),
     },
-
     {
-      name: "Payment",
+      name: "Payout",
       path: "/payment",
       icon: (
         <img
           src={
             location.pathname === "/payment"
-              ? "/Icons/payment-active.png"
+              ? "/Icons/Payout-active.png"
               : hoveredPath === "/payment"
-                ? "/Icons/payment-active.png"
-                : "/Icons/payment-inactive.png"
+                ? "/Icons/Payout-active.png"
+                : "/Icons/Payout-inactive.png"
           }
           alt="payment"
           className="sidebar-png-icon"
         />
       ),
     },
-    {
-      name: "Customer",
-      path: "/customer",
-      icon: (
-        <img
-          src={
-            location.pathname === "/customer"
-              ? "/Icons/customer-active.png"
-              : hoveredPath === "/customer"
-                ? "/Icons/customer-active.png"
-                : "/Icons/customer-inactive.png"
-          }
-          alt="customer"
-          className="sidebar-png-icon"
-        />
-      ),
-    },
-
-
-
-
-
     {
       name: "Logout",
       icon: <HiOutlineLogout size={20} />,
@@ -153,26 +138,8 @@ const Sidebar = ({ isOpen, onItemClick }) => {
 
   return (
     <div className={`sidebar ${isOpen ? "open" : "closed"}`}>
-      <ul className="sidebar-menu" style={{ marginTop: "8vh" }}>
+      <ul className="sidebar-menu" style={{ marginTop: "10vh" }}>
         {menuItems.map((item) => (
-          // <Link to={item.path} key={item.path}>
-          //   {/* <li
-          //     className={`menu-item ${
-          //       location.pathname === item.path ? "active" : ""
-          //     }`}
-          //   > */}
-          //   <li
-          //     className={`menu-item ${location.pathname === item.path ? "active" : ""
-          //       }`}
-          //     onMouseEnter={() => setHoveredPath(item.path)}
-          //     onMouseLeave={() => setHoveredPath(null)}
-          //   >
-
-          //     {item.icon}
-          //     {isOpen && <span>{item.name}</span>}
-          //   </li>
-          // </Link>
-
           <Link to={item.path} key={item.path} onClick={onItemClick}>
             <li
               className={`menu-item ${isActive(item.path) ? "active" : ""}`}
