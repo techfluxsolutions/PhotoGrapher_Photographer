@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./ProfilePage.css";
-import { getProfilePhotographer } from "../../../utils/APIs/profileApis";
+import { getProfilePhotographer, updateProfilePhotographer } from "../../../utils/APIs/profileApis";
 import Loader from "../../../Loader/Loader";
 
 
@@ -29,6 +29,23 @@ const ProfilePage = () => {
       setLoading(false);
     }
   };
+
+  const handleSaveProfile = async () => {
+  try {
+    setLoading(true);
+
+    const payload = profileData;
+
+    await updateProfilePhotographer(payload);
+
+    alert("Profile updated successfully");
+
+  } catch (error) {
+    console.error("Failed to update profile", error);
+  } finally {
+    setLoading(false);
+  }
+};
 
   if (loading) return <Loader />;
 
@@ -75,21 +92,76 @@ const ProfilePage = () => {
         <h3 className="section-title">Basic Information</h3>
 
         <div className="card-body">
-          <div className="input-box">
+          {/* <div className="input-box">
             {profileData?.basicInfo?.fullName || "Full Name"}
-          </div>
+          </div> */}
+          <input
+  className="input-box"
+  value={profileData?.basicInfo?.fullName || ""}
+  placeholder="Full Name"
+  onChange={(e) =>
+    setProfileData({
+      ...profileData,
+      basicInfo: {
+        ...profileData.basicInfo,
+        fullName: e.target.value,
+      },
+    })
+  }
+/>
 
-          <div className="input-box">
+          {/* <div className="input-box">
             {profileData?.basicInfo?.displayName || "Display Name"}
-          </div>
-
-          <div className="input-box">
+          </div> */}
+<input
+  className="input-box"
+  value={profileData?.basicInfo?.displayName || ""}
+  placeholder="Display Name"
+  onChange={(e) =>
+    setProfileData({
+      ...profileData,
+      basicInfo: {
+        ...profileData.basicInfo,
+        displayName: e.target.value,
+      },
+    })
+  }
+/>
+          {/* <div className="input-box">
             {profileData?.basicInfo?.email || "Email"}
-          </div>
+          </div> */}
+          <input
+  className="input-box"
+  value={profileData?.basicInfo?.email || ""}
+  placeholder="Email"
+  onChange={(e) =>
+    setProfileData({
+      ...profileData,
+      basicInfo: {
+        ...profileData.basicInfo,
+        email: e.target.value,
+      },
+    })
+  }
+/>
 
-          <div className="input-box">
+          {/* <div className="input-box">
             {profileData?.basicInfo?.phone || "Phone No."}
-          </div>
+          </div> */}
+          <input
+  className="input-box"
+  value={profileData?.basicInfo?.phone || ""}
+  placeholder="Phone No."
+  onChange={(e) =>
+    setProfileData({
+      ...profileData,
+      basicInfo: {
+        ...profileData.basicInfo,
+        phone: e.target.value,
+      },
+    })
+  }
+/>
         </div>
       </div>
 
@@ -98,26 +170,84 @@ const ProfilePage = () => {
         <h3 className="section-title">Professional Details</h3>
 
         <div className="card-body">
-          <div className="input-box dropdown">
+          {/* <div className="input-box dropdown">
             {profileData?.professionalDetails?.photographerType || "Photographer Type"}
-          </div>
+          </div> */}
+          <input
+  className="input-box"
+  value={profileData?.professionalDetails?.photographerType || ""}
+  placeholder="Photographer Type"
+  onChange={(e) =>
+    setProfileData({
+      ...profileData,
+      professionalDetails: {
+        ...profileData.professionalDetails,
+        photographerType: e.target.value,
+      },
+    })
+  }
+/>
 
-          <div className="input-box dropdown">
+          {/* <div className="input-box dropdown">
             {profileData?.professionalDetails?.yearsOfExperience || "Years of Experience"}
-          </div>
-
-          <div className="input-box">
+          </div> */}
+<input
+  className="input-box"
+  value={profileData?.professionalDetails?.yearsOfExperience || ""}
+  placeholder="Years of Experience"
+  onChange={(e) =>
+    setProfileData({
+      ...profileData,
+      professionalDetails: {
+        ...profileData.professionalDetails,
+        yearsOfExperience: e.target.value,
+      },
+    })
+  }
+/>
+          {/* <div className="input-box">
             {profileData?.professionalDetails?.primaryLocation || "Primary Location"}
-          </div>
+          </div> */}
+          <input
+  className="input-box"
+  value={profileData?.professionalDetails?.primaryLocation || ""}
+  placeholder="Primary Location"
+  onChange={(e) =>
+    setProfileData({
+      ...profileData,
+      professionalDetails: {
+        ...profileData.professionalDetails,
+        primaryLocation: e.target.value,
+      },
+    })
+  }
+/>
 
-          <div className="input-box dropdown">
+          {/* <div className="input-box dropdown">
             {profileData?.professionalDetails?.willingToTravel !== undefined
               ? profileData.professionalDetails.willingToTravel
                 ? "Yes"
                 : "No"
               : "Willing to Travel"}
-          </div>
+          </div> */}
 
+<select
+  className="input-box"
+  value={profileData?.professionalDetails?.willingToTravel ?? ""}
+  onChange={(e) =>
+    setProfileData({
+      ...profileData,
+      professionalDetails: {
+        ...profileData.professionalDetails,
+        willingToTravel: e.target.value === "true",
+      },
+    })
+  }
+>
+  <option value="">Willing To Travel</option>
+  <option value="true">Yes</option>
+  <option value="false">No</option>
+</select>
           <div className="input-box dropdown">
             {profileData?.professionalDetails?.languagesSpoken?.length
               ? profileData.professionalDetails.languagesSpoken.join(", ")
@@ -130,9 +260,20 @@ const ProfilePage = () => {
       <div className="profile-card">
         <h3 className="section-title">About You</h3>
         <div className="card-body">
-          <div className="input-box about-box">
+          {/* <div className="input-box about-box">
             {profileData?.aboutYou || "Write Something About You..."}
-          </div>
+          </div> */}
+          <textarea
+  className="input-box about-box"
+  value={profileData?.aboutYou || ""}
+  placeholder="Write Something About You..."
+  onChange={(e) =>
+    setProfileData({
+      ...profileData,
+      aboutYou: e.target.value,
+    })
+  }
+/>
         </div>
       </div>
 
@@ -229,9 +370,23 @@ const ProfilePage = () => {
         <h3 className="section-title">Availability Settings</h3>
 
         <div className="card-body">
-          <div className="input-box dropdown">
+          {/* <div className="input-box dropdown">
             {profileData?.availability?.status || "Availability Status"}
-          </div>
+          </div> */}
+          <input
+  className="input-box"
+  value={profileData?.availability?.status || ""}
+  placeholder="Availability Status"
+  onChange={(e) =>
+    setProfileData({
+      ...profileData,
+      availability: {
+        ...profileData.availability,
+        status: e.target.value,
+      },
+    })
+  }
+/>
 
           <div className="input-box dropdown">
             {profileData?.availability?.workingDays?.length
@@ -293,7 +448,10 @@ const ProfilePage = () => {
 
       {/* ===== Final Save Button ===== */}
       <div className="final-save-wrapper">
-        <button className="final-save-btn">Save Details</button>
+        {/* <button className="final-save-btn">Save Details</button> */}
+        <button className="final-save-btn" onClick={handleSaveProfile}>
+  Save Details
+</button>
       </div>
 
     </div>
