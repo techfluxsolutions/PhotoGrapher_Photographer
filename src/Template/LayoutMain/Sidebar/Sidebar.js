@@ -53,8 +53,26 @@ const Sidebar = ({ isOpen, onItemClick }) => {
       icon: <HiOutlineViewGrid size={20} />,
       path: "/dashboard",
     },
+ {
+      name: "Booking Request",
+      path: "/bookingRequest",
+      icon: (
+        <img
+          src={
+            isActive("/bookingRequest")
+              ? "/Icons/Booking-active.png"
+              : hoveredPath === "/bookingRequest"
+                ? "/Icons/Booking-active.png"
+                : "/Icons/Booking-inactive.png"
+          }
+          alt="Booking Request"
+          className="sidebar-png-icon"
+        />
+      ),
+    },
+
     {
-      name: "Bookings",
+      name: "My Bookings",
       path: "/bookings",
       icon: (
         <img
@@ -70,18 +88,20 @@ const Sidebar = ({ isOpen, onItemClick }) => {
         />
       ),
     },
+
+    
 {
       name: "Calender View",
       icon: <HiOutlineViewGrid size={20} />,
       path: "/calender",
     },
      {
-      name: "Action Centre",
-      path: "/actionCentre",
+      name: "Notification",
+      path: "/notification",
       icon: (
         <img
           src={
-            location.pathname === "/actionCentre"
+            location.pathname === "/notification"
               ? "/Icons/Notification-active.png"
               : hoveredPath === "/payment"
                 ? "/Icons/Notification-active.png"

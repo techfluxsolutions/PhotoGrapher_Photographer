@@ -77,20 +77,35 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
-
-.cancel-btn {
-  padding: 6px 12px;
-  background-color: #ff4d4f;
-  color: #fff;
+/* Action button (table row only) */
+.request-btn {
+  background: var(--primary-color, #4a3326);
+  color: #ffffff;
   border: none;
-  border-radius: 6px;
-  cursor: pointer;
+  padding: 6px 14px;
+  border-radius: 6px;       /* clean, not too round */
   font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.15s ease, opacity 0.15s ease;
 }
 
-.cancel-btn:hover {
-  background-color: #d55657;
+/* Hover */
+.request-btn:hover {
+  background: #3b281e;     /* darker primary */
 }
+
+/* Click */
+.request-btn:active {
+  transform: scale(0.96);
+}
+
+/* Disabled (if used later) */
+.request-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 /* Mobile */
 @media (max-width: 768px) {
   .bookings-table {

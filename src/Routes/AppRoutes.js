@@ -104,6 +104,7 @@ import Profile from "../Pages/Profile/Profile";
 import GalleryAddPhotos from "../Pages/Bookings/GalleryAddPhotos/GalleryAddPhotos";
 import ActionCentre from "../Pages/ActionCentre/ActionCentre";
 import Calender from "../Pages/Calender/Calender";
+import BookingRequest from "../Pages/BookingRequest/BookingRequest";
 
 const AppRoutes = () => {
   const [isOffline, setIsOffline] = useState(false);
@@ -147,13 +148,14 @@ const AppRoutes = () => {
 
           {/* ✅ BOOKINGS */}
           <Route path="/bookings" element={<Bookings />} />
+          <Route path="/bookingRequest" element={<BookingRequest />} />
           <Route
             path="/bookings/gallery-upload/:bookingId"
             element={<GalleryAddPhotos />}
           />
           <Route path="/payment" element={<Payment />} /> 
           <Route path="/profile" element={<Profile />} /> 
-          <Route path="/actionCentre" element={<ActionCentre />} />
+          <Route path="/notification" element={<ActionCentre />} />
           <Route path="/calender" element={<Calender />} /> 
  
         </Route>

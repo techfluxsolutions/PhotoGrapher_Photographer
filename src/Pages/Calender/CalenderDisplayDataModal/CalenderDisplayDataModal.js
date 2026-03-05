@@ -1,8 +1,16 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./CalenderDisplayDataModal.css";
 
 const CalenderDisplayDataModal = ({ isOpen, onClose, data }) => {
+  const navigate = useNavigate();
+
   if (!isOpen || !data) return null;
+
+  const handleGoToBooking = () => {
+    onClose();              // close modal first
+    navigate("/bookings");  // navigate
+  };
 
   return (
     <div className="calendar-modal-overlay">
@@ -16,12 +24,12 @@ const CalenderDisplayDataModal = ({ isOpen, onClose, data }) => {
 
         <div className="modal-row">
           <span>Date:</span>
-          <strong>{data.date}</strong> {/* ✅ Direct from API */}
+          <strong>{data.date}</strong>
         </div>
 
         <div className="modal-row">
           <span>Time:</span>
-          <strong>{data.time}</strong> {/* ✅ Direct from API */}
+          <strong>{data.time}</strong>
         </div>
 
         <div className="modal-row">
@@ -34,9 +42,16 @@ const CalenderDisplayDataModal = ({ isOpen, onClose, data }) => {
           <strong>{data.clientName}</strong>
         </div>
 
-        <button className="close-btn" onClick={onClose}>
-          Close
-        </button>
+        {/* ✅ Buttons */}
+        <div className="modal-actions">
+          <button className="close-btn" onClick={onClose}>
+            Close
+          </button>
+
+          <button className="go-booking-btn" onClick={handleGoToBooking}>
+            Take me to this booking
+          </button>
+        </div>
       </div>
     </div>
   );

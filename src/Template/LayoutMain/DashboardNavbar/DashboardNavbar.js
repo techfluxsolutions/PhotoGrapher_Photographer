@@ -152,7 +152,7 @@ useEffect(() => {
             width: "50px",
             cursor: "pointer",
           }}
-          onClick={() => navigate("/actionCentre")}
+          onClick={() => navigate("/notification")}
         />
         <div className="status-toggle-wrapper">
             

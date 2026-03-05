@@ -24,6 +24,20 @@ export const getAcceptedBookings = (page = 1, limit = 10) => {
   });
 };
 
+export const getPendingBookings = (page = 1, limit = 10) => {
+  return withAuthorization(async () => {
+    return await axiosInstance.get(
+      `/api/photographers/bookings/pending?page=${page}&limit=${limit}`
+    );
+  });
+};
+export const getBookingHistory = (page = 1, limit = 10) => {
+  return withAuthorization(async () => {
+    return await axiosInstance.get(
+      `/api/photographers/bookings/completed?page=${page}&limit=${limit}`
+    );
+  });
+};
 
 export const updateBookingStatus = (bookingId, payload) => {
   return withAuthorization(async () => {
@@ -35,6 +49,30 @@ export const updateBookingStatus = (bookingId, payload) => {
 };
 
 
+export const acceptBookingRequest = (bookingId, payload) => {
+  return withAuthorization(async () => {
+    return await axiosInstance.patch(
+      `/api/photographers/bookings/${bookingId}/status`,
+      payload
+    );
+  });
+};
+
+export const getAcceptedBookingById = (bookingId) => {
+  return withAuthorization(async () => {
+    return await axiosInstance.get(
+      `/api/photographers/bookings/${bookingId}`
+    );
+  });
+};
+
+export const cancelBooking = (bookingId) => {
+  return withAuthorization(async () => {
+    return await axiosInstance.delete(
+      `/api/photographers/bookings/${bookingId}`
+    );
+  });
+};
 
 export const getPreviousBookingsAPI = (
   fromDate,

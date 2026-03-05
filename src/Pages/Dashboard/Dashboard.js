@@ -73,12 +73,45 @@ const Dashboard = () => {
     >
       <div className="container-fluid px-3 px-md-4">
         {/* Header */}
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <h2 className="fw-bold mb-1 dashboard-title">Welcome Back,</h2>
           <p className="dashboard-subtitle">
             Here’s what’s happening with your shoots
           </p>
-        </div>
+        </div> */}
+        {/* Header */}
+<div className="mb-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
+  {/* Left: Welcome Text */}
+  <div>
+    <h2 className="fw-bold mb-1 dashboard-title">Welcome Back,</h2>
+    <p className="dashboard-subtitle">
+      Here’s what’s happening with your shoots
+    </p>
+  </div>
+
+  {/* Right: Photographer Info */}
+  <div className="photographer-info d-flex align-items-center gap-3">
+    {/* Profile Image */}
+    <img
+      src="https://via.placeholder.com/50"
+      alt="Photographer"
+      className="photographer-img"
+    />
+
+    {/* Name & Badge */}
+    <div className="photographer-text">
+      <div className="photographer-name">
+        Rahul Sharma <span className="badge-level">(Professional)</span>
+      </div>
+
+      <div className="photographer-stats">
+        <span>Customer Feedback: <strong>128</strong></span>
+        <span className="mx-2">|</span>
+        <span>Veroa Rating: <strong>4 / 5</strong></span>
+      </div>
+    </div>
+  </div>
+</div>
 
   {/* Main Grid */}
         <div className="row g-4 mb-4">
