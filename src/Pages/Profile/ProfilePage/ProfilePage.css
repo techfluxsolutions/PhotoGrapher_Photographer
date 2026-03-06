@@ -1,5 +1,6 @@
 .profile-page-wrapper {
-  background: #fbfaf8;
+  background: var(--color-bg-secondary);
+    /* background: var(--color-bg-main); */
   padding: 24px;
   min-height: 100vh;
 }
@@ -129,7 +130,7 @@ textarea.input-box {
   outline: none;
   appearance: none;
   -webkit-appearance: none;
-  background: #f7f7f7;
+  background: var(--color-bg-secondary);
   font-size: 13px;
   color: #333;
 }
@@ -186,6 +187,11 @@ textarea.input-box:focus {
   display: flex;
   gap: 20px;
   font-size: 13px;
+}
+
+.profile-label{
+  font-size: small;
+  font-weight: 500;
 }
 
 /* Save Button */
