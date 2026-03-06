@@ -1,5 +1,5 @@
 .profile-page-wrapper {
-  background: var(--color-bg-secondary);
+  background: var(--secondary-color);
     /* background: var(--color-bg-main); */
   padding: 24px;
   min-height: 100vh;

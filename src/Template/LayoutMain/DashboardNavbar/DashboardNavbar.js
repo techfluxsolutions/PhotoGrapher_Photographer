@@ -10,15 +10,15 @@ import { getPhotographerStatus, postPhotographerStatus } from "../../../utils/AP
 const DashboardNavbar = ({ toggleSidebar, isSidebarOpen }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
-  const [notificationCount, setNotificationCount] = useState(0); // State to manage notification count
+  // const [notificationCount, setNotificationCount] = useState(0); // State to manage notification count
   const dropdownRef = useRef(null); // To detect clicks outside the dropdown
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState(false);
 const [loading, setLoading] = useState(false);
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
+  // const toggleDropdown = () => {
+  //   setIsDropdownOpen(!isDropdownOpen);
+  // };
 const handleToggleStatus = async () => {
   const newStatus = isActive ? "inactive" : "active";
 
@@ -188,9 +188,14 @@ useEffect(() => {
           {isDropdownOpen && (
             <ul className="dropdown-menu">
               
-              <li>
+              {/* <li>
                 <a onClick={handleLogoutClick}>Logout</a>
-              </li>{" "}
+              </li>{" "} */}
+              <li>
+                <button onClick={handleLogoutClick} className="dropdown-btn">
+                  Logout
+                </button>
+              </li>
               {/* Open modal on logout */}
             </ul>
           )}

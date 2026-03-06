@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState, useCallback  } from "react";
+// import { useNavigate } from "react-router-dom";
 
 import "./BookingRequestTable.css";
 import { getPendingBookings } from "../../../utils/APIs/bookingsApis";
@@ -7,7 +7,7 @@ import Loader from "../../../Loader/Loader";
 import BookingRequestModal from "../BookingRequestModal/BookingRequestModal";
 
 const BookingRequestTable = ({ page: initialPage = 1, limit = 10 }) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   /* ================= STATE ================= */
 
@@ -21,42 +21,76 @@ const [isModalOpen, setIsModalOpen] = useState(false);
   /* ================= FETCH BOOKINGS ================= */
   
 
-  const fetchBookings = async () => {
-    try {
-      setLoading(true);
+  // const fetchBookings = async () => {
+  //   try {
+  //     setLoading(true);
 
-      const res = await getPendingBookings(page, limit);
+  //     const res = await getPendingBookings(page, limit);
 
-      if (res?.data?.success) {
-        const { bookings, meta } = res.data.data;
+  //     if (res?.data?.success) {
+  //       const { bookings, meta } = res.data.data;
 
-        const mappedData = bookings.map((item) => ({
-          shootId: item._id,
-          shoot_id: item.bookingId || "N/A",
-          client_name: item.client_id?.username || "N/A",
-          client_email: item.client_id?.email || "N/A",
-          client_mobile: item.client_id?.mobileNumber || "N/A",
-          shoot_type: item.eventType || "N/A",
-          event_date: item.date || "N/A",
-          event_time: item.time || "N/A",
-          event_location: item.city || "N/A",
-          photography_requirements: item.requirements || "N/A",
-          bookingStatus: item.bookingStatus || "N/A", // ✅ ADDED
-        }));
+  //       const mappedData = bookings.map((item) => ({
+  //         shootId: item._id,
+  //         shoot_id: item.bookingId || "N/A",
+  //         client_name: item.client_id?.username || "N/A",
+  //         client_email: item.client_id?.email || "N/A",
+  //         client_mobile: item.client_id?.mobileNumber || "N/A",
+  //         shoot_type: item.eventType || "N/A",
+  //         event_date: item.date || "N/A",
+  //         event_time: item.time || "N/A",
+  //         event_location: item.city || "N/A",
+  //         photography_requirements: item.requirements || "N/A",
+  //         bookingStatus: item.bookingStatus || "N/A", // ✅ ADDED
+  //       }));
 
-        setData(mappedData);
-        setTotalPages(Math.ceil(meta.total / meta.limit));
-      }
-    } catch (error) {
-      console.error("Bookings fetch error", error);
-    } finally {
-      setLoading(false);
+  //       setData(mappedData);
+  //       setTotalPages(Math.ceil(meta.total / meta.limit));
+  //     }
+  //   } catch (error) {
+  //     console.error("Bookings fetch error", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+
+  const fetchBookings = useCallback(async () => {
+  try {
+    setLoading(true);
+
+    const res = await getPendingBookings(page, limit);
+
+    if (res?.data?.success) {
+      const { bookings, meta } = res.data.data;
+
+      const mappedData = bookings.map((item) => ({
+        shootId: item._id,
+        shoot_id: item.bookingId || "N/A",
+        client_name: item.client_id?.username || "N/A",
+        client_email: item.client_id?.email || "N/A",
+        client_mobile: item.client_id?.mobileNumber || "N/A",
+        shoot_type: item.eventType || "N/A",
+        event_date: item.date || "N/A",
+        event_time: item.time || "N/A",
+        event_location: item.city || "N/A",
+        photography_requirements: item.requirements || "N/A",
+        bookingStatus: item.bookingStatus || "N/A",
+      }));
+
+      setData(mappedData);
+      setTotalPages(Math.ceil(meta.total / meta.limit));
     }
-  };
+  } catch (error) {
+    console.error("Bookings fetch error", error);
+  } finally {
+    setLoading(false);
+  }
+}, [page, limit]);
 
-  useEffect(() => {
-    fetchBookings();
-  }, [page]);
+ useEffect(() => {
+  fetchBookings();
+}, [fetchBookings]);
 
   /* ================= HELPERS ================= */
 

@@ -7,6 +7,28 @@ const RequirementModal = ({ isOpen, onClose, bookingId }) => {
   const [requirements, setRequirements] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // const fetchBookingDetails = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const res = await getAcceptedBookingById(bookingId);
+
+  //     if (res?.data?.success) {
+  //       setRequirements(res.data.data.booking.requirements);
+  //     }
+  //   } catch (error) {
+  //     console.error("Requirement fetch error:", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (isOpen && bookingId) {
+  //     fetchBookingDetails();
+  //   }
+  // }, [isOpen, bookingId]);
+
+  useEffect(() => {
   const fetchBookingDetails = async () => {
     try {
       setLoading(true);
@@ -22,11 +44,10 @@ const RequirementModal = ({ isOpen, onClose, bookingId }) => {
     }
   };
 
-  useEffect(() => {
-    if (isOpen && bookingId) {
-      fetchBookingDetails();
-    }
-  }, [isOpen, bookingId]);
+  if (isOpen && bookingId) {
+    fetchBookingDetails();
+  }
+}, [isOpen, bookingId]);
 
   if (!isOpen) return null;
 
