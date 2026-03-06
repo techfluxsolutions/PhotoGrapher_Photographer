@@ -22,6 +22,46 @@ const BookingHistoryTable = ({ page: initialPage = 1, limit = 10 }) => {
 
   /* ================= FETCH BOOKINGS ================= */
 
+  // const fetchBookings = async () => {
+  //   try {
+  //     setLoading(true);
+
+  //     const res = await getBookingHistory(page, limit);
+
+  //     if (res?.data?.success) {
+  //       const { bookings, meta } = res.data.data;
+
+  //       const mappedData = bookings.map((item) => ({
+  //         shootId: item._id,
+  //         shoot_id: item.bookingId || "N/A",
+  //         client_name: item.client_id?.username || "N/A",
+  //         client_email: item.client_id?.email || "N/A",
+  //         client_mobile: item.client_id?.mobileNumber || "N/A",
+  //         shoot_type: item.eventType || "N/A",
+  //         event_date: item.date || "N/A",
+  //         event_time: item.time || "N/A",
+  //         event_location: item.city || "N/A",
+  //         photography_requirements: item.requirements || "N/A",
+  //         status: item.status || "completed",
+  //         daysLeft: item.daysLeft || "N/A",
+  //       }));
+
+  //       setData(mappedData);
+  //       setTotalPages(Math.ceil(meta.total / meta.limit));
+  //     }
+  //   } catch (error) {
+  //     console.error("Booking history fetch error", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchBookings();
+  // }, [page]);
+
+
+  useEffect(() => {
   const fetchBookings = async () => {
     try {
       setLoading(true);
@@ -56,9 +96,8 @@ const BookingHistoryTable = ({ page: initialPage = 1, limit = 10 }) => {
     }
   };
 
-  useEffect(() => {
-    fetchBookings();
-  }, [page]);
+  fetchBookings();
+}, [page, limit]);
 
   /* ================= HELPERS ================= */
 
