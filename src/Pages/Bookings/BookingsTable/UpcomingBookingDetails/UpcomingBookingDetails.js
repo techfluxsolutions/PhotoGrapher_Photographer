@@ -7,11 +7,35 @@ const UpcomingBookingDetails = ({ booking, onBack }) => {
   const [bookingData, setBookingData] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  // const fetchBookingById = async () => {
+  //   try {
+  //     setLoading(true);
+
+  //     const res = await getAcceptedBookingById(booking.shootId);
+
+  //     if (res?.data?.success) {
+  //       setBookingData(res.data.data.booking);
+  //     }
+  //   } catch (error) {
+  //     console.error("Fetch booking by ID error:", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (booking?.shootId) {
+  //     fetchBookingById();
+  //   }
+  // }, [booking]);
+
+
+  useEffect(() => {
   const fetchBookingById = async () => {
     try {
       setLoading(true);
 
-      const res = await getAcceptedBookingById(booking.shootId);
+      const res = await getAcceptedBookingById(booking?.shootId);
 
       if (res?.data?.success) {
         setBookingData(res.data.data.booking);
@@ -23,11 +47,10 @@ const UpcomingBookingDetails = ({ booking, onBack }) => {
     }
   };
 
-  useEffect(() => {
-    if (booking?.shootId) {
-      fetchBookingById();
-    }
-  }, [booking]);
+  if (booking?.shootId) {
+    fetchBookingById();
+  }
+}, [booking?.shootId]);
 
   /* ================= LOADER HANDLING ================= */
 

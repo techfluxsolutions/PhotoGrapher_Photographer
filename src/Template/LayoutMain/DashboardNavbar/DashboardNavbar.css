@@ -232,6 +232,14 @@
 .profile-dropdown {
     gap: 6px;
 }
+.dropdown-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 12px;
+  width: 100%;
+  text-align: left;
+}
 /* For very small mobile screens */
 @media (max-width: 480px) {
   .navbar-icon{

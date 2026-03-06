@@ -17,6 +17,28 @@ const GalleryAddPhotos = () => {
 
   /* ================= FETCH BOOKING BY ID ================= */
 
+  // const fetchBookingById = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const res = await getAcceptedBookingById(bookingId);
+
+  //     if (res?.data?.success) {
+  //       setBookingData(res.data.data.booking);
+  //     }
+  //   } catch (error) {
+  //     console.error("Fetch booking error:", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (bookingId) {
+  //     fetchBookingById();
+  //   }
+  // }, [bookingId]);
+
+  useEffect(() => {
   const fetchBookingById = async () => {
     try {
       setLoading(true);
@@ -32,12 +54,10 @@ const GalleryAddPhotos = () => {
     }
   };
 
-  useEffect(() => {
-    if (bookingId) {
-      fetchBookingById();
-    }
-  }, [bookingId]);
-
+  if (bookingId) {
+    fetchBookingById();
+  }
+}, [bookingId]);
   /* ================= LOADER ================= */
 
   if (loading) return <Loader />;

@@ -208,7 +208,7 @@
 
 
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FiUpload, FiEye, FiEdit } from "react-icons/fi";
 import EditBookingModal from "../EditBookingModal/EditBookingModal";
 import { toast } from "react-toastify";
@@ -242,45 +242,82 @@ const [cancelLoading, setCancelLoading] = useState(false);
 
   /* ================= FETCH BOOKINGS ================= */
 
-  const fetchBookings = async () => {
-    try {
-      setLoading(true);
+  // const fetchBookings = async () => {
+  //   try {
+  //     setLoading(true);
 
-      const res = await getAcceptedBookings(page, limit);
+  //     const res = await getAcceptedBookings(page, limit);
 
-      if (res?.data?.success) {
-        const { bookings, meta } = res.data.data;
+  //     if (res?.data?.success) {
+  //       const { bookings, meta } = res.data.data;
 
-        const mappedData = bookings.map((item) => ({
-          shootId: item._id,
-          shoot_id: item.bookingId || "N/A",
-          client_name: item.client_id?.username || "N/A",
-          client_email: item.client_id?.email || "N/A",
-          client_mobile: item.client_id?.mobileNumber || "N/A",
-          shoot_type: item.eventType || "N/A",
-          event_date: item.date || "N/A",
-          event_time: item.time || "N/A",
-          event_location: item.city || "N/A",
-          budget: item.budget || "N/A",
-          status: item.status || "pending",
-          daysLeft: item.daysLeft || "N/A",
-        }));
+  //       const mappedData = bookings.map((item) => ({
+  //         shootId: item._id,
+  //         shoot_id: item.bookingId || "N/A",
+  //         client_name: item.client_id?.username || "N/A",
+  //         client_email: item.client_id?.email || "N/A",
+  //         client_mobile: item.client_id?.mobileNumber || "N/A",
+  //         shoot_type: item.eventType || "N/A",
+  //         event_date: item.date || "N/A",
+  //         event_time: item.time || "N/A",
+  //         event_location: item.city || "N/A",
+  //         budget: item.budget || "N/A",
+  //         status: item.status || "pending",
+  //         daysLeft: item.daysLeft || "N/A",
+  //       }));
 
-        setData(mappedData);
-        setTotalPages(Math.ceil(meta.total / meta.limit));
-      }
-    } catch (error) {
-      console.error("Bookings fetch error", error);
-    } finally {
-      setLoading(false);
+  //       setData(mappedData);
+  //       setTotalPages(Math.ceil(meta.total / meta.limit));
+  //     }
+  //   } catch (error) {
+  //     console.error("Bookings fetch error", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+
+  const fetchBookings = useCallback(async () => {
+  try {
+    setLoading(true);
+
+    const res = await getAcceptedBookings(page, limit);
+
+    if (res?.data?.success) {
+      const { bookings, meta } = res.data.data;
+
+      const mappedData = bookings.map((item) => ({
+        shootId: item._id,
+        shoot_id: item.bookingId || "N/A",
+        client_name: item.client_id?.username || "N/A",
+        client_email: item.client_id?.email || "N/A",
+        client_mobile: item.client_id?.mobileNumber || "N/A",
+        shoot_type: item.eventType || "N/A",
+        event_date: item.date || "N/A",
+        event_time: item.time || "N/A",
+        event_location: item.city || "N/A",
+        budget: item.budget || "N/A",
+        status: item.status || "pending",
+        daysLeft: item.daysLeft || "N/A",
+      }));
+
+      setData(mappedData);
+      setTotalPages(Math.ceil(meta.total / meta.limit));
     }
-  };
+  } catch (error) {
+    console.error("Bookings fetch error", error);
+  } finally {
+    setLoading(false);
+  }
+}, [page, limit]);
 
-  useEffect(() => {
-    fetchBookings();
-  }, [page]);
+  // useEffect(() => {
+  //   fetchBookings();
+  // }, [page]);
 
-
+useEffect(() => {
+  fetchBookings();
+}, [fetchBookings]);
 
   /* ================= HANDLERS ================= */
 

@@ -119,13 +119,21 @@ const Bookings = () => {
 
   /* ================= RESTORE BOOKING AFTER REFRESH ================= */
 
-  useEffect(() => {
-    const savedBookingId = sessionStorage.getItem("selectedBookingId");
+  // useEffect(() => {
+  //   const savedBookingId = sessionStorage.getItem("selectedBookingId");
 
-    if (savedBookingId && activeTab === "bookingDetails") {
-      setSelectedBooking({ shootId: savedBookingId });
-    }
-  }, []);
+  //   if (savedBookingId && activeTab === "bookingDetails") {
+  //     setSelectedBooking({ shootId: savedBookingId });
+  //   }
+  // }, []);
+
+  useEffect(() => {
+  const savedBookingId = sessionStorage.getItem("selectedBookingId");
+
+  if (savedBookingId && activeTab === "bookingDetails") {
+    setSelectedBooking({ shootId: savedBookingId });
+  }
+}, [activeTab]);
 
   /* ================= HANDLE DETAILS ================= */
 
