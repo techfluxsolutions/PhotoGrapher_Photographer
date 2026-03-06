@@ -151,7 +151,7 @@ const [isModalOpen, setIsModalOpen] = useState(false);
               <th>Mobile</th>
               <th>Event Type</th>
               <th>Date</th>
-              <th>Time</th>
+              {/* <th>Time</th> */}
               <th>City</th>
               <th>Requirements</th>
                <th>Days Left</th>
@@ -160,36 +160,47 @@ const [isModalOpen, setIsModalOpen] = useState(false);
             </tr>
           </thead>
 
-          <tbody>
-            {data.map((item, index) => (
-              <tr key={item.shootId}>
-                <td>{(page - 1) * limit + index + 1}</td>
-                <td>{item.shoot_id}</td>
-                <td>{item.client_name}</td>
-                <td>{item.client_email}</td>
-                <td>{item.client_mobile}</td>
-                <td>{item.shoot_type}</td>
-                <td>{item.event_date}</td>
-                <td>{item.event_time}</td>
-                <td>{item.event_location}</td>
-                <td>{item.photography_requirements}</td>
-                <td>{calculateDaysRemaining(item.event_date)}</td>
-                  <td className="status">
-                    {item.bookingStatus
-                      ? item.bookingStatus.charAt(0).toUpperCase() + item.bookingStatus.slice(1)
-                      : "N/A"}
-                  </td>                
-                  <td>
-                  <button
-                    className="request-btn"
-                    onClick={() => handleRequestClick(item)}
-                  >
-                    Action
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
+                <tbody>
+        {data.length === 0 ? (
+          <tr>
+            <td colSpan="12" style={{ textAlign: "center" }}>
+              No booking request available
+            </td>
+          </tr>
+        ) : (
+          data.map((item, index) => (
+      <tr key={item.shootId}>
+        <td>{(page - 1) * limit + index + 1}</td>
+        <td>{item.shoot_id}</td>
+        <td>{item.client_name}</td>
+        <td>{item.client_email}</td>
+        <td>{item.client_mobile}</td>
+        <td>{item.shoot_type}</td>
+        <td>{item.event_date}</td>
+        {/* <td>{item.event_time}</td> */}
+        <td>{item.event_location}</td>
+        <td>{item.photography_requirements}</td>
+        <td>{calculateDaysRemaining(item.event_date)}</td>
+
+        <td className="status">
+          {item.bookingStatus
+            ? item.bookingStatus.charAt(0).toUpperCase() +
+              item.bookingStatus.slice(1)
+            : "N/A"}
+        </td>
+
+        <td>
+          <button
+            className="request-btn"
+            onClick={() => handleRequestClick(item)}
+          >
+            Action
+          </button>
+        </td>
+      </tr>
+    ))
+  )}
+</tbody>
         </table>
       </div>
 

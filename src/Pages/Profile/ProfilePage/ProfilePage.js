@@ -3,18 +3,35 @@ import "./ProfilePage.css";
 import { getProfilePhotographer, updateProfilePhotographer } from "../../../utils/APIs/profileApis";
 import Loader from "../../../Loader/Loader";
 import { toast } from "react-toastify";
-
+import { FiPlus, FiUser } from "react-icons/fi";
 
 const CURRENT_LEVEL = "intermediate";
 
 const ProfilePage = () => {
   const [loading, setLoading] = useState(false);
   const [profileData, setProfileData] = useState(null);
+  const [profileImageFile, setProfileImageFile] = useState(null);
 
   const isBeginner = CURRENT_LEVEL === "beginner";
   const isIntermediate = CURRENT_LEVEL === "intermediate";
   const isProfessional = CURRENT_LEVEL === "professional";
 
+const handleProfilePhotoChange = (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const imageUrl = URL.createObjectURL(file);
+
+  setProfileImageFile(file); // store file for API
+
+  setProfileData({
+    ...profileData,
+    basicInfo: {
+      ...profileData.basicInfo,
+      profilePhoto: imageUrl, // preview only
+    },
+  });
+};
   useEffect(() => {
     fetchProfile();
   }, []);
@@ -32,25 +49,33 @@ const ProfilePage = () => {
   };
 
   const handleSaveProfile = async () => {
-    try {
-      if (profileData?.confirm_account_number !== profileData?.account_number) {
-        toast.error("Account numbers not matching please check!")
-        return
-      }
-      setLoading(true);
-
-      const payload = profileData;
-
-      await updateProfilePhotographer(payload);
-
-      alert("Profile updated successfully");
-
-    } catch (error) {
-      console.error("Failed to update profile", error);
-    } finally {
-      setLoading(false);
+  try {
+    if (profileData?.confirm_account_number !== profileData?.account_number) {
+      toast.error("Account numbers not matching please check!");
+      return;
     }
-  };
+
+    setLoading(true);
+
+    const formData = new FormData();
+
+    // append profile image
+    if (profileImageFile) {
+      formData.append("profilePhoto", profileImageFile);
+    }
+
+    // append remaining data
+    formData.append("data", JSON.stringify(profileData));
+
+    await updateProfilePhotographer(formData);
+
+    // alert("Profile updated successfully");
+  } catch (error) {
+    console.error("Failed to update profile", error);
+  } finally {
+    setLoading(false);
+  }
+};
 
   const handleCheckboxChange = (section, field) => {
     setProfileData((prev) => ({
@@ -93,7 +118,7 @@ const ProfilePage = () => {
       </div>
 
       {/* ===== Profile Header ===== */}
-      <div className="profile-header">
+      {/* <div className="profile-header">
         <div className="profile-avatar">👤</div>
         <div>
           <h2>{profileData?.basicInfo?.fullName || "Photographer Name"}</h2>
@@ -103,7 +128,43 @@ const ProfilePage = () => {
               : "Type of Photographer "}
           </p>
         </div>
-      </div>
+      </div> */}
+
+      <div className="profile-header">
+  <div className="profile-avatar-wrapper">
+
+    <div className="profile-avatar">
+      {profileData?.basicInfo?.profilePhoto ? (
+        <img
+          src={profileData.basicInfo.profilePhoto}
+          alt="profile"
+        />
+      ) : (
+        <FiUser size={40} color="#9ca3af" />
+      )}
+    </div>
+
+    <label className="profile-upload-btn">
+      <FiPlus size={18} />
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleProfilePhotoChange}
+        hidden
+      />
+    </label>
+
+  </div>
+
+  <div>
+    <h2>{profileData?.basicInfo?.fullName || "Photographer Name"}</h2>
+    <p>
+      {profileData?.professionalDetails?.photographerType
+        ? `${profileData.professionalDetails.photographerType} Photographer`
+        : "Type of Photographer "}
+    </p>
+  </div>
+</div>
 
       {/* ===== Basic Information ===== */}
       <div className="profile-card">
@@ -742,7 +803,7 @@ const ProfilePage = () => {
       {/* ===== Final Save Button ===== */}
       <div className="final-save-wrapper">
         {/* <button className="final-save-btn">Save Details</button> */}
-        <button className="final-save-btn" onClick={handleSaveProfile}>
+        <button className="final-save-btn w-50" onClick={handleSaveProfile}>
           Save Details
         </button>
       </div>

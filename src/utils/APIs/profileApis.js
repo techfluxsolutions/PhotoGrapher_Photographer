@@ -32,7 +32,7 @@ export const getProfilePhotographer = () => {
 
 export const updateProfilePhotographer = (payload) => {
   return withAuthorization(async () => {
-    return await axiosInstance.put(
+    return await axiosInstance.patch(
       `/api/photographers/me`,
       payload
     );
