@@ -149,7 +149,7 @@ const BookingHistoryTable = ({ page: initialPage = 1, limit = 10 }) => {
               <th>Mobile</th>
               <th>Event Type</th>
               <th>Date</th>
-              <th>Time</th>
+              {/* <th>Time</th> */}
               <th>City</th>
               <th>Requirements</th>
               <th>Gallery</th>
@@ -176,7 +176,7 @@ const BookingHistoryTable = ({ page: initialPage = 1, limit = 10 }) => {
                   <td>{item.client_mobile}</td>
                   <td>{item.shoot_type}</td>
                   <td>{item.event_date}</td>
-                  <td>{item.event_time}</td>
+                  {/* <td>{item.event_time}</td> */}
                   <td>{item.event_location}</td>
                   <td>{item.photography_requirements}</td>
 

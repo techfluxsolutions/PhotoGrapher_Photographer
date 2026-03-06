@@ -27,10 +27,10 @@ const CalenderDisplayDataModal = ({ isOpen, onClose, data }) => {
           <strong>{data.date}</strong>
         </div>
 
-        <div className="modal-row">
+        {/* <div className="modal-row">
           <span>Time:</span>
           <strong>{data.time}</strong>
-        </div>
+        </div> */}
 
         <div className="modal-row">
           <span>City:</span>

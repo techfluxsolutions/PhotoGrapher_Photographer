@@ -130,7 +130,7 @@ textarea.input-box {
   outline: none;
   appearance: none;
   -webkit-appearance: none;
-  background: var(--color-bg-secondary);
+  background: var(--secondary-color);
   font-size: 13px;
   color: #333;
 }
@@ -193,7 +193,9 @@ textarea.input-box:focus {
   font-size: small;
   font-weight: 500;
 }
-
+.final-save-wrapper{
+  text-align: center;
+}
 /* Save Button */
 .final-save-btn {
   background: #5a3d2b;
@@ -209,4 +211,42 @@ textarea.input-box:focus {
 
 .final-save-btn:hover {
   opacity: 0.9;
+}
+.profile-avatar-wrapper {
+  position: relative;
+  width: 70px;
+  height: 70px;
+}
+
+.profile-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-upload-btn {
+  position: absolute;
+  bottom: -6px;
+  right: -6px;
+  background: #4a3326;
+  color: white;
+  border-radius: 50%;
+  height: 26px;
+  width: 26px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
