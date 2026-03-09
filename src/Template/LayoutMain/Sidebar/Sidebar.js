@@ -178,7 +178,7 @@ import "./Sidebar.css";
 
 const Sidebar = ({ isOpen, onItemClick }) => {
   const location = useLocation();
-  const [hoveredPath, setHoveredPath] = useState(null);
+  // const [hoveredPath, setHoveredPath] = useState(null);
 
   const isActive = (path) => {
     if (path === "/my-quote") {
@@ -251,8 +251,8 @@ const Sidebar = ({ isOpen, onItemClick }) => {
           <Link to={item.path} key={item.path} onClick={onItemClick}>
             <li
               className={`menu-item ${isActive(item.path) ? "active" : ""}`}
-              onMouseEnter={() => setHoveredPath(item.path)}
-              onMouseLeave={() => setHoveredPath(null)}
+              // onMouseEnter={() => setHoveredPath(item.path)}
+              // onMouseLeave={() => setHoveredPath(null)}
             >
               {item.icon}
               {isOpen && <span>{item.name}</span>}
@@ -265,3 +265,4 @@ const Sidebar = ({ isOpen, onItemClick }) => {
 };
 
 export default Sidebar;
+// new comment

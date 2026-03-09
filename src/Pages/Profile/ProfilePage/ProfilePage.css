@@ -250,3 +250,14 @@ textarea.input-box:focus {
   align-items: center;
   justify-content: center;
 }
+/* Checkbox primary color */
+input[type="checkbox"] {
+  accent-color: #5a3d2b;
+  cursor: pointer;
+}
+
+/* Radio button primary color */
+input[type="radio"] {
+  accent-color: #5a3d2b;
+  cursor: pointer;
+}

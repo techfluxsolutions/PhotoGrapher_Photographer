@@ -1,161 +1,37 @@
-// import React from "react";
-// import "./ProfilePage.css";
-
-// const CURRENT_LEVEL = "intermediate";
-
-// const ProfilePage = () => {
-//   const isBeginner = CURRENT_LEVEL === "beginner";
-//   const isIntermediate = CURRENT_LEVEL === "intermediate";
-//   const isProfessional = CURRENT_LEVEL === "professional";
-
-//   return (
-//     <div className="profile-page-wrapper">
-
-//       {/* ===== Level Tracker ===== */}
-//       <div className="level-tracker">
-//         <div className={`tracker-step ${isBeginner || isIntermediate || isProfessional ? "active" : ""}`}>
-//           <span className="dot" />
-//           <p>Beginner</p>
-//         </div>
-
-//         <div className={`tracker-line ${isIntermediate || isProfessional ? "active-line" : ""}`} />
-
-//         <div className={`tracker-step ${isIntermediate || isProfessional ? "active" : ""}`}>
-//           <span className="dot" />
-//           <p>Intermediate</p>
-//         </div>
-
-//         <div className={`tracker-line ${isProfessional ? "active-line" : ""}`} />
-
-//         <div className={`tracker-step ${isProfessional ? "active" : ""}`}>
-//           <span className="dot" />
-//           <p>Professional</p>
-//         </div>
-//       </div>
-
-//       {/* ===== Profile Header ===== */}
-//       <div className="profile-header">
-//         <div className="profile-avatar">👤</div>
-//         <div>
-//           <h2>Arjun Mehta</h2>
-//           <p>Wedding & Fashion Photographer</p>
-//         </div>
-//       </div>
-
-//       {/* ===== Basic Information ===== */}
-//       <div className="profile-card">
-//         <h3 className="section-title">Basic Information</h3>
-
-//         <div className="card-body">
-//           <div className="input-box">Full Name</div>
-//           <div className="input-box">Display Name</div>
-//           <div className="input-box">Email</div>
-//           <div className="input-box">Phone No.</div>
-//         </div>
-//       </div>
-
-//       {/* ===== Professional Details ===== */}
-//       <div className="profile-card">
-//         <h3 className="section-title">Professional Details</h3>
-
-//         <div className="card-body">
-//           <div className="input-box dropdown">Photographer Type</div>
-//           <div className="input-box dropdown">Years of Experience</div>
-//           <div className="input-box">Primary Location</div>
-//           <div className="input-box dropdown">Willing to Travel</div>
-//           <div className="input-box dropdown">Languages Spoken</div>
-//         </div>
-//       </div>
-
-//       {/* ===== About You ===== */}
-//       <div className="profile-card">
-//         <h3 className="section-title">About You</h3>
-
-//         <div className="card-body">
-//           <div className="input-box about-box">
-//             Write Something About You...
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* ===== Services & Styles ===== */}
-//       <div className="profile-card">
-//         <h3 className="section-title">Services and Styles</h3>
-
-//         <div className="card-body services-grid">
-//           <label><input type="checkbox" /> Wedding Photography</label>
-//           <label><input type="checkbox" /> Pre-Wedding Photography</label>
-//           <label><input type="checkbox" /> Fashion Photography</label>
-//           <label><input type="checkbox" /> Corporate Photography</label>
-//           <label><input type="checkbox" /> Event Shooting Style</label>
-//           <label><input type="checkbox" /> Food Photography</label>
-//           <label><input type="checkbox" /> Product Photography</label>
-//           <label><input type="checkbox" /> Documentary</label>
-//           <label><input type="checkbox" /> Candid</label>
-//           <label><input type="checkbox" /> Editorial</label>
-//         </div>
-//       </div>
-
-//       {/* ===== Availability Settings ===== */}
-//       <div className="profile-card">
-//         <h3 className="section-title">Availability Settings</h3>
-
-//         <div className="card-body">
-//           <div className="input-box dropdown">Availability Status</div>
-//           <div className="input-box dropdown">Working Days</div>
-//           <div className="input-box dropdown">Preferred Time Slots</div>
-//           <div className="input-box dropdown">Max Bookings Per Day</div>
-//         </div>
-//       </div>
-
-
-//       {/* ===== Bank Details ===== */}
-//       <div className="profile-card">
-//         <h3 className="section-title">Bank Details</h3>
-
-//         <div className="card-body">
-//           <div className="input-box">Account Holder Name</div>
-//           <div className="input-box">Bank Name</div>
-//           <div className="input-box">Account Number</div>
-//           <div className="input-box">Confirm Account Number</div>
-//           <div className="input-box">IFSC Code</div>
-
-//           <div className="radio-group">
-//             <label><input type="radio" name="accountType" /> Savings</label>
-//             <label><input type="radio" name="accountType" /> Current</label>
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* ===== Final Save Button ===== */}
-//       <div className="final-save-wrapper">
-//         <button className="final-save-btn">Save Details</button>
-//       </div>
-
-//     </div>
-//   );
-// };
-
-// export default ProfilePage;
-
-
-
 import React, { useEffect, useState } from "react";
 import "./ProfilePage.css";
-import { getProfilePhotographer } from "../../../utils/APIs/profileApis";
+import { getProfilePhotographer, updateProfilePhotographer } from "../../../utils/APIs/profileApis";
 import Loader from "../../../Loader/Loader";
-
+import { toast } from "react-toastify";
+import { FiPlus, FiUser } from "react-icons/fi";
 
 const CURRENT_LEVEL = "intermediate";
 
 const ProfilePage = () => {
   const [loading, setLoading] = useState(false);
   const [profileData, setProfileData] = useState(null);
+  const [profileImageFile, setProfileImageFile] = useState(null);
 
   const isBeginner = CURRENT_LEVEL === "beginner";
   const isIntermediate = CURRENT_LEVEL === "intermediate";
   const isProfessional = CURRENT_LEVEL === "professional";
 
+const handleProfilePhotoChange = (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const imageUrl = URL.createObjectURL(file);
+
+  setProfileImageFile(file); // store file for API
+
+  setProfileData({
+    ...profileData,
+    basicInfo: {
+      ...profileData.basicInfo,
+      profilePhoto: imageUrl, // preview only
+    },
+  });
+};
   useEffect(() => {
     fetchProfile();
   }, []);
@@ -170,6 +46,48 @@ const ProfilePage = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSaveProfile = async () => {
+  try {
+    if (profileData?.confirm_account_number !== profileData?.account_number) {
+      toast.error("Account numbers not matching please check!");
+      return;
+    }
+
+    setLoading(true);
+
+    const formData = new FormData();
+
+    // append profile image
+    if (profileImageFile) {
+      formData.append("profilePhoto", profileImageFile);
+    }
+
+    // append remaining data
+    formData.append("data", JSON.stringify(profileData));
+
+    await updateProfilePhotographer(formData);
+
+    // alert("Profile updated successfully");
+  } catch (error) {
+    console.error("Failed to update profile", error);
+  } finally {
+    setLoading(false);
+  }
+};
+
+  const handleCheckboxChange = (section, field) => {
+    setProfileData((prev) => ({
+      ...prev,
+      servicesAndStyles: {
+        ...prev.servicesAndStyles,
+        [section]: {
+          ...prev.servicesAndStyles[section],
+          [field]: !prev.servicesAndStyles[section][field],
+        },
+      },
+    }));
   };
 
   if (loading) return <Loader />;
@@ -200,7 +118,7 @@ const ProfilePage = () => {
       </div>
 
       {/* ===== Profile Header ===== */}
-      <div className="profile-header">
+      {/* <div className="profile-header">
         <div className="profile-avatar">👤</div>
         <div>
           <h2>{profileData?.basicInfo?.fullName || "Photographer Name"}</h2>
@@ -210,28 +128,123 @@ const ProfilePage = () => {
               : "Type of Photographer "}
           </p>
         </div>
-      </div>
+      </div> */}
+
+      <div className="profile-header">
+  <div className="profile-avatar-wrapper">
+
+    <div className="profile-avatar">
+      {profileData?.basicInfo?.profilePhoto ? (
+        <img
+          src={profileData.basicInfo.profilePhoto}
+          alt="profile"
+        />
+      ) : (
+        <FiUser size={40} color="#9ca3af" />
+      )}
+    </div>
+
+    <label className="profile-upload-btn">
+      <FiPlus size={18} />
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleProfilePhotoChange}
+        hidden
+      />
+    </label>
+
+  </div>
+
+  <div>
+    <h2>{profileData?.basicInfo?.fullName || "Photographer Name"}</h2>
+    <p>
+      {profileData?.professionalDetails?.photographerType
+        ? `${profileData.professionalDetails.photographerType} Photographer`
+        : "Type of Photographer "}
+    </p>
+  </div>
+</div>
 
       {/* ===== Basic Information ===== */}
       <div className="profile-card">
         <h3 className="section-title">Basic Information</h3>
 
         <div className="card-body">
-          <div className="input-box">
+          {/* <div className="input-box">
             {profileData?.basicInfo?.fullName || "Full Name"}
-          </div>
+          </div> */}
+           <label className="profile-label">Full Name</label>
+          <input
+            className="input-box"
+            value={profileData?.basicInfo?.fullName || ""}
+            placeholder="Full Name"
+            onChange={(e) =>
+              setProfileData({
+                ...profileData,
+                basicInfo: {
+                  ...profileData.basicInfo,
+                  fullName: e.target.value,
+                },
+              })
+            }
+          />
 
-          <div className="input-box">
+          {/* <div className="input-box">
             {profileData?.basicInfo?.displayName || "Display Name"}
-          </div>
-
-          <div className="input-box">
+          </div> */}
+            <label className="profile-label">Display Name</label>
+          <input
+            className="input-box"
+            value={profileData?.basicInfo?.displayName || ""}
+            placeholder="Display Name"
+            onChange={(e) =>
+              setProfileData({
+                ...profileData,
+                basicInfo: {
+                  ...profileData.basicInfo,
+                  displayName: e.target.value,
+                },
+              })
+            }
+          />
+          {/* <div className="input-box">
             {profileData?.basicInfo?.email || "Email"}
-          </div>
+          </div> */}
+          <label className="profile-label">Email</label>
+          <input
+            className="input-box"
+            value={profileData?.basicInfo?.email || ""}
+            placeholder="Email"
+            onChange={(e) =>
+              setProfileData({
+                ...profileData,
+                basicInfo: {
+                  ...profileData.basicInfo,
+                  email: e.target.value,
+                },
+              })
+            }
+          />
 
-          <div className="input-box">
+          {/* <div className="input-box">
             {profileData?.basicInfo?.phone || "Phone No."}
-          </div>
+          </div> */}
+          <label className="profile-label">Phone No.</label>
+          <input
+            className="input-box"
+            value={profileData?.basicInfo?.phone || ""}
+            placeholder="Phone No."
+            onChange={(e) =>
+              setProfileData({
+                ...profileData,
+                basicInfo: {
+                  ...profileData.basicInfo,
+                  phone: e.target.value,
+                },
+              })
+            }
+          />
         </div>
       </div>
 
@@ -240,31 +253,112 @@ const ProfilePage = () => {
         <h3 className="section-title">Professional Details</h3>
 
         <div className="card-body">
-          <div className="input-box dropdown">
+          {/* <div className="input-box dropdown">
             {profileData?.professionalDetails?.photographerType || "Photographer Type"}
-          </div>
+          </div> */}
+          <label className="profile-label">Photographer Type</label>
+          <input
+            className="input-box"
+            value={profileData?.professionalDetails?.photographerType || ""}
+            placeholder="Photographer Type"
+            onChange={(e) =>
+              setProfileData({
+                ...profileData,
+                professionalDetails: {
+                  ...profileData.professionalDetails,
+                  photographerType: e.target.value,
+                },
+              })
+            }
+          />
 
-          <div className="input-box dropdown">
+          {/* <div className="input-box dropdown">
             {profileData?.professionalDetails?.yearsOfExperience || "Years of Experience"}
-          </div>
-
-          <div className="input-box">
+          </div> */}
+           <label className="profile-label">Years of Experience</label>
+          <input
+            className="input-box"
+            value={profileData?.professionalDetails?.yearsOfExperience || ""}
+            placeholder="Years of Experience"
+            onChange={(e) =>
+              setProfileData({
+                ...profileData,
+                professionalDetails: {
+                  ...profileData.professionalDetails,
+                  yearsOfExperience: e.target.value,
+                },
+              })
+            }
+          />
+          {/* <div className="input-box">
             {profileData?.professionalDetails?.primaryLocation || "Primary Location"}
-          </div>
+          </div> */}
+           <label className="profile-label">Primary Location</label>
 
-          <div className="input-box dropdown">
+          <input
+            className="input-box"
+            value={profileData?.professionalDetails?.primaryLocation || ""}
+            placeholder="Primary Location"
+            onChange={(e) =>
+              setProfileData({
+                ...profileData,
+                professionalDetails: {
+                  ...profileData.professionalDetails,
+                  primaryLocation: e.target.value,
+                },
+              })
+            }
+          />
+
+          {/* <div className="input-box dropdown">
             {profileData?.professionalDetails?.willingToTravel !== undefined
               ? profileData.professionalDetails.willingToTravel
                 ? "Yes"
                 : "No"
               : "Willing to Travel"}
-          </div>
+          </div> */}
 
-          <div className="input-box dropdown">
+          <label className="profile-label">Willing to Travel</label>
+
+          <select
+            className="input-box"
+            value={profileData?.professionalDetails?.willingToTravel ?? ""}
+            onChange={(e) =>
+              setProfileData({
+                ...profileData,
+                professionalDetails: {
+                  ...profileData.professionalDetails,
+                  willingToTravel: e.target.value === "true",
+                },
+              })
+            }
+          >
+            <option value="">Willing To Travel</option>
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+          </select>
+          {/* <div className="input-box dropdown">
             {profileData?.professionalDetails?.languagesSpoken?.length
               ? profileData.professionalDetails.languagesSpoken.join(", ")
               : "Languages Spoken"}
-          </div>
+          </div> */}
+          <label className="profile-label">Languages Spoken</label>
+          <input
+            className="input-box"
+            placeholder="Languages Spoken (comma separated)"
+            value={profileData?.professionalDetails?.languagesSpoken?.join(", ") || ""}
+            onChange={(e) =>
+              setProfileData({
+                ...profileData,
+                professionalDetails: {
+                  ...profileData.professionalDetails,
+                  languagesSpoken: e.target.value
+                    .split(",")
+                    .map((lang) => lang.trim()),
+                },
+              })
+            }
+          />
         </div>
       </div>
 
@@ -272,9 +366,20 @@ const ProfilePage = () => {
       <div className="profile-card">
         <h3 className="section-title">About You</h3>
         <div className="card-body">
-          <div className="input-box about-box">
+          {/* <div className="input-box about-box">
             {profileData?.aboutYou || "Write Something About You..."}
-          </div>
+          </div> */}
+          <textarea
+            className="input-box about-box"
+            value={profileData?.aboutYou || ""}
+            placeholder="Write Something About You..."
+            onChange={(e) =>
+              setProfileData({
+                ...profileData,
+                aboutYou: e.target.value,
+              })
+            }
+          />
         </div>
       </div>
 
@@ -283,7 +388,95 @@ const ProfilePage = () => {
         <h3 className="section-title">Services and Styles</h3>
 
         <div className="card-body services-grid">
-          <label>
+
+          <label className="profile-label">
+            <input
+              type="checkbox"
+              checked={profileData?.servicesAndStyles?.services?.weddingPhotography || false}
+              onChange={() => handleCheckboxChange("services", "weddingPhotography")}
+            />
+            Wedding Photography
+          </label>
+
+          <label className="profile-label">
+            <input
+              type="checkbox"
+              checked={profileData?.servicesAndStyles?.services?.preWeddingPhotography || false}
+              onChange={() => handleCheckboxChange("services", "preWeddingPhotography")}
+            />
+            Pre-Wedding Photography
+          </label>
+
+          <label className="profile-label">
+            <input
+              type="checkbox"
+              checked={profileData?.servicesAndStyles?.services?.fashionPhotography || false}
+              onChange={() => handleCheckboxChange("services", "fashionPhotography")}
+            />
+            Fashion Photography
+          </label>
+
+          <label className="profile-label">
+            <input
+              type="checkbox"
+              checked={profileData?.servicesAndStyles?.services?.corporatePhotography || false}
+              onChange={() => handleCheckboxChange("services", "corporatePhotography")}
+            />
+            Corporate Photography
+          </label>
+
+          <label className="profile-label">
+            <input
+              type="checkbox"
+              checked={profileData?.servicesAndStyles?.services?.foodPhotography || false}
+              onChange={() => handleCheckboxChange("services", "foodPhotography")}
+            />
+            Food Photography
+          </label>
+
+          <label className="profile-label">
+            <input
+              type="checkbox"
+              checked={profileData?.servicesAndStyles?.services?.productPhotography || false}
+              onChange={() => handleCheckboxChange("services", "productPhotography")}
+            />
+            Product Photography
+          </label>
+
+          <label className="profile-label">
+            <input
+              type="checkbox"
+              checked={profileData?.servicesAndStyles?.styles?.documentary || false}
+              onChange={() => handleCheckboxChange("styles", "documentary")}
+            />
+            Documentary
+          </label>
+
+          <label className="profile-label">
+            <input
+              type="checkbox"
+              checked={profileData?.servicesAndStyles?.styles?.candid || false}
+              onChange={() => handleCheckboxChange("styles", "candid")}
+            />
+            Candid
+          </label>
+
+          <label className="profile-label">
+            <input
+              type="checkbox"
+              checked={profileData?.servicesAndStyles?.styles?.editorial || false}
+              onChange={() => handleCheckboxChange("styles", "editorial")}
+            />
+            Editorial
+          </label>
+
+        </div>
+      </div>
+      {/* <div className="profile-card">
+        <h3 className="section-title">Services and Styles</h3>
+
+        <div className="card-body services-grid">
+          <label className="profile-label">
             <input
               type="checkbox"
               checked={profileData?.servicesAndStyles?.services?.weddingPhotography || false}
@@ -292,7 +485,7 @@ const ProfilePage = () => {
             Wedding Photography
           </label>
 
-          <label>
+          <label className="profile-label">
             <input
               type="checkbox"
               checked={profileData?.servicesAndStyles?.services?.preWeddingPhotography || false}
@@ -301,7 +494,7 @@ const ProfilePage = () => {
             Pre-Wedding Photography
           </label>
 
-          <label>
+          <label className="profile-label">
             <input
               type="checkbox"
               checked={profileData?.servicesAndStyles?.services?.fashionPhotography || false}
@@ -310,7 +503,7 @@ const ProfilePage = () => {
             Fashion Photography
           </label>
 
-          <label>
+          <label className="profile-label">
             <input
               type="checkbox"
               checked={profileData?.servicesAndStyles?.services?.corporatePhotography || false}
@@ -319,7 +512,7 @@ const ProfilePage = () => {
             Corporate Photography
           </label>
 
-          <label>
+          <label className="profile-label">
             <input
               type="checkbox"
               checked={profileData?.servicesAndStyles?.services?.foodPhotography || false}
@@ -328,7 +521,7 @@ const ProfilePage = () => {
             Food Photography
           </label>
 
-          <label>
+          <label className="profile-label">
             <input
               type="checkbox"
               checked={profileData?.servicesAndStyles?.services?.productPhotography || false}
@@ -337,7 +530,7 @@ const ProfilePage = () => {
             Product Photography
           </label>
 
-          <label>
+          <label className="profile-label">
             <input
               type="checkbox"
               checked={profileData?.servicesAndStyles?.styles?.documentary || false}
@@ -346,7 +539,7 @@ const ProfilePage = () => {
             Documentary
           </label>
 
-          <label>
+          <label className="profile-label">
             <input
               type="checkbox"
               checked={profileData?.servicesAndStyles?.styles?.candid || false}
@@ -355,7 +548,7 @@ const ProfilePage = () => {
             Candid
           </label>
 
-          <label>
+          <label className="profile-label">
             <input
               type="checkbox"
               checked={profileData?.servicesAndStyles?.styles?.editorial || false}
@@ -364,32 +557,97 @@ const ProfilePage = () => {
             Editorial
           </label>
         </div>
-      </div>
+      </div> */}
 
       {/* ===== Availability Settings ===== */}
       <div className="profile-card">
         <h3 className="section-title">Availability Settings</h3>
 
         <div className="card-body">
-          <div className="input-box dropdown">
+          {/* <div className="input-box dropdown">
             {profileData?.availability?.status || "Availability Status"}
-          </div>
+          </div> */}
+          <label className="profile-label">Availability Status</label>
+          <input
+            className="input-box"
+            value={profileData?.availability?.status || ""}
+            placeholder="Availability Status"
+            onChange={(e) =>
+              setProfileData({
+                ...profileData,
+                availability: {
+                  ...profileData.availability,
+                  status: e.target.value,
+                },
+              })
+            }
+          />
 
-          <div className="input-box dropdown">
+          {/* <div className="input-box dropdown">
             {profileData?.availability?.workingDays?.length
               ? profileData.availability.workingDays.join(", ")
               : "Working Days"}
-          </div>
+          </div> */}
+          <label className="profile-label">Working Days</label>
+          <input
+            className="input-box"
+            placeholder="Working Days (comma separated)"
+            value={profileData?.availability?.workingDays?.join(", ") || ""}
+            onChange={(e) =>
+              setProfileData({
+                ...profileData,
+                availability: {
+                  ...profileData.availability,
+                  workingDays: e.target.value
+                    .split(",")
+                    .map((day) => day.trim()),
+                },
+              })
+            }
+          />
 
-          <div className="input-box dropdown">
+          {/* <div className="input-box dropdown">
             {profileData?.availability?.preferredTimeSlots?.length
               ? profileData.availability.preferredTimeSlots.join(", ")
               : "Preferred Time Slots"}
-          </div>
+          </div> */}
+           <label className="profile-label">Preferred Time Slots</label>
 
-          <div className="input-box dropdown">
+          <input
+            className="input-box"
+            placeholder="Preferred Time Slots (comma separated)"
+            value={profileData?.availability?.preferredTimeSlots?.join(", ") || ""}
+            onChange={(e) =>
+              setProfileData({
+                ...profileData,
+                availability: {
+                  ...profileData.availability,
+                  preferredTimeSlots: e.target.value
+                    .split(",")
+                    .map((slot) => slot.trim()),
+                },
+              })
+            }
+          />
+          {/* <div className="input-box dropdown">
             {profileData?.availability?.maxBookingsPerDay || "Max Bookings Per Day"}
-          </div>
+          </div> */}
+          <label className="profile-label">Max Bookings Per Day</label>
+          <input
+            type="number"
+            className="input-box"
+            placeholder="Max Bookings Per Day"
+            value={profileData?.availability?.maxBookingsPerDay || ""}
+            onChange={(e) =>
+              setProfileData({
+                ...profileData,
+                availability: {
+                  ...profileData.availability,
+                  maxBookingsPerDay: e.target.value,
+                },
+              })
+            }
+          />
         </div>
       </div>
 
@@ -397,7 +655,7 @@ const ProfilePage = () => {
       <div className="profile-card">
         <h3 className="section-title">Bank Details</h3>
 
-        <div className="card-body">
+        {/* <div className="card-body">
           <div className="input-box">
             {profileData?.basicInfo?.fullName || "Account Holder Name"}
           </div>
@@ -412,7 +670,7 @@ const ProfilePage = () => {
           <div className="input-box">IFSC Code</div>
 
           <div className="radio-group">
-            <label>
+            <label className="profile-label">
               <input
                 type="radio"
                 checked={profileData?.account_type === "Savings"}
@@ -421,7 +679,7 @@ const ProfilePage = () => {
               Savings
             </label>
 
-            <label>
+            <label className="profile-label">
               <input
                 type="radio"
                 checked={profileData?.account_type === "Current"}
@@ -430,12 +688,124 @@ const ProfilePage = () => {
               Current
             </label>
           </div>
+        </div> */}
+        <div className="card-body">
+          <label className="profile-label">Full Name</label>
+          {/* Account Holder Name */}
+          <input
+            className="input-box"
+            placeholder="Account Holder Name"
+            value={profileData?.basicInfo?.fullName || ""}
+            onChange={(e) =>
+              setProfileData({
+                ...profileData,
+                basicInfo: {
+                  ...profileData.basicInfo,
+                  fullName: e.target.value,
+                },
+              })
+            }
+          />
+
+          {/* Bank Name */}
+           <label className="profile-label">Bank Name</label>
+          <input
+            className="input-box"
+            placeholder="Bank Name"
+            value={profileData?.bank_name || ""}
+            onChange={(e) =>
+              setProfileData({
+                ...profileData,
+                bank_name: e.target.value,
+              })
+            }
+          />
+
+          {/* Account Number */}
+          <label className="profile-label">Account Number</label>
+          <input
+            className="input-box"
+            placeholder="Account Number"
+            value={profileData?.account_number || ""}
+            onChange={(e) =>
+              setProfileData({
+                ...profileData,
+                account_number: e.target.value,
+              })
+            }
+          />
+
+          {/* Confirm Account Number */}
+          <label className="profile-label">Confirm Account Number</label>
+          <input
+            className="input-box"
+            placeholder="Confirm Account Number"
+            value={profileData?.confirm_account_number || ""}
+            onChange={(e) =>
+              setProfileData({
+                ...profileData,
+                confirm_account_number: e.target.value,
+              })
+            }
+          />
+
+          {/* IFSC Code */}
+          <label className="profile-label">IFSC Code</label>
+          <input
+            className="input-box"
+            placeholder="IFSC Code"
+            value={profileData?.ifsc_code || ""}
+            onChange={(e) =>
+              setProfileData({
+                ...profileData,
+                ifsc_code: e.target.value,
+              })
+            }
+          />
+
+          {/* Account Type */}
+           <label className="profile-label"> Account Type</label>
+          <div className="radio-group">
+            <label className="profile-label">
+              <input
+                type="radio"
+                name="accountType"
+                checked={profileData?.account_type === "Savings"}
+                onChange={() =>
+                  setProfileData({
+                    ...profileData,
+                    account_type: "Savings",
+                  })
+                }
+              />
+              Savings
+            </label>
+
+            <label className="profile-label">
+              <input
+                type="radio"
+                name="accountType"
+                checked={profileData?.account_type === "Current"}
+                onChange={() =>
+                  setProfileData({
+                    ...profileData,
+                    account_type: "Current",
+                  })
+                }
+              />
+              Current
+            </label>
+          </div>
+
         </div>
       </div>
 
       {/* ===== Final Save Button ===== */}
       <div className="final-save-wrapper">
-        <button className="final-save-btn">Save Details</button>
+        {/* <button className="final-save-btn">Save Details</button> */}
+        <button className="final-save-btn w-50" onClick={handleSaveProfile}>
+          Save Details
+        </button>
       </div>
 
     </div>
@@ -525,7 +895,7 @@ export default ProfilePage;
 //           )}
 
 //           {/* Pencil only for image */}
-//           <label className="image-edit-icon">
+//           <label className="profile-label" className="image-edit-icon">
 //             ✏️
 //             <input
 //               type="file"

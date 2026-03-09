@@ -286,21 +286,37 @@ const [cancelLoading, setCancelLoading] = useState(false);
     if (res?.data?.success) {
       const { bookings, meta } = res.data.data;
 
-      const mappedData = bookings.map((item) => ({
-        shootId: item._id,
-        shoot_id: item.bookingId || "N/A",
-        client_name: item.client_id?.username || "N/A",
-        client_email: item.client_id?.email || "N/A",
-        client_mobile: item.client_id?.mobileNumber || "N/A",
-        shoot_type: item.eventType || "N/A",
-        event_date: item.date || "N/A",
-        event_time: item.time || "N/A",
-        event_location: item.city || "N/A",
-        budget: item.budget || "N/A",
-        status: item.status || "pending",
-        daysLeft: item.daysLeft || "N/A",
-      }));
+      // const mappedData = bookings.map((item) => ({
+      //   shootId: item._id,
+      //   shoot_id: item.bookingId || "N/A",
+      //   client_name: item.client_id?.username || "N/A",
+      //   client_email: item.client_id?.email || "N/A",
+      //   client_mobile: item.client_id?.mobileNumber || "N/A",
+      //   shoot_type: item.eventType || "N/A",
+      //   event_date: item.date || "N/A",
+      //   event_time: item.time || "N/A",
+      //   event_location: item.city || "N/A",
+      //   budget: item.photographerAmount || "N/A",
+      //   status: item.status || "pending",
+      //   daysLeft: item.daysLeft || "N/A",
+      // }));
 
+
+      const mappedData = bookings.map((item) => ({
+  shootId: item._id,
+  shoot_id: item.bookingId || "N/A",
+  client_name: item.client_id?.username || "N/A",
+  client_email: item.client_id?.email || "N/A",
+  client_mobile: item.client_id?.mobileNumber || "N/A",
+  shoot_type: item.eventType || "N/A",
+  event_date: item.date || "N/A",
+  event_time: item.time || "N/A",
+  event_location: item.city || "N/A",
+  budget: item.photographerAmount || "N/A",
+  status: item.status || "pending",
+  galleryStatus: item.galleryStatus || "Upload Pending",
+  daysLeft: item.daysLeft || "N/A",
+}));
       setData(mappedData);
       setTotalPages(Math.ceil(meta.total / meta.limit));
     }
@@ -409,7 +425,7 @@ const handleConfirmCancel = async () => {
               <th>View Details</th>
               <th>Gallery</th>
               <th>Days Left</th>
-              <th>Status</th>
+              <th>Gallery Status</th>
               <th>Edit Status</th>
               <th>Cancel Booking</th>
 
@@ -431,7 +447,7 @@ const handleConfirmCancel = async () => {
 
                   {/* BOOKING ID - DIRECT COMPONENT SWITCH */}
                   <td>
-                    <span
+                    {/* <span
                       style={{
                         color: "#007bff",
                         cursor: "pointer",
@@ -440,7 +456,13 @@ const handleConfirmCancel = async () => {
                       onClick={() => handleViewDetails(item)}
                     >
                       {item.shoot_id}
-                    </span>
+                    </span> */}
+                    <span
+                    className="booking-id-link"
+                    onClick={() => handleViewDetails(item)}
+                  >
+                    {item.shoot_id}
+                  </span>
                   </td>
 
                   <td>{item.client_name}</td>
@@ -473,10 +495,15 @@ const handleConfirmCancel = async () => {
                   <td>{item.daysLeft}</td>
 
                   <td>
-                    <span className={`status status-${item.status}`}>
+                    {/* <span className={`status status-${item.status}`}>
                       {item.status.charAt(0).toUpperCase() +
                         item.status.slice(1)}
-                    </span>
+                    </span> */}
+
+                  <span className={`status status-${item.galleryStatus?.replace(" ", "-")}`}>
+                    {item.galleryStatus}
+                  </span>
+
                   </td>
 
                  
