@@ -265,4 +265,3 @@ const Sidebar = ({ isOpen, onItemClick }) => {
 };
 
 export default Sidebar;
-// new comment
