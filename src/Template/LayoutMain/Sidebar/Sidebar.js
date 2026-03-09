@@ -178,7 +178,7 @@ import "./Sidebar.css";
 
 const Sidebar = ({ isOpen, onItemClick }) => {
   const location = useLocation();
-  const [hoveredPath, setHoveredPath] = useState(null);
+  // const [hoveredPath, setHoveredPath] = useState(null);
 
   const isActive = (path) => {
     if (path === "/my-quote") {
