@@ -74,27 +74,24 @@
 
 import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
-// import Loader from "../../Template/Loader/Loader";
 import Loader from "../../../Loader/Loader";
 import { toast } from "react-toastify";
 import "./EditBookingModal.css";
 import { updateBookingStatus } from "../../../utils/APIs/bookingsApis";
 
 const EditBookingModal = ({ booking, isOpen, onClose, onSave }) => {
-  const [bookingStatus, setBookingStatus] = useState("");
+  const [galleryStatus, setGalleryStatus] = useState("");
   const [notes, setNotes] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const BOOKING_STATUSES = [
-    "pending",
-    "confirmed",
-    "completed",
-    "canceled",
+  const GALLERY_STATUSES = [
+    "Upload Pending",
+    "Photos Uploaded",
   ];
 
   useEffect(() => {
     if (booking) {
-      setBookingStatus(booking.status);
+      setGalleryStatus(booking.galleryStatus || "Upload Pending");
       setNotes(booking.photography_requirements || "");
     }
   }, [booking]);
@@ -108,7 +105,7 @@ const EditBookingModal = ({ booking, isOpen, onClose, onSave }) => {
       setLoading(true);
 
       const payload = {
-        status: bookingStatus,
+        galleryStatus: galleryStatus,
         notes: notes,
       };
 
@@ -142,16 +139,16 @@ const EditBookingModal = ({ booking, isOpen, onClose, onSave }) => {
 
       <h3 className="modal-title">Edit Booking</h3>
 
-      {/* Booking Status */}
+      {/* Gallery Status */}
       <div className="form-group">
-        <label>Booking Status</label>
+        <label>Gallery Status</label>
         <select
-          value={bookingStatus}
-          onChange={(e) => setBookingStatus(e.target.value)}
+          value={galleryStatus}
+          onChange={(e) => setGalleryStatus(e.target.value)}
         >
-          {BOOKING_STATUSES.map((status) => (
+          {GALLERY_STATUSES.map((status) => (
             <option key={status} value={status}>
-              {status.charAt(0).toUpperCase() + status.slice(1)}
+              {status}
             </option>
           ))}
         </select>

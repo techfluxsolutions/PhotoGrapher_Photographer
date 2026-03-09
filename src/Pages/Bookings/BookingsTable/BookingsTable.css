@@ -91,6 +91,16 @@
 .cancel-btn:hover {
   background-color: red;
 }
+.booking-id-link {
+  color: var(--primary-color);
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: 900;
+}
+
+.booking-id-link:hover {
+  opacity: 0.8;
+}
 /* Mobile */
 @media (max-width: 768px) {
   .bookings-table {

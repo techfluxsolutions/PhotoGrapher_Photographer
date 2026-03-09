@@ -100,3 +100,16 @@
   font-size: 13px;
   color: #666;
 }
+
+.photographer-placeholder {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 18px;
+}

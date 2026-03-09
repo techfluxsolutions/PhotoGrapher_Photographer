@@ -83,6 +83,7 @@ const BookingHistoryTable = ({ page: initialPage = 1, limit = 10 }) => {
         photography_requirements: item.requirements || "N/A",
         status: item.status || "completed",
         daysLeft: item.daysLeft || "N/A",
+         budget: item.photographerAmount || "N/A",
       }));
 
       setData(mappedData);
@@ -151,6 +152,7 @@ const BookingHistoryTable = ({ page: initialPage = 1, limit = 10 }) => {
               <th>Date</th>
               {/* <th>Time</th> */}
               <th>City</th>
+              <th>Budget</th>
               <th>Requirements</th>
               <th>Gallery</th>
               <th>Days Left</th>
@@ -178,6 +180,7 @@ const BookingHistoryTable = ({ page: initialPage = 1, limit = 10 }) => {
                   <td>{item.event_date}</td>
                   {/* <td>{item.event_time}</td> */}
                   <td>{item.event_location}</td>
+                  <td>{item.budget}</td>
                   <td>{item.photography_requirements}</td>
 
                   <td>
