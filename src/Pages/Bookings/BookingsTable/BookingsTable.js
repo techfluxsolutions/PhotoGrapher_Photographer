@@ -372,6 +372,7 @@ const handleConfirmCancel = async () => {
               <th>View Details</th>
               <th>Gallery</th>
               <th>Days Left</th>
+              <th>Booking Status</th>
               <th>Gallery Status</th>
               <th>Edit Status</th>
               <th>Cancel Booking</th>
@@ -440,6 +441,11 @@ const handleConfirmCancel = async () => {
                   </td>
 
                   <td>{item.daysLeft}</td>
+                  <td>
+                  <span className={`status status-${item.status}`}>
+                    {item.status?.charAt(0).toUpperCase() + item.status?.slice(1)}
+                  </span>
+                </td>
 
                   <td>
                     {/* <span className={`status status-${item.status}`}>
