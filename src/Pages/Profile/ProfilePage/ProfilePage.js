@@ -5,16 +5,16 @@ import Loader from "../../../Loader/Loader";
 import { toast } from "react-toastify";
 import { FiPlus, FiUser } from "react-icons/fi";
 
-const CURRENT_LEVEL = "intermediate";
-
 const ProfilePage = () => {
   const [loading, setLoading] = useState(false);
   const [profileData, setProfileData] = useState(null);
   const [profileImageFile, setProfileImageFile] = useState(null);
 
-  const isBeginner = CURRENT_LEVEL === "beginner";
-  const isIntermediate = CURRENT_LEVEL === "intermediate";
-  const isProfessional = CURRENT_LEVEL === "professional";
+  const CURRENT_LEVEL = profileData?.professionalDetails?.expertiseLevel || "";
+
+  const isInitio = CURRENT_LEVEL === "INITIO";
+const isPro = CURRENT_LEVEL === "PRO";
+const isElite = CURRENT_LEVEL === "ELITE";
 
 const handleProfilePhotoChange = (e) => {
   const file = e.target.files[0];
@@ -96,26 +96,28 @@ const handleProfilePhotoChange = (e) => {
     <div className="profile-page-wrapper">
 
       {/* ===== Level Tracker ===== */}
-      <div className="level-tracker">
-        <div className={`tracker-step ${isBeginner || isIntermediate || isProfessional ? "active" : ""}`}>
-          <span className="dot" />
-          <p>Beginner</p>
-        </div>
+    <div className="level-tracker">
 
-        <div className={`tracker-line ${isIntermediate || isProfessional ? "active-line" : ""}`} />
+  <div className={`tracker-step ${isInitio || isPro || isElite ? "active" : ""}`}>
+    <span className="dot" />
+    <p>Initio</p>
+  </div>
 
-        <div className={`tracker-step ${isIntermediate || isProfessional ? "active" : ""}`}>
-          <span className="dot" />
-          <p>Intermediate</p>
-        </div>
+  <div className={`tracker-line ${isPro || isElite ? "active-line" : ""}`} />
 
-        <div className={`tracker-line ${isProfessional ? "active-line" : ""}`} />
+  <div className={`tracker-step ${isPro || isElite ? "active" : ""}`}>
+    <span className="dot" />
+    <p>Pro</p>
+  </div>
 
-        <div className={`tracker-step ${isProfessional ? "active" : ""}`}>
-          <span className="dot" />
-          <p>Professional</p>
-        </div>
-      </div>
+  <div className={`tracker-line ${isElite ? "active-line" : ""}`} />
+
+  <div className={`tracker-step ${isElite ? "active" : ""}`}>
+    <span className="dot" />
+    <p>Elite</p>
+  </div>
+
+</div>
 
       {/* ===== Profile Header ===== */}
       {/* <div className="profile-header">

@@ -43,6 +43,7 @@
 /* ================= BUTTONS ================= */
 
 .upload-btn {
+  margin-left: 5px;
   margin-top: 12px;
   padding: 10px 20px;
   border: none;

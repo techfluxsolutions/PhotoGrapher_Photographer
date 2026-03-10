@@ -48,7 +48,9 @@
 .active-line {
   background: #6b4f3f;
 }
-
+.tracker-step p {
+  text-transform: uppercase;
+}
 /* Header */
 .profile-header {
   display: flex;
