@@ -14,13 +14,6 @@ const withAuthorization = async (apiFunction, ...args) => {
 };
 
 
-
-
-
-
-
-
-
 export const getProfilePhotographer = () => {
   return withAuthorization(async () => {
     return await axiosInstance.get(

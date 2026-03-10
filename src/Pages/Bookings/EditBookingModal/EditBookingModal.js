@@ -84,6 +84,11 @@ const EditBookingModal = ({ booking, isOpen, onClose, onSave }) => {
   const [notes, setNotes] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const resetForm = () => {
+  setGalleryStatus(booking?.galleryStatus || "Upload Pending");
+  setNotes(booking?.photography_requirements || "");
+};
+
   const GALLERY_STATUSES = [
     "Upload Pending",
     "Photos Uploaded",
@@ -165,7 +170,7 @@ const EditBookingModal = ({ booking, isOpen, onClose, onSave }) => {
       </div>
 
       <div className="modal-actions">
-        <button className="btn-secondary" onClick={onClose}>
+        <button className="btn-secondary" onClick={() => {resetForm(); onClose();}}>
           Cancel
         </button>
 
