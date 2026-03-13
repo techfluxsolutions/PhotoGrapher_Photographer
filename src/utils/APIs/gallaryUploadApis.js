@@ -40,3 +40,93 @@ export const completeGalleryUpload = (payload) => {
     );
   });
 };
+
+
+
+
+
+// view gallery
+export async function getPhotoskeysbyidAPI(page, limit, bookingId = "", photographerId = "") {
+  return withAuthorization(async () => {
+    const response = await axiosInstance.get(
+      `/api/photographers/datalinks?page=${page}&limit=${limit}&bookingId=${bookingId}&photographerId=${photographerId}`
+    );
+    return response;
+  });
+}
+
+
+
+
+export async function getImagesUsingKeysAPI(bookingId, key) {
+  return withAuthorization(async () => {
+    const response = await axiosInstance.get(
+      `/api/photographers/stream/${bookingId}/*${key}`,
+      {
+        responseType: "blob",
+      }
+    );
+
+    const blobUrl = URL.createObjectURL(response.data);
+    return blobUrl;
+  });
+}
+
+
+export async function downloadFullZip(payload) {
+  return withAuthorization(async () => {
+    const response = await axiosInstance.post(
+      "/api/photographers/downloadZip",
+      payload,
+      {
+        responseType: "blob",
+      }
+    );
+    return response;
+  });
+}
+
+export async function downloadSelectedImages(payload) {
+  return withAuthorization(async () => {
+    const response = await axiosInstance.post(
+      "/api/photographers/downloadZiponFourtyPlus",
+      payload,
+      {
+        responseType: "blob",
+      }
+    );
+    return response;
+  });
+}
+
+export async function downloadSingleImage(payload) {
+  return withAuthorization(async () => {
+    const response = await axiosInstance.post(
+      "/api/photographers/downloadSingleFile",
+      payload
+    );
+    return response;
+  });
+}
+
+
+export async function deleteSingleImage(payload) {
+  return withAuthorization(async () => {
+    const response = await axiosInstance.post(
+      "api/photographers/deleteSingleFile",
+      payload
+    );
+    return response;
+  });
+}
+
+
+export async function deleteSelectedImages(payload) {
+  return withAuthorization(async () => {
+    const response = await axiosInstance.post(
+      "/api/photographers/deleteMultipleFiles",
+      payload
+    );
+    return response;
+  });
+}

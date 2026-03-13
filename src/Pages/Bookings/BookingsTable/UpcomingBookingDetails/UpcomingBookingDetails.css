@@ -107,7 +107,13 @@
   font-size: 14px;
   line-height: 1.5;
 }
-
+.upload-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
 /* ================= RESPONSIVE ================= */
 
 /* Tablet */

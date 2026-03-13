@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./ProfilePage.css";
 import { getProfilePhotographer, updateProfilePhotographer } from "../../../utils/APIs/profileApis";
-import Loader from "../../../Loader/Loader";
 import { toast } from "react-toastify";
 import { FiPlus, FiUser } from "react-icons/fi";
+import Loader from "../../../Template/Loader/Loader";
 
 const ProfilePage = () => {
   const [loading, setLoading] = useState(false);

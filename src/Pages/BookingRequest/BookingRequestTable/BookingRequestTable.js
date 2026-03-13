@@ -3,8 +3,8 @@ import { useEffect, useState, useCallback  } from "react";
 
 import "./BookingRequestTable.css";
 import { getPendingBookings } from "../../../utils/APIs/bookingsApis";
-import Loader from "../../../Loader/Loader";
 import BookingRequestModal from "../BookingRequestModal/BookingRequestModal";
+import Loader from "../../../Template/Loader/Loader";
 
 const BookingRequestTable = ({ page: initialPage = 1, limit = 10 }) => {
   // const navigate = useNavigate();

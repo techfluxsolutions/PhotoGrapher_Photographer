@@ -5,8 +5,8 @@ import "./Login.css";
 import { LoginAPI } from "../../utils/APIs/credentialsApis";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import Loader from "../../Loader/Loader";
 import { encryptData } from "../../utils/CRYPTO/cryptoFunction";
+import Loader from "../../Template/Loader/Loader";
 
 const Login = () => {
   const [email, setEmail] = useState("");

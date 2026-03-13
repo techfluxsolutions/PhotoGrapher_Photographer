@@ -98,7 +98,7 @@ import LatestQuotes from "./LatestQuotes/LatestQuotes";
 import "./Dashboard.css";
 
 import { getProfilePhotographer } from "../../utils/APIs/profileApis";
-import Loader from "../../Loader/Loader";
+import Loader from "../../Template/Loader/Loader";
 
 const Dashboard = () => {
 

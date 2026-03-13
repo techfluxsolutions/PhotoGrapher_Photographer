@@ -74,10 +74,10 @@
 
 import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
-import Loader from "../../../Loader/Loader";
 import { toast } from "react-toastify";
 import "./EditBookingModal.css";
 import { updateBookingStatus } from "../../../utils/APIs/bookingsApis";
+import Loader from "../../../Template/Loader/Loader";
 
 const EditBookingModal = ({ booking, isOpen, onClose, onSave }) => {
   const [galleryStatus, setGalleryStatus] = useState("");
