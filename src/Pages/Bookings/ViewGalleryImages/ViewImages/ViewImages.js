@@ -40,53 +40,53 @@ const ViewImages = () => {
 
   const fetchGallery = useCallback(async (currentPage) => {
 
-    if (isFetchingRef.current) return;
-    isFetchingRef.current = true;
+  if (isFetchingRef.current) return;
+  isFetchingRef.current = true;
 
-    try {
+  try {
 
-      setLoading(true);
+    setLoading(true);
 
-      const response = await getPhotoskeysbyidAPI(
-        currentPage,
-        LIMIT,
-        bookingId,
-        photographerId
+    const response = await getPhotoskeysbyidAPI(
+      currentPage,
+      LIMIT,
+      bookingId,
+      photographerId
+    );
+
+    if (response?.data?.success) {
+
+      const keys = response?.data?.data || [];
+
+      const images = await Promise.all(
+        keys
+          .filter((item) => item?.key)
+          .map(async (item) => {
+            const url = await getImagesUsingKeysAPI(bookingId, item.key);
+            return { id: item._id, key: item.key, url };
+          })
       );
 
-      if (response?.data?.success) {
+      setGalleryData((prev) =>
+        currentPage === 1 ? images : [...prev, ...images]
+      );
 
-        const keys = response?.data?.data || [];
-
-        const images = await Promise.all(
-          keys
-            .filter((item) => item?.key)
-            .map(async (item) => {
-              const url = await getImagesUsingKeysAPI(bookingId, item.key);
-              return { id: item._id, key: item.key, url };
-            })
-        );
-
-        setGalleryData((prev) =>
-          currentPage === 1 ? images : [...prev, ...images]
-        );
-
-        setHasMore(keys.length >= LIMIT);
-      }
-
-    } catch (error) {
-
-      console.error("Gallery API Error:", error);
-      toast.error("Failed to load gallery");
-
-    } finally {
-
-      setLoading(false);
-      isFetchingRef.current = false;
-
+      setHasMore(keys.length >= LIMIT);
     }
 
-  }, [bookingId, photographerId]);
+  } catch (error) {
+
+    console.error("Gallery API Error:", error);
+    toast.error("Failed to load gallery");
+
+  } finally {
+
+    setLoading(false);
+    isFetchingRef.current = false;
+
+  }
+
+}, [bookingId, photographerId]);
 
   /* ===============================
       DELETE SINGLE IMAGE
@@ -225,16 +225,25 @@ const ViewImages = () => {
 
     fetchGallery(1);
 
-  }, [bookingId, photographerId]);
+  }, [bookingId, photographerId, fetchGallery]);
+
+  // useEffect(() => {
+
+  //   if (page === 1) return;
+  //   if (!photographerId) return;
+
+  //   fetchGallery(page);
+
+  // }, [page]);
 
   useEffect(() => {
 
-    if (page === 1) return;
-    if (!photographerId) return;
+  if (page === 1) return;
+  if (!photographerId) return;
 
-    fetchGallery(page);
+  fetchGallery(page);
 
-  }, [page]);
+}, [page, photographerId, fetchGallery]);
 
   /* ===============================
       INFINITE SCROLL
