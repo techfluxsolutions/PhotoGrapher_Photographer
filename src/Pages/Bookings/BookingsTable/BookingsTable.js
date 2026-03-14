@@ -214,10 +214,10 @@ import EditBookingModal from "../EditBookingModal/EditBookingModal";
 import { toast } from "react-toastify";
 import "./BookingsTable.css";
 import { cancelBooking, getAcceptedBookings } from "../../../utils/APIs/bookingsApis";
-import Loader from "../../../Loader/Loader";
 import { useNavigate } from "react-router-dom";
 import RequirementModal from "./RequirementModal/RequirementModal";
 import CancelBookingModal from "../CancelBookingModal/CancelBookingModal";
+import Loader from "../../../Template/Loader/Loader";
 
 const BookingsTable = ({
   page: initialPage = 1,

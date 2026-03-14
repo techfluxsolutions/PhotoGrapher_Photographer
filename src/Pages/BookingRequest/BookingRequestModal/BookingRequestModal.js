@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
-import Loader from "../../../Loader/Loader";
 import { toast } from "react-toastify";
 import "../../Bookings/EditBookingModal/EditBookingModal.css";
 import { acceptBookingRequest } from "../../../utils/APIs/bookingsApis";
+import Loader from "../../../Template/Loader/Loader";
 
 const BookingRequestModal = ({ booking, isOpen, onClose, onSave }) => {
   const [status, setStatus] = useState("");

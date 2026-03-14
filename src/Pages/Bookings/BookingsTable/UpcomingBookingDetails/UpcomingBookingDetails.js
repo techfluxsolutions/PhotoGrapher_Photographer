@@ -1,175 +1,3 @@
-// import React, { useEffect, useState } from "react";
-// import "./UpcomingBookingDetails.css";
-// import { getAcceptedBookingById } from "../../../../utils/APIs/bookingsApis";
-// import Loader from "../../../../Loader/Loader";
-
-// const UpcomingBookingDetails = ({ booking, onBack }) => {
-//   const [bookingData, setBookingData] = useState(null);
-//   const [loading, setLoading] = useState(false);
-
-//   /* ===== Helper Function for Capitalization ===== */
-//   const capitalizeFirst = (text) => {
-//     if (!text) return "";
-//     return text.charAt(0).toUpperCase() + text.slice(1);
-//   };
-
-//   useEffect(() => {
-//     const fetchBookingById = async () => {
-//       try {
-//         setLoading(true);
-
-//         const res = await getAcceptedBookingById(booking?.shootId);
-
-//         if (res?.data?.success) {
-//           setBookingData(res.data.data.booking);
-//         }
-//       } catch (error) {
-//         console.error("Fetch booking by ID error:", error);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     if (booking?.shootId) {
-//       fetchBookingById();
-//     }
-//   }, [booking?.shootId]);
-
-//   /* ================= LOADER HANDLING ================= */
-
-//   if (loading) return <Loader />;
-
-//   if (!bookingData) {
-//     return (
-//       <div style={{ padding: "30px" }}>
-//         <Loader />
-//       </div>
-//     );
-//   }
-
-//   return (
-//     <div className="details-container">
-//       <div className="details-header">
-//         <button onClick={onBack} className="back-btn">
-//           ← Back
-//         </button>
-
-//         <div className="booking-id-badge">
-//           Booking ID: {bookingData._id}
-//         </div>
-//       </div>
-
-//       <div className="details-card">
-
-//         <div className="section-title">Client Information</div>
-
-//         <div className="details-grid">
-//           <div>
-//             <label>Client Name</label>
-//             <p>{capitalizeFirst(bookingData.client_id?.username)}</p>
-//           </div>
-
-//           <div>
-//             <label>Email</label>
-//             <p>{bookingData.client_id?.email}</p>
-//           </div>
-
-//           <div>
-//             <label>Mobile</label>
-//             <p>{bookingData.client_id?.mobileNumber}</p>
-//           </div>
-
-//           <div>
-//             <label>Service</label>
-//             <p>{capitalizeFirst(bookingData.service_id?.serviceName)}</p>
-//           </div>
-//         </div>
-
-//         <div className="section-title">Event Details</div>
-
-//         <div className="details-grid">
-//           <div>
-//             <label>Event Type</label>
-//             <p>{capitalizeFirst(bookingData.eventType)}</p>
-//           </div>
-
-//           <div>
-//             <label>Date</label>
-//             <p>{bookingData.date}</p>
-//           </div>
-
-//           {/* <div>
-//             <label>Time</label>
-//             <p>{bookingData.time}</p>
-//           </div> */}
-
-//           <div>
-//             <label>Location</label>
-//             <p>
-//               {bookingData.flatOrHouseNo}, {bookingData.streetName},{" "}
-//               {capitalizeFirst(bookingData.city)}, {capitalizeFirst(bookingData.state)} -{" "}
-//               {bookingData.postalCode}
-//             </p>
-//           </div>
-//         </div>
-
-//         <div className="section-title">Payment & Status</div>
-
-//         <div className="details-grid">
-//           <div>
-//             <label>Total Amount</label>
-//             <p>₹ {bookingData.totalAmount}</p>
-//           </div>
-
-//           <div>
-//             <label>Payment Status :</label>
-//             <span className="status-badge">
-//               {capitalizeFirst(bookingData.paymentStatus)}
-//             </span>
-//           </div>
-
-//           <div>
-//             <label>Booking Status :</label>
-//             <span className="status-badge">
-//               {capitalizeFirst(bookingData.bookingStatus)}
-//             </span>
-//           </div>
-
-//           <div>
-//             <label>Current Status :</label>
-//             <span className="status-badge">
-//               {capitalizeFirst(bookingData.status)}
-//             </span>
-//           </div>
-//         </div>
-
-//         {bookingData.requirements && (
-//           <>
-//             <div className="section-title">Requirements</div>
-//             <div className="requirements-box">
-//               {capitalizeFirst(bookingData.requirements)}
-//             </div>
-//           </>
-//         )}
-//       </div>
-
-//       {/* UPLOAD SECTION */}
-//       <div className="upload-box">
-//         <p>Drag and Drop photos here</p>
-//         <span>OR </span>
-//         <button className="upload-btn">
-//           Upload to Cloud
-//         </button>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default UpcomingBookingDetails;
-
-
-
-
 import React, { useEffect, useState, useRef } from "react";
 import "./UpcomingBookingDetails.css";
 import { getAcceptedBookingById } from "../../../../utils/APIs/bookingsApis";
@@ -178,11 +6,16 @@ import {
   uploadGalleryChunk,
   completeGalleryUpload,
 } from "../../../../utils/APIs/gallaryUploadApis";
-import Loader from "../../../../Loader/Loader";
-import Loader2 from "../../../../Template/Loader/Loader2";
 import { toast } from "react-toastify";
+import { FaEye } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import Loader from "../../../../Template/Loader/Loader";
+import Loader2 from "../../../../Template/Loader2/Loader2";
 
 const UpcomingBookingDetails = ({ booking, onBack }) => {
+
+  const navigate = useNavigate();
+
   const [bookingData, setBookingData] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -324,6 +157,7 @@ const UpcomingBookingDetails = ({ booking, onBack }) => {
 
   return (
     <div className="details-container">
+
       <div className="details-header">
         <button onClick={onBack} className="back-btn">
           ← Back
@@ -334,6 +168,7 @@ const UpcomingBookingDetails = ({ booking, onBack }) => {
         </div>
       </div>
 
+      {/* DETAILS CARD */}
       <div className="details-card">
 
         <div className="section-title">Client Information</div>
@@ -360,100 +195,63 @@ const UpcomingBookingDetails = ({ booking, onBack }) => {
           </div>
         </div>
 
-        <div className="section-title">Event Details</div>
-
-        <div className="details-grid">
-          <div>
-            <label>Event Type</label>
-            <p>{capitalizeFirst(bookingData.eventType)}</p>
-          </div>
-
-          <div>
-            <label>Date</label>
-            <p>{bookingData.date}</p>
-          </div>
-
-          <div>
-            <label>Location</label>
-            <p>
-              {bookingData.flatOrHouseNo}, {bookingData.streetName},{" "}
-              {capitalizeFirst(bookingData.city)}, {capitalizeFirst(bookingData.state)} -{" "}
-              {bookingData.postalCode}
-            </p>
-          </div>
-        </div>
-
-        <div className="section-title">Payment & Status</div>
-
-        <div className="details-grid">
-          <div>
-            <label>Total Amount</label>
-            <p>₹ {bookingData.totalAmount}</p>
-          </div>
-
-          <div>
-            <label>Payment Status :</label>
-            <span className="status-badge">
-              {capitalizeFirst(bookingData.paymentStatus)}
-            </span>
-          </div>
-
-          <div>
-            <label>Booking Status :</label>
-            <span className="status-badge">
-              {capitalizeFirst(bookingData.bookingStatus)}
-            </span>
-          </div>
-
-          <div>
-            <label>Current Status :</label>
-            <span className="status-badge">
-              {capitalizeFirst(bookingData.status)}
-            </span>
-          </div>
-        </div>
-
-        {bookingData.requirements && (
-          <>
-            <div className="section-title">Requirements</div>
-            <div className="requirements-box">
-              {capitalizeFirst(bookingData.requirements)}
-            </div>
-          </>
-        )}
       </div>
 
       {/* UPLOAD SECTION */}
+
       <div className="upload-box">
+
         <p>Drag and Drop photos here</p>
-        <span>OR </span>
+        <span>OR</span>
 
-        <button
-          className="upload-btn"
-          onClick={() => fileInputRef.current.click()}
-        >
-          Upload to Cloud
-        </button>
+        <div className="upload-actions">
 
-        <input
-          ref={fileInputRef}
-          type="file"
-          hidden
-          multiple
-          accept="image/*,video/*"
-          onChange={handleFileSelect}
-        />
-
-        {files.length > 0 && (
           <button
             className="upload-btn"
-            onClick={() => handleUpload(files)}
-            style={{ marginTop: "10px" }}
+            onClick={() => fileInputRef.current.click()}
           >
-            Submit Upload ({files.length})
+            Upload to Cloud
           </button>
-        )}
+
+          <input
+            ref={fileInputRef}
+            type="file"
+            hidden
+            multiple
+            accept="image/*,video/*"
+            onChange={handleFileSelect}
+          />
+
+          {files.length > 0 && (
+            <button
+              className="upload-btn"
+              onClick={() => handleUpload(files)}
+              style={{ marginTop: "10px" }}
+            >
+              Submit Upload ({files.length})
+            </button>
+          )}
+
+        </div>
+
+        {/* VIEW GALLERY BUTTON */}
+
+        <button
+  className="upload-btn"
+  onClick={() =>
+    navigate(
+      `/gallery/${bookingData._id}/${
+        bookingData.photographer_id?._id || bookingData.photographer_id
+      }/${bookingData.client_id?._id}`
+    )
+  }
+>
+  <FaEye style={{ marginRight: "6px" }} />
+  View Gallery
+</button>
+
       </div>
+
     </div>
   );
 };

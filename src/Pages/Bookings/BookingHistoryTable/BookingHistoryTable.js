@@ -5,7 +5,7 @@ import EditBookingModal from "../EditBookingModal/EditBookingModal";
 
 import "../../Bookings/BookingsTable/BookingsTable.css";
 import { getBookingHistory } from "../../../utils/APIs/bookingsApis";
-import Loader from "../../../Loader/Loader";
+import Loader from "../../../Template/Loader/Loader";
 
 const BookingHistoryTable = ({ page: initialPage = 1, limit = 10 }) => {
   const navigate = useNavigate();
