@@ -369,12 +369,12 @@ const UpcomingBookingDetails = ({ booking, onBack }) => {
       for (const file of selectedFiles) {
 
         const startRes = await startUploadAPI({
-          fileName: file.name,
-          fileType: file.type,
-          relativePath,
-          veroaBookingId: bookingData.veroaBookingId,
-          fileSize: file.size,
-        });
+        fileName: file.name,
+        fileType: file.type,
+        relativePath: file.webkitRelativePath || file.name,
+        veroaBookingId: bookingData.veroaBookingId,
+        fileSize: file.size,
+      });
 
         const { key, uploadId } = startRes.data;
 
