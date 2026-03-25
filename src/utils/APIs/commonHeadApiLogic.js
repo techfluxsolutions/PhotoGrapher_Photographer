@@ -7,12 +7,12 @@ const baseURL = process.env.REACT_APP_PHOTOGRAPHY_ADMIN_BASE_API_URL;
 
 const axiosInstance = axios.create({
   baseURL,
-  timeout: 30000,
+  timeout: 60000,
 });
 
 const axiosInstanceNoAuth = axios.create({
   baseURL,
-  timeout: 30000,
+  timeout: 60000,
 });
 // 🔥🔥🔥 ADD THIS EXACT LINE
 // axiosInstance.defaults.headers.common["ngrok-skip-browser-warning"] = "true";

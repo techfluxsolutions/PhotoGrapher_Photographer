@@ -13,7 +13,7 @@ const withAuthorization = async (apiFunction, ...args) => {
 
 /* ================= START UPLOAD ================= */
 
-export const startGalleryUpload = (payload) => {
+export const startUploadAPI = (payload) => {
   return withAuthorization(async () => {
     return await axiosInstance.post(
       `/api/photographers/start`,
@@ -31,8 +31,13 @@ export const uploadGalleryChunk = (formData) => {
 };
 
 /* ================= COMPLETE UPLOAD ================= */
+export const getPartUploadUrlAPI = async (payload) => {
+  return withAuthorization(() =>
+    axiosInstance.post("/api/photographers/get-part-url", payload)
+  );
+};
 
-export const completeGalleryUpload = (payload) => {
+export const completeUploadAPI = (payload) => {
   return withAuthorization(async () => {
     return await axiosInstance.post(
       `/api/photographers/complete`,
@@ -42,36 +47,57 @@ export const completeGalleryUpload = (payload) => {
 };
 
 
-
+// ABORT UPLOAD
+export const abortUploadAPI = (payload) => {
+  return withAuthorization(async () => {
+    return axiosInstance.post("/api/photographers/abort", payload);
+  });
+};
 
 
 // view gallery
-export async function getPhotoskeysbyidAPI(page, limit, bookingId = "", photographerId = "") {
+// export async function getPhotoskeysbyidAPI(page, limit, bookingId = "", photographerId = "") {
+//   return withAuthorization(async () => {
+//     const response = await axiosInstance.get(
+//       `/api/photographers/datalinks?page=${page}&limit=${limit}&bookingId=${bookingId}&photographerId=${photographerId}`
+//     );
+//     return response;
+//   });
+// }
+
+
+
+
+// export async function getImagesUsingKeysAPI(bookingId, key) {
+//   return withAuthorization(async () => {
+//     const response = await axiosInstance.get(
+//       `/api/photographers/stream/${bookingId}/*${key}`,
+//       {
+//         responseType: "blob",
+//       }
+//     );
+
+//     const blobUrl = URL.createObjectURL(response.data);
+//     return blobUrl;
+//   });
+// }
+
+
+
+export async function getAllGalleryImages(page, limit, bookingId = "") {
   return withAuthorization(async () => {
     const response = await axiosInstance.get(
-      `/api/photographers/datalinks?page=${page}&limit=${limit}&bookingId=${bookingId}&photographerId=${photographerId}`
+      `/api/users/getArrayImages/${bookingId}`,
+      {
+        params: {
+          page,
+          limit
+        }
+      }
     );
     return response;
   });
 }
-
-
-
-
-export async function getImagesUsingKeysAPI(bookingId, key) {
-  return withAuthorization(async () => {
-    const response = await axiosInstance.get(
-      `/api/photographers/stream/${bookingId}/*${key}`,
-      {
-        responseType: "blob",
-      }
-    );
-
-    const blobUrl = URL.createObjectURL(response.data);
-    return blobUrl;
-  });
-}
-
 
 export async function downloadFullZip(payload) {
   return withAuthorization(async () => {
@@ -80,6 +106,7 @@ export async function downloadFullZip(payload) {
       payload,
       {
         responseType: "blob",
+        timeout:600000 // 10 min
       }
     );
     return response;
@@ -91,8 +118,9 @@ export async function downloadSelectedImages(payload) {
     const response = await axiosInstance.post(
       "/api/photographers/downloadZiponFourtyPlus",
       payload,
-      {
+       {
         responseType: "blob",
+        timeout:600000 // 10 min
       }
     );
     return response;
@@ -103,7 +131,11 @@ export async function downloadSingleImage(payload) {
   return withAuthorization(async () => {
     const response = await axiosInstance.post(
       "/api/photographers/downloadSingleFile",
-      payload
+      payload,
+       {
+        responseType: "blob",
+        timeout:120000 // 10 min
+      }
     );
     return response;
   });
