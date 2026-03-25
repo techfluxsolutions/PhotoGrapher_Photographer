@@ -234,7 +234,7 @@
 
 
 import axios from "axios";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { FaEye } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -290,9 +290,9 @@ const GalleryAddPhotos = () => {
   }, [isPaused, bookingId]);
 
   // Helper to check pause state from storage
-  const isCurrentlyPaused = () => {
+  const isCurrentlyPaused = useCallback(() => {
     return localStorage.getItem(`is_paused_${bookingId}`) === "true" || isPaused;
-  };
+  }, [bookingId, isPaused]);
 
   // Internet connectivity handlers
   useEffect(() => {
@@ -322,7 +322,7 @@ const GalleryAddPhotos = () => {
       window.removeEventListener("offline", handleOffline);
       window.removeEventListener("online", handleOnline);
     };
-  }, []);
+  }, [isCurrentlyPaused]);
 
   // Sync UI with background/storage progress (optional but helps on remount)
   useEffect(() => {
@@ -386,6 +386,15 @@ const GalleryAddPhotos = () => {
       await new Promise(resolve => setTimeout(resolve, 1000));
     }
     setIsRetrying(false);
+  };
+
+  const applyProgress = (baseUploaded, loaded) => {
+    const total = totalBytesRef.current;
+    if (!total) return;
+    const totalPercent = Math.round(((baseUploaded + loaded) / total) * 100);
+    const capped = Math.min(totalPercent, 99);
+    setUploadProgress(capped);
+    localStorage.setItem(`upload_progress_${bookingId}`, capped.toString());
   };
 
   const handleCancel = () => {
@@ -453,14 +462,11 @@ const GalleryAddPhotos = () => {
 
           setStatusText(`Uploading ${file.name}...`);
           
+          const baseUploaded = uploadedBytesRef.current;
           await axios.put(uploadUrl, file, {
             headers: { "Content-Type": file.type },
             onUploadProgress: (progressEvent) => {
-              const filePercent = (progressEvent.loaded / progressEvent.total) * file.size;
-              const totalPercent = Math.round(((uploadedSize + filePercent) / totalSize) * 100);
-              const capped = Math.min(totalPercent, 99);
-              setUploadProgress(capped);
-              localStorage.setItem(`upload_progress_${bookingId}`, capped.toString());
+              applyProgress(baseUploaded, progressEvent.loaded);
             },
           });
 
@@ -504,14 +510,11 @@ const GalleryAddPhotos = () => {
             const { uploadUrl: partUploadUrl } = partUrlRes.data;
 
             // Upload the chunk to S3
+            const baseUploaded = uploadedBytesRef.current;
             const uploadRes = await axios.put(partUploadUrl, chunkFile, {
               headers: { "Content-Type": file.type },
               onUploadProgress: (progressEvent) => {
-                const chunkUploaded = (progressEvent.loaded / progressEvent.total) * chunkFile.size;
-                const totalPercent = Math.round(((uploadedSize + chunkUploaded) / totalSize) * 100);
-                const capped = Math.min(totalPercent, 99);
-                setUploadProgress(capped);
-                localStorage.setItem(`upload_progress_${bookingId}`, capped.toString());
+                applyProgress(baseUploaded, progressEvent.loaded);
               },
             });
 

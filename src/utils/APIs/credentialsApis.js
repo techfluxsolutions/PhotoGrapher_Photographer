@@ -13,20 +13,30 @@ const withAuthorization = async (apiFunction, ...args) => {
   }
 };
 
-export async function LoginAPI(data) {
+export async function SendOtpAPI(data) {
   // return withAuthorization(async () => {
-    const response = await axiosInstanceNoAuth.post("/api/photographers/auth/login", data);
+    const response = await axiosInstanceNoAuth.post("/api/auth/login", data);
     return response;
   // });
 }
 
+// Backward-compatible alias (if any old code still imports LoginAPI)
+export async function LoginAPI(data) {
+  return SendOtpAPI(data);
+}
 
 
-export async function VerifyOtpAPI(data) {
+
+export async function VerifyOTP(data) {
   // return withAuthorization(async () => {
-    const response = await axiosInstanceNoAuth.post("/api/admin/verify-otp", data);
+    const response = await axiosInstanceNoAuth.post("/api/auth/verify", data);
     return response;
   // });
+}
+
+// Backward-compatible alias (if any old code still imports VerifyOtpAPI)
+export async function VerifyOtpAPI(data) {
+  return VerifyOTP(data);
 }
 
 export async function forgotPasswordAPI(data) {

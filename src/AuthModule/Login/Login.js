@@ -1,3 +1,6 @@
+/*
+Previous login code (email/password) hidden per request.
+
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
@@ -154,6 +157,164 @@ const handleLoginClick = async (e) => {
           </div>
         </form>
       </div>
+    </div>
+  );
+};
+
+export default Login;
+*/
+
+import React, { useEffect, useState } from "react";
+import "./Login.css";
+import { SendOtpAPI, VerifyOTP } from "../../utils/APIs/credentialsApis";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { encryptData } from "../../utils/CRYPTO/cryptoFunction";
+import Loader from "../../Template/Loader/Loader";
+import OtpModal from "../OtpModal/OtpModal";
+
+const Login = () => {
+  const [phone, setPhone] = useState("");
+  const [showOtpModal, setShowOtpModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [timer, setTimer] = useState(60);
+  const [canResend, setCanResend] = useState(false);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    let interval;
+    if (showOtpModal && timer > 0) {
+      interval = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 1000);
+    } else if (timer === 0) {
+      setCanResend(true);
+    }
+    return () => clearInterval(interval);
+  }, [showOtpModal, timer]);
+
+  const handleSendOtp = async (e) => {
+    if (e?.preventDefault) e.preventDefault();
+
+    if (!/^[0-9]{10}$/.test(phone)) {
+      toast.error("Please enter a valid 10-digit mobile number");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const payload = {
+        mobileNumber: phone,
+        role: "photographer",
+      };
+
+      const response = await SendOtpAPI(payload);
+      const isSuccess =
+        response?.status === 200 &&
+        (response?.data?.success === true || response?.data?.status === true);
+
+      if (isSuccess) {
+        toast.success(response?.data?.message || "OTP sent successfully");
+        setShowOtpModal(true);
+        setTimer(60);
+        setCanResend(false);
+      } else {
+        toast.error(response?.data?.message || "Failed to send OTP");
+      }
+    } catch (err) {
+      toast.error(
+        err?.response?.data?.message || err.message || "Failed to send OTP"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleVerifyOtp = async (otpString) => {
+    if (!otpString || otpString.length < 4) {
+      toast.error("Please enter the OTP");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const payload = {
+        mobileNumber: phone,
+        role: "photographer",
+        otp: otpString,
+      };
+
+      const response = await VerifyOTP(payload);
+      const token =
+        response?.data?.token || response?.data?.data?.token || null;
+      const isSuccess =
+        response?.status === 200 &&
+        (response?.data?.success === true ||
+          response?.data?.status === true ||
+          !!token);
+
+      if (isSuccess) {
+
+        if (token) {
+          sessionStorage.setItem("token", encryptData(token));
+          sessionStorage.setItem("loggedIn", "true");
+        }
+
+        toast.success(response?.data?.message || "OTP verified");
+        setShowOtpModal(false);
+        navigate("/dashboard");
+      } else {
+        toast.error(response?.data?.message || "Invalid OTP");
+      }
+    } catch (err) {
+      toast.error(
+        err?.response?.data?.message || err.message || "OTP verification failed"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="main-container">
+      {loading && <Loader />}
+
+      <div className="container login-container">
+        <form className="login-form" onSubmit={handleSendOtp}>
+          <h2 className="text-center mb-4 login-text" style={{ fontWeight: "600" }}>
+            Photographer - Login
+          </h2>
+
+          <label className="login-label">Mobile Number</label>
+          <input
+            type="text"
+            className="login-input login-input-manual"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value.replace(/[^0-9]/g, ""))}
+            maxLength={10}
+            required
+          />
+
+          <div className="login-btn-container">
+            <button type="submit" className="login-btn">
+              Send OTP
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <OtpModal
+        isOpen={showOtpModal}
+        onHide={() => setShowOtpModal(false)}
+        onVerify={handleVerifyOtp}
+        timer={timer}
+        canResend={canResend}
+        onResend={handleSendOtp}
+        loading={loading}
+      />
     </div>
   );
 };
