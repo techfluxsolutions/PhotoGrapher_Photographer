@@ -159,7 +159,7 @@ const handleVerifyOtpOrder = async (otp) => {
       className="btn-send-otp"
       onClick={() => handleSendOtp(item)}
     >
-      Resend OTP
+      Send OTP
     </button>
   )}
 
