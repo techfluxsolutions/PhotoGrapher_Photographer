@@ -113,6 +113,53 @@
     margin-bottom: 32px;
 }
 
+
+.shoot-action-wrapper {
+  display: flex;
+  gap: 8px;
+}
+
+/* Send OTP (secondary theme) */
+.btn-send-otp {
+  background-color: var(--tertiary-color);
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s ease;
+}
+
+/* Verify Order (primary theme) */
+.btn-verify-order {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s ease;
+}
+
+/* Hover Effects */
+.btn-send-otp:hover {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+}
+
+.btn-verify-order:hover {
+  opacity: 0.9;
+}
+
+/* Optional: Disabled state */
+.btn-send-otp:disabled,
+.btn-verify-order:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .booking-box {
