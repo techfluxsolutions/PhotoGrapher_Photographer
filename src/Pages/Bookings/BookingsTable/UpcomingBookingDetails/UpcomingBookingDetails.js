@@ -298,11 +298,37 @@ import {
 } from "../../../../utils/APIs/gallaryUploadApis";
 import { toast } from "react-toastify";
 import { FaEye } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../../../../Template/Loader/Loader";
 import Loader2 from "../../../../Template/Loader2/Loader2";
 
 const UpcomingBookingDetails = ({ booking, onBack }) => {
+
+    const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
+      const stored = sessionStorage.getItem("isSidebarOpen");
+      return stored !== null ? JSON.parse(stored) : true;
+    });
+  
+   
+  
+  
+    /* ================= SAVE ACTIVE TAB ================= */
+  
+    /* ================= SIDEBAR WATCHER ================= */
+  
+    useEffect(() => {
+      const interval = setInterval(() => {
+        const stored = sessionStorage.getItem("isSidebarOpen");
+        const parsed = stored !== null ? JSON.parse(stored) : true;
+  
+        if (parsed !== isSidebarOpen) {
+          setIsSidebarOpen(parsed);
+        }
+      }, 100);
+  
+      return () => clearInterval(interval);
+    }, [isSidebarOpen]);
+  
 
   const navigate = useNavigate();
 
@@ -314,7 +340,8 @@ const UpcomingBookingDetails = ({ booking, onBack }) => {
   const [files, setFiles] = useState([]);
 
   const fileInputRef = useRef(null);
-
+ const bookingId=useParams()
+ console.log("BOOKING",bookingId?.bookingId)
   /* ===== Helper Function ===== */
 
   const capitalizeFirst = (text) => {
@@ -395,10 +422,10 @@ const UpcomingBookingDetails = ({ booking, onBack }) => {
       try {
         setLoading(true);
 
-        const res = await getAcceptedBookingById(booking?.shootId);
+        const res = await getAcceptedBookingById(booking?.shootId || bookingId?.bookingId);
 
         if (res?.data?.success) {
-          setBookingData(res.data.data.booking);
+          setBookingData(res?.data?.data?.booking);
         }
       } catch {
         toast.error("Failed to fetch booking details");
@@ -407,8 +434,8 @@ const UpcomingBookingDetails = ({ booking, onBack }) => {
       }
     };
 
-    if (booking?.shootId) fetchBookingById();
-  }, [booking?.shootId]);
+    if (booking?.shootId || bookingId?.bookingId) fetchBookingById();
+  }, [booking?.shootId,bookingId?.bookingId]);
 
   /* ================= FILE SELECT ================= */
 
@@ -515,7 +542,8 @@ const UpcomingBookingDetails = ({ booking, onBack }) => {
   }
 
   return (
-    <div className="details-container">
+    <div className={`details-container ${isSidebarOpen ? "open" : "closed"}`}>
+    {/* <div className="details-container"> */}
 
       <div className="details-header">
         <button onClick={onBack} className="back-btn">
@@ -812,6 +840,7 @@ const UpcomingBookingDetails = ({ booking, onBack }) => {
       </div>
 
     </div>
+    // </div>
   );
 };
 

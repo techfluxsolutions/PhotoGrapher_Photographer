@@ -4,23 +4,23 @@ import { IoChevronForward } from "react-icons/io5";
 import Loader from "../../../Template/Loader/Loader";
 import { getTodaysBookingAPI, sendOtpAPI, verifyOtpAPI } from "../../../utils/APIs/dashboardApis";
 import OtpVerifyModal from "./OtpVerifyModal/OtpVerifyModal";
+import BookingMapModal from "./BookingMapModal/BookingMapModal";
 
 const UpcomingBookings = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showOtpModal, setShowOtpModal] = useState(false);
-const [selectedBooking, setSelectedBooking] = useState(null);
-const [otpLoading, setOtpLoading] = useState(false);
-  // 🧠 Fetch today's bookings
+  const [selectedBooking, setSelectedBooking] = useState(null);
+  const [otpLoading, setOtpLoading] = useState(false);
+
+  const [showMap, setShowMap] = useState(false);
+  const [mapBooking, setMapBooking] = useState(null);
+
   const fetchTodaysBookings = async () => {
     try {
       setLoading(true);
-
       const response = await getTodaysBookingAPI(1, 10);
-
-      // 👉 adjust based on your backend response structure
       const data = response?.data?.data || [];
-
       setBookings(data);
     } catch (error) {
       console.error("Error fetching today's bookings:", error);
@@ -29,97 +29,47 @@ const [otpLoading, setOtpLoading] = useState(false);
     }
   };
 
-const handleSendOtp = async (item) => {
+  const handleSendOtp = async (item) => {
+    try {
+      const mobile = item?.mobileNumber || item?.phone;
+      if (!mobile) return alert("Mobile number not found");
 
-  console.log("BOOKING",item?._id)
-  try {
-    const mobile = item?.mobileNumber || item?.phone;
-
-    if (!mobile) {
-      alert("Mobile number not found");
-      return;
-    }
-
-    setOtpLoading(true);
-
-    const response=await sendOtpAPI(mobile,item?._id);
-    if(response?.data?.success){
-       setSelectedBooking(item);
+      setOtpLoading(true);
+      const response = await sendOtpAPI(mobile, item?._id);
+      if (response?.data?.success) {
+        setSelectedBooking(item);
         alert(`OTP sent successfully to ${mobile}`);
+      }
+    } catch (error) {
+      const status = error?.response?.status;
+      const message = error?.response?.data?.message || error?.response?.data?.error || error?.message || "Something went wrong";
+      if (status === 404) alert("API not found (404).");
+      else if (status === 500) alert("Server error.");
+      else alert(message);
+    } finally {
+      setOtpLoading(false);
     }
-   
+  };
 
-    // setShowOtpModal(true);
+  const handleVerifyOtpOrder = async (otp) => {
+    try {
+      if (!selectedBooking) return alert("No booking selected");
+      setOtpLoading(true);
 
-  } 
-
-  catch (error) {
-  console.error("OTP API Error:", error);
-
-  const status = error?.response?.status;
-  const message =
-    error?.response?.data?.message ||
-    error?.response?.data?.error ||
-    error?.message ||
-    "Something went wrong";
-
-  // 🔍 Detailed log (for dev)
-  console.log("Status:", status);
-  console.log("Response Data:", error?.response?.data);
-  console.log("Full Error:", error);
-
-  // 🎯 User-friendly messages
-  if (status === 404) {
-    alert("API not found (404). Please check backend route.");
-  } else if (status === 500) {
-    alert("Server error. Please try again later.");
-  } else if (status === 400) {
-    alert(message || "Invalid request");
-  } else {
-    alert(message);
-  }
-}
-   finally {
-    setOtpLoading(false);
-  }
-};
-
-const handleVerifyOtpOrder = async (otp) => {
-  try {
-    if (!selectedBooking) {
-      alert("No booking selected");
-      return;
+      const mobile = selectedBooking?.mobileNumber || selectedBooking?.phone;
+      const res = await verifyOtpAPI(mobile, otp, selectedBooking._id);
+      if (res.data.success) {
+        alert("Order Verified ✅");
+        setBookings(prev => prev.map(b => b._id === selectedBooking._id ? { ...b, verified: true } : b));
+        setShowOtpModal(false);
+      } else alert("Invalid OTP");
+    } catch {
+      alert("Verification failed");
+    } finally {
+      setOtpLoading(false);
     }
+  };
 
-    setOtpLoading(true);
-
-    const mobile =
-      selectedBooking?.mobileNumber || selectedBooking?.phone;
-
-    const res = await verifyOtpAPI(mobile, otp,selectedBooking._id);
-
-    if (res.data.success) {
-      alert("Order Verified ✅");
-
-      // ✅ Optional: update UI state
-      setBookings((prev) =>
-        prev.map((b) =>
-          b._id === selectedBooking._id
-            ? { ...b, verified: true }
-            : b
-        )
-      );
-
-      setShowOtpModal(false);
-    } else {
-      alert("Invalid OTP");
-    }
-  } catch (err) {
-    alert("Verification failed");
-  } finally {
-    setOtpLoading(false);
-  }
-};
   useEffect(() => {
     fetchTodaysBookings();
   }, []);
@@ -129,77 +79,62 @@ const handleVerifyOtpOrder = async (otp) => {
       <h4 className="todays-title">Today’s Shoots</h4>
 
       {loading && <Loader />}
-
-      {!loading && bookings.length === 0 && (
-        <p>No bookings for today</p>
-      )}
+      {!loading && bookings.length === 0 && <p>No bookings for today</p>}
 
       {bookings.map((item, index) => (
         <div key={index} className="shoot-card">
-
-          {/* Left */}
           <div>
-            <div className="shoot-name">
-              {item?.title || item?.clientName || "N/A"}
-            </div>
+            <div className="shoot-name">{item?.title || item?.clientName || "N/A"}</div>
+            {/* <div className="shoot-sub">
+              • {item?.eventType || item?.type || "Service"}
+              <span className="dot">📍 {item?.address || item?.city || "Location"}</span>
+            </div> */}
 
             <div className="shoot-sub">
-              • {item?.eventType || item?.type || "Service"}
-              <span className="dot">
-                📍 {item?.city || "Location"}
-              </span>
-            </div>
-          </div>
-
-          {/* Right */}
-
-   <div className="shoot-action-wrapper">
-  {!item?.verified && (
-    <button
-      className="btn-send-otp"
-      onClick={() => handleSendOtp(item)}
+  • {item?.eventType || item?.type || "Service"}{" "}
+  {item?.lat && item?.lng ? (
+    <span
+      className="dot clickable-address"
+      onClick={() => { setMapBooking(item); setShowMap(true); }}
+      title="View on map"
     >
-      Send OTP
-    </button>
-  )}
-
-  {item?.verified ? (
-    <button className="btn-verify-order" disabled>
-      Verified ✅
-    </button>
+      📍 {item?.address || item?.city || "Location"}
+    </span>
   ) : (
-    <button
-      className="btn-verify-order"
-      onClick={() => {
-        setSelectedBooking(item);
-        setShowOtpModal(true);
-      }}
-    >
-      Verify Order
-    </button>
+    <span className="dot">📍 {item?.address || item?.city || "Location"}</span>
   )}
 </div>
-  <IoChevronForward className="arrow-icon" />
-          {/* <div className="shoot-time-wrapper">
-            <div className="shoot-time">
-              <FiClock /> {item?.time || item?.bookingTime || "--"}
-            </div>
-            <IoChevronForward className="arrow-icon" />
-          </div> */}
+          </div>
 
+          <div className="shoot-action-wrapper">
+            {!item?.verified && (
+              <button className="btn-send-otp" onClick={() => handleSendOtp(item)}>
+                {otpLoading ? "Sending OTP.." : "Send OTP"}
+              </button>
+            )}
+
+            {item?.verified ? (
+              <button className="btn-verify-order" disabled>Verified ✅</button>
+            ) : (
+              <button className="btn-verify-order" onClick={() => { setSelectedBooking(item); setShowOtpModal(true); }}>Verify Order</button>
+            )}
+
+            {/* Map buttons */}
+         
+          </div>
+          <IoChevronForward className="arrow-icon" />
         </div>
       ))}
 
       <OtpVerifyModal
-  show={showOtpModal}
-  onClose={() => setShowOtpModal(false)}
-  onVerify={handleVerifyOtpOrder}
-  loading={otpLoading}
-  mobile={
-    selectedBooking?.mobileNumber ||
-    selectedBooking?.phone
-  }
-/>
+        show={showOtpModal}
+        onClose={() => setShowOtpModal(false)}
+        onVerify={handleVerifyOtpOrder}
+        loading={otpLoading}
+        mobile={selectedBooking?.mobileNumber || selectedBooking?.phone}
+      />
+
+      <BookingMapModal show={showMap} onClose={() => setShowMap(false)} booking={mapBooking} />
     </div>
   );
 };

@@ -160,6 +160,38 @@
   cursor: not-allowed;
 }
 
+.clickable-address{
+  cursor: pointer;
+  font-weight: bold;
+      text-decoration: underline;
+}
+
+.shoot-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;  /* align top so buttons stay at top */
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  gap: 12px;               /* space between left and right */
+  flex-wrap: wrap;          /* allow wrapping on small screens */
+}
+
+.shoot-card > div:first-child {
+  flex: 1 1 60%;          /* take up max 60% of card width, shrink if needed */
+  min-width: 180px;       /* never smaller than 180px */
+}
+
+.shoot-action-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;          /* prevent shrinking */
+    /* keep buttons right-aligned */
+  min-width: 120px;        /* ensure enough space */
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .booking-box {

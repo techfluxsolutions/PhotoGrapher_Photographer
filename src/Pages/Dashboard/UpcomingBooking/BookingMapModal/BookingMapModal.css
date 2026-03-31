@@ -1,0 +1,70 @@
+.map-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.map-container {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  transition: all 0.3s ease-in-out;
+}
+
+.map-container.fullscreen {
+  border-radius: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.map-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: #f5f5f5;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.map-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.map-buttons .btn {
+  padding: 6px 12px;
+  border: none;
+  background: var(--primary-color);
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.map-buttons .btn:hover {
+ opacity: 0.8;
+}
+
+.map-buttons .map-btn-close {
+  background: var(--primary-color);
+}
+
+.map-buttons .map-btn-close:hover {
+ opacity: 0.8;
+}
+
+.map-body {
+  flex: 1;
+  position: relative;
+  height: 100%;
+}

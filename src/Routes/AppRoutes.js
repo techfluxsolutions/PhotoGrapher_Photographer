@@ -106,6 +106,7 @@ import Calender from "../Pages/Calender/Calender";
 import BookingRequest from "../Pages/BookingRequest/BookingRequest";
 import ViewGalleryImages from "../Pages/Bookings/ViewGalleryImages/ViewGalleryImages";
 import GalleryAddPhotosMain from "../Pages/Bookings/GalleryAddPhotosMain/GalleryAddPhotosMain";
+import UpcomingBookingDetails from "../Pages/Bookings/BookingsTable/UpcomingBookingDetails/UpcomingBookingDetails";
 
 const AppRoutes = () => {
   const [isOffline, setIsOffline] = useState(false);
@@ -149,6 +150,8 @@ const AppRoutes = () => {
 
           {/* ✅ BOOKINGS */}
           <Route path="/bookings" element={<Bookings />} />
+          {/* UpcomingBookingDetails */}
+          <Route path="/bookings/:bookingId" element={<UpcomingBookingDetails />} />
           <Route path="/bookingRequest" element={<BookingRequest />} />
           <Route
             path="/bookings/gallery-upload/:bookingId"
