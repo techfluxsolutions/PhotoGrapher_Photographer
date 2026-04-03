@@ -36,6 +36,7 @@ const UpcomingBookings = () => {
 
       setOtpLoading(true);
       const response = await sendOtpAPI(mobile, item?._id);
+      console.log("OTP SENT RESPONSE",response)
       if (response?.data?.success) {
         setSelectedBooking(item);
         alert(`OTP sent successfully to ${mobile}`);

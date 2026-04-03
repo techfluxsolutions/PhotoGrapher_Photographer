@@ -6,22 +6,22 @@
 
 // const Bookings = () => {
 //   const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
-//     const stored = sessionStorage.getItem("isSidebarOpen");
+//     const stored = localStorage.getItem("isSidebarOpen");
 //     return stored !== null ? JSON.parse(stored) : true;
 //   });
 
 //   const [activeTab, setActiveTab] = useState(() => {
-//     const savedTab = sessionStorage.getItem("bookingsActiveTab");
+//     const savedTab = localStorage.getItem("bookingsActiveTab");
 //     return savedTab ? savedTab : "myBookings";
 //   });
 
 //   useEffect(() => {
-//     sessionStorage.setItem("bookingsActiveTab", activeTab);
+//     localStorage.setItem("bookingsActiveTab", activeTab);
 //   }, [activeTab]);
 
 //   useEffect(() => {
 //     const interval = setInterval(() => {
-//       const stored = sessionStorage.getItem("isSidebarOpen");
+//       const stored = localStorage.getItem("isSidebarOpen");
 //       const parsed = stored !== null ? JSON.parse(stored) : true;
 
 //       if (parsed !== isSidebarOpen) {
@@ -85,12 +85,12 @@ import UpcomingBookingDetails from "./BookingsTable/UpcomingBookingDetails/Upcom
 
 const Bookings = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
-    const stored = sessionStorage.getItem("isSidebarOpen");
+    const stored = localStorage.getItem("isSidebarOpen");
     return stored !== null ? JSON.parse(stored) : true;
   });
 
   const [activeTab, setActiveTab] = useState(() => {
-    const savedTab = sessionStorage.getItem("bookingsActiveTab");
+    const savedTab = localStorage.getItem("bookingsActiveTab");
     return savedTab ? savedTab : "myBookings";
   });
 
@@ -99,14 +99,14 @@ const Bookings = () => {
   /* ================= SAVE ACTIVE TAB ================= */
 
   useEffect(() => {
-    sessionStorage.setItem("bookingsActiveTab", activeTab);
+    localStorage.setItem("bookingsActiveTab", activeTab);
   }, [activeTab]);
 
   /* ================= SIDEBAR WATCHER ================= */
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const stored = sessionStorage.getItem("isSidebarOpen");
+      const stored = localStorage.getItem("isSidebarOpen");
       const parsed = stored !== null ? JSON.parse(stored) : true;
 
       if (parsed !== isSidebarOpen) {
@@ -120,7 +120,7 @@ const Bookings = () => {
   /* ================= RESTORE BOOKING AFTER REFRESH ================= */
 
   // useEffect(() => {
-  //   const savedBookingId = sessionStorage.getItem("selectedBookingId");
+  //   const savedBookingId = localStorage.getItem("selectedBookingId");
 
   //   if (savedBookingId && activeTab === "bookingDetails") {
   //     setSelectedBooking({ shootId: savedBookingId });
@@ -128,7 +128,7 @@ const Bookings = () => {
   // }, []);
 
   useEffect(() => {
-  const savedBookingId = sessionStorage.getItem("selectedBookingId");
+  const savedBookingId = localStorage.getItem("selectedBookingId");
 
   if (savedBookingId && activeTab === "bookingDetails") {
     setSelectedBooking({ shootId: savedBookingId });
@@ -138,14 +138,14 @@ const Bookings = () => {
   /* ================= HANDLE DETAILS ================= */
 
   const handleOpenDetails = (booking) => {
-    sessionStorage.setItem("selectedBookingId", booking.shootId);
+    localStorage.setItem("selectedBookingId", booking.shootId);
 
     setSelectedBooking({ shootId: booking.shootId });
     setActiveTab("bookingDetails");
   };
 
   const handleBackToBookings = () => {
-    sessionStorage.removeItem("selectedBookingId");
+    localStorage.removeItem("selectedBookingId");
     setActiveTab("myBookings");
     setSelectedBooking(null);
   };

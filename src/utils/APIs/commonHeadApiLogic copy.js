@@ -36,7 +36,7 @@ axiosInstance.interceptors.response.use(
 );
 
 export function getAccessToken() {
-  const encrypted = sessionStorage.getItem("token");
+  const encrypted = localStorage.getItem("token");
   if (!encrypted) return null;
   const decryptToken=decryptData(encrypted)
   console.log("decryptToken",decryptToken)
@@ -45,7 +45,7 @@ export function getAccessToken() {
 // authorizeMe now defensive and returns token or null
 export function authorizeMe() {
   try {
-    const stored = sessionStorage.getItem("token");
+    const stored = localStorage.getItem("token");
     
       // axiosInstance.defaults.headers.common["ngrok-skip-browser-warning"] = "true";
 

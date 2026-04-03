@@ -6,7 +6,7 @@ import "./Layout.css";
 
 const Layout = () => {
   const getInitialSidebarState = () => {
-    const savedState = sessionStorage.getItem("isSidebarOpen");
+    const savedState = localStorage.getItem("isSidebarOpen");
     return savedState ? JSON.parse(savedState) : true;
   };
 
@@ -41,7 +41,7 @@ const Layout = () => {
   // 🔹 Persist only on desktop
   useEffect(() => {
     if (window.innerWidth > 1024) {
-      sessionStorage.setItem("isSidebarOpen", isSidebarOpen);
+      localStorage.setItem("isSidebarOpen", isSidebarOpen);
     }
   }, [isSidebarOpen]);
 

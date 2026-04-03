@@ -7,7 +7,7 @@ const LogoutModal = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
 
   const handleYesClick = () => {
-    sessionStorage.clear(); 
+    localStorage.clear(); 
     navigate("/"); 
     toast.success("Log-Out Successful!");
   };

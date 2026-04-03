@@ -33,7 +33,7 @@
 
 //   // ✅ UI-ONLY PRIVATE ROUTE
 //   const PrivateRoute = ({ children }) => {
-//     const isLoggedIn = sessionStorage.getItem("loggedIn") === "true";
+//     const isLoggedIn = localStorage.getItem("loggedIn") === "true";
 
 //     if (!isLoggedIn) {
 //       return <Navigate to="/" replace />;
@@ -125,7 +125,7 @@ const AppRoutes = () => {
   }, []);
 
   const PrivateRoute = ({ children }) => {
-    const isLoggedIn = sessionStorage.getItem("loggedIn") === "true";
+    const isLoggedIn = localStorage.getItem("loggedIn") === "true";
     return isLoggedIn ? children : <Navigate to="/" replace />;
   };
 

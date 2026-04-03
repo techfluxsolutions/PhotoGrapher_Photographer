@@ -39,6 +39,24 @@ export async function VerifyOtpAPI(data) {
   return VerifyOTP(data);
 }
 
+
+
+export async function getTokenAPI(token) {
+
+  if (!token) {
+    throw new Error("No token found");
+  }
+
+  const response = await axiosInstanceNoAuth.post(
+    "/api/auth/getToken",
+    {
+      token: token,
+    }
+  );
+
+  return response;
+}
+
 export async function forgotPasswordAPI(data) {
   return withAuthorization(async () => {
     const response = await axiosInstanceNoAuth.post("/user/user_Forgot_Password_check_api", data);

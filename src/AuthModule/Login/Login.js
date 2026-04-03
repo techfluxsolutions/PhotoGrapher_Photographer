@@ -33,15 +33,15 @@ const Login = () => {
 
 //     if (response?.data?.success && response?.status === 200) {
 //       const token = encryptData(response?.data?.data?.token);
-//       sessionStorage.setItem("token", token);
-//       sessionStorage.setItem("loggedIn", "true");
-//       sessionStorage.setItem("myId",response?.data?.data?.admin?.id)
+//       localStorage.setItem("token", token);
+//       localStorage.setItem("loggedIn", "true");
+//       localStorage.setItem("myId",response?.data?.data?.admin?.id)
 //       toast.success(response?.data?.message);
 //       navigate("/dashboard");
 //     } else {
 //       if (DEV_BYPASS) {
-//         sessionStorage.setItem("token", "DEV_TOKEN");
-//         sessionStorage.setItem("loggedIn", "true");
+//         localStorage.setItem("token", "DEV_TOKEN");
+//         localStorage.setItem("loggedIn", "true");
 //         toast.warn("DEV MODE: Login bypassed");
 //         navigate("/dashboard");
 //       } else {
@@ -50,8 +50,8 @@ const Login = () => {
 //     }
 //   } catch (err) {
 //     if (DEV_BYPASS) {
-//       sessionStorage.setItem("token", "DEV_TOKEN");
-//       sessionStorage.setItem("loggedIn", "true");
+//       localStorage.setItem("token", "DEV_TOKEN");
+//       localStorage.setItem("loggedIn", "true");
 //       toast.warn("DEV MODE: API down, bypass login");
 //       navigate("/dashboard");
 //     } else {
@@ -76,9 +76,9 @@ const handleLoginClick = async (e) => {
     if (response?.status === 200 && response?.data?.data?.token) {
       const token = encryptData(response?.data?.data?.token);
 
-      sessionStorage.setItem("token", token);
-      sessionStorage.setItem("loggedIn", "true");
-      sessionStorage.setItem("myId", response?.data?.data?.admin?.id);
+      localStorage.setItem("token", token);
+      localStorage.setItem("loggedIn", "true");
+      localStorage.setItem("myId", response?.data?.data?.admin?.id);
 
       toast.success(response?.data?.message);
       navigate("/dashboard");
@@ -166,12 +166,13 @@ export default Login;
 
 import React, { useEffect, useState } from "react";
 import "./Login.css";
-import { SendOtpAPI, VerifyOTP } from "../../utils/APIs/credentialsApis";
+import { getTokenAPI, SendOtpAPI, VerifyOTP } from "../../utils/APIs/credentialsApis";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { encryptData } from "../../utils/CRYPTO/cryptoFunction";
 import Loader from "../../Template/Loader/Loader";
 import OtpModal from "../OtpModal/OtpModal";
+import { getAccessToken } from "../../utils/APIs/commonHeadApiLogic";
 
 const Login = () => {
   const [phone, setPhone] = useState("");
@@ -181,6 +182,29 @@ const Login = () => {
   const [canResend, setCanResend] = useState(false);
 
   const navigate = useNavigate();
+
+    useEffect(() => {
+  const checkExistingLogin = async () => {
+    try {
+      const token = getAccessToken();
+
+      if (token) {
+        setLoading(true)
+        await getTokenAPI(token);  // sends token in body
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      setLoading(false)
+      console.log("Token invalid or expired");
+      localStorage.clear();
+    }
+    finally{
+      setLoading(false)
+    }
+  };
+
+  checkExistingLogin();
+}, [navigate]);
 
   useEffect(() => {
     let interval;
@@ -259,8 +283,8 @@ const Login = () => {
       if (isSuccess) {
 
         if (token) {
-          sessionStorage.setItem("token", encryptData(token));
-          sessionStorage.setItem("loggedIn", "true");
+          localStorage.setItem("token", encryptData(token));
+          localStorage.setItem("loggedIn", "true");
         }
 
         toast.success(response?.data?.message || "OTP verified");
@@ -277,6 +301,11 @@ const Login = () => {
       setLoading(false);
     }
   };
+
+  
+
+
+
 
   return (
     <div className="main-container">

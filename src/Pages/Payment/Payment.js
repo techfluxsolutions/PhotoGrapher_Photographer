@@ -10,13 +10,13 @@
 //   const [total, setTotal] = useState(0);
 
 //   const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
-//     const stored = sessionStorage.getItem("isSidebarOpen");
+//     const stored = localStorage.getItem("isSidebarOpen");
 //     return stored !== null ? JSON.parse(stored) : true;
 //   });
 
 //   useEffect(() => {
 //     const interval = setInterval(() => {
-//       const stored = sessionStorage.getItem("isSidebarOpen");
+//       const stored = localStorage.getItem("isSidebarOpen");
 //       const parsed = stored !== null ? JSON.parse(stored) : true;
 
 //       if (parsed !== isSidebarOpen) {
@@ -149,13 +149,13 @@ import PaymentTable from "./PaymentTable/PaymentTable";
 
 const Payment = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
-    const stored = sessionStorage.getItem("isSidebarOpen");
+    const stored = localStorage.getItem("isSidebarOpen");
     return stored !== null ? JSON.parse(stored) : true;
   });
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const stored = sessionStorage.getItem("isSidebarOpen");
+      const stored = localStorage.getItem("isSidebarOpen");
       const parsed = stored !== null ? JSON.parse(stored) : true;
 
       if (parsed !== isSidebarOpen) {

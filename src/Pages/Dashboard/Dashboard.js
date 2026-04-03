@@ -6,13 +6,13 @@
 
 // const Dashboard = () => {
 //   const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
-//     const stored = sessionStorage.getItem("isSidebarOpen");
+//     const stored = localStorage.getItem("isSidebarOpen");
 //     return stored !== null ? JSON.parse(stored) : true;
 //   });
 
 //   useEffect(() => {
 //     const interval = setInterval(() => {
-//       const stored = sessionStorage.getItem("isSidebarOpen");
+//       const stored = localStorage.getItem("isSidebarOpen");
 //       const parsed = stored !== null ? JSON.parse(stored) : true;
 //       if (parsed !== isSidebarOpen) setIsSidebarOpen(parsed);
 //     }, 10);
@@ -99,20 +99,34 @@ import "./Dashboard.css";
 
 import { getProfilePhotographer } from "../../utils/APIs/profileApis";
 import Loader from "../../Template/Loader/Loader";
+import { getDashboardRatingsAPI } from "../../utils/APIs/dashboardApis";
 
 const Dashboard = () => {
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
-    const stored = sessionStorage.getItem("isSidebarOpen");
+    const stored = localStorage.getItem("isSidebarOpen");
     return stored !== null ? JSON.parse(stored) : true;
   });
 
+  const StarRating = ({ rating = 0 }) => {
+  return (
+    <div className="flex items-center">
+      {[...Array(5)].map((_, index) => (
+        <span key={index}>
+          {index < rating ? "★" : "☆"}
+        </span>
+      ))}
+    </div>
+  );
+};
+
   const [photographer, setPhotographer] = useState(null);
+   const [rating, setRating] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const stored = sessionStorage.getItem("isSidebarOpen");
+      const stored = localStorage.getItem("isSidebarOpen");
       const parsed = stored !== null ? JSON.parse(stored) : true;
       if (parsed !== isSidebarOpen) setIsSidebarOpen(parsed);
     }, 10);
@@ -120,8 +134,27 @@ const Dashboard = () => {
     return () => clearInterval(interval);
   }, [isSidebarOpen]);
 
+    const fetchRatingInfo = async () => {
+    try {
+      setLoading(true);
+
+      const res = await getDashboardRatingsAPI();
+      console.log("RESPONSE",res?.data)
+     setRating(res?.data)
+
+      // correct response handling
+     
+
+    } catch (error) {
+      console.error("Failed to fetch photographer profile", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     fetchProfile();
+    fetchRatingInfo()
   }, []);
 
   const fetchProfile = async () => {
@@ -129,6 +162,7 @@ const Dashboard = () => {
       setLoading(true);
 
       const res = await getProfilePhotographer();
+     
 
       // correct response handling
       setPhotographer(res?.data?.photographer);
@@ -195,11 +229,19 @@ const Dashboard = () => {
                 <span className="badge-level"> ({expertiseLevel})</span>
               </div>
 
-              <div className="photographer-stats">
-                <span>Customer Feedback: <strong>128</strong></span>
-                <span className="mx-2">|</span>
-                <span>Veroa Rating: <strong>4 / 5</strong></span>
-              </div>
+             <div className="photographer-stats">
+  <span className="d-flex align-items-center gap-1">
+    <strong>Customer Rating :</strong>
+    <StarRating rating={rating?.adminRating || 0} />
+    <strong>({rating?.totalUserRatings || 0}/5)</strong>
+  </span>
+
+  <span className="d-flex align-items-center gap-1">
+     <strong>Veroa Rating :</strong>
+    <StarRating rating={rating?.adminRating || 0} />
+    <strong>({rating?.adminRating || 0}/5)</strong>
+  </span>
+</div>
 
             </div>
           </div>

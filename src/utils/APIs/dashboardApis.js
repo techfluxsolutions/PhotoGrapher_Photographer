@@ -33,7 +33,7 @@ export const getUpcommingBookingAPI = (page = 1, limit = 10) => {
 // ✅ Send OTP
 export const sendOtpAPI = (mobile,bookingId) =>{
     // console.log("first",booking)
-     withAuthorization(() =>
+    return withAuthorization(() =>
     axiosInstance.post(`/api/photographers/bookings/${bookingId}/resend-otp`, { mobile })
   );
 }
@@ -45,5 +45,13 @@ export const verifyOtpAPI = (mobile, otp,bookingId) =>
   withAuthorization(() =>
     axiosInstance.post(`/api/photographers/bookings/${bookingId}/verify-otp`, { mobile, otp })
   );
+
+  // /api/photographers/ratings
+
+  export const getDashboardRatingsAPI = () => {
+  return withAuthorization(() =>
+    axiosInstance.get(`/api/photographers/ratings`)
+  );
+};
 
 

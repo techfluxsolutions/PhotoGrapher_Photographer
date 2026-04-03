@@ -36,14 +36,14 @@ axiosInstance.interceptors.response.use(
 );
 
 export function getAccessToken() {
-  const encrypted = sessionStorage.getItem("token");
+  const encrypted = localStorage.getItem("token");
   if (!encrypted) return null;
   return decryptData(encrypted); // 🔑 THIS IS THE FIX
 }
 // authorizeMe now defensive and returns token or null
 export function authorizeMe() {
   try {
-    const stored = sessionStorage.getItem("token");
+    const stored = localStorage.getItem("token");
     
       // axiosInstance.defaults.headers.common["ngrok-skip-browser-warning"] = "true";
 

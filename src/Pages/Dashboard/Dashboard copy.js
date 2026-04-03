@@ -5,13 +5,13 @@
 // import "./Dashboard.css"
 // const Dashboard = () => {
 //   const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
-//     const stored = sessionStorage.getItem("isSidebarOpen");
+//     const stored = localStorage.getItem("isSidebarOpen");
 //     return stored !== null ? JSON.parse(stored) : true;
 //   });
 
 //   useEffect(() => {
 //     const interval = setInterval(() => {
-//       const stored = sessionStorage.getItem("isSidebarOpen");
+//       const stored = localStorage.getItem("isSidebarOpen");
 //       const parsed = stored !== null ? JSON.parse(stored) : true;
 //       if (parsed !== isSidebarOpen) setIsSidebarOpen(parsed);
 //     }, 10);
@@ -50,13 +50,13 @@ import "./Dashboard.css";
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
-    const stored = sessionStorage.getItem("isSidebarOpen");
+    const stored = localStorage.getItem("isSidebarOpen");
     return stored !== null ? JSON.parse(stored) : true;
   });
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const stored = sessionStorage.getItem("isSidebarOpen");
+      const stored = localStorage.getItem("isSidebarOpen");
       const parsed = stored !== null ? JSON.parse(stored) : true;
       if (parsed !== isSidebarOpen) setIsSidebarOpen(parsed);
     }, 10);
