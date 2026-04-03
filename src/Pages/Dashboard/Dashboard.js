@@ -232,14 +232,14 @@ const Dashboard = () => {
              <div className="photographer-stats">
   <span className="d-flex align-items-center gap-1">
     <strong>Customer Rating :</strong>
-    <StarRating rating={rating?.adminRating || 0} />
+    <StarRating rating={rating?.totalUserRatings || 0} />
     <strong>({rating?.totalUserRatings || 0}/5)</strong>
   </span>
 
   <span className="d-flex align-items-center gap-1">
      <strong>Veroa Rating :</strong>
-    <StarRating rating={rating?.adminRating || 0} />
-    <strong>({rating?.adminRating || 0}/5)</strong>
+    <StarRating rating={rating?.adminRating?.ratingCount || 0} />
+    <strong>({rating?.adminRating?.ratingCount || 0}/5)</strong>
   </span>
 </div>
 
