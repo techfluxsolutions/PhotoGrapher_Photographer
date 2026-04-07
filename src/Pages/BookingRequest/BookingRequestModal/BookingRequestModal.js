@@ -9,7 +9,10 @@ const BookingRequestModal = ({ booking, isOpen, onClose, onSave }) => {
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const REQUEST_STATUSES = ["accepted", "rejected"];
+  const REQUEST_STATUSES = [
+    { label: "Accept", value: "accepted" },
+    { label: "Reject", value: "rejected" },
+  ];
 
   useEffect(() => {
     if (booking) {
@@ -73,8 +76,8 @@ const BookingRequestModal = ({ booking, isOpen, onClose, onSave }) => {
         >
           <option value="">Select</option>
           {REQUEST_STATUSES.map((item) => (
-            <option key={item} value={item}>
-              {item.charAt(0).toUpperCase() + item.slice(1)}
+            <option key={item.value} value={item.value}>
+              {item.label}
             </option>
           ))}
         </select>
