@@ -151,7 +151,7 @@ const AppRoutes = () => {
           {/* ✅ BOOKINGS */}
           <Route path="/bookings" element={<Bookings />} />
           {/* UpcomingBookingDetails */}
-          <Route path="/bookings/:bookingId" element={<UpcomingBookingDetails />} />
+          <Route path="/bookings/:bookingId" element={<UpcomingBookingDetails/>} />
           <Route path="/bookingRequest" element={<BookingRequest />} />
           <Route
             path="/bookings/gallery-upload/:bookingId"

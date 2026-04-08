@@ -5,6 +5,7 @@ import Loader from "../../../Template/Loader/Loader";
 import { getTodaysBookingAPI, sendOtpAPI, verifyOtpAPI } from "../../../utils/APIs/dashboardApis";
 import OtpVerifyModal from "./OtpVerifyModal/OtpVerifyModal";
 import BookingMapModal from "./BookingMapModal/BookingMapModal";
+import { useNavigate } from "react-router-dom";
 
 const UpcomingBookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -16,6 +17,11 @@ const UpcomingBookings = () => {
   const [showMap, setShowMap] = useState(false);
   const [mapBooking, setMapBooking] = useState(null);
 
+  const navigate = useNavigate()
+    const handleArrow = (item)=>{
+    console.log("Perticular booking",item)
+navigate(`/bookings/${item._id}`);
+  }
   const fetchTodaysBookings = async () => {
     try {
       setLoading(true);
@@ -123,7 +129,7 @@ const UpcomingBookings = () => {
             {/* Map buttons */}
          
           </div>
-          <IoChevronForward className="arrow-icon" />
+          <IoChevronForward className="arrow-icon" onClick={() => handleArrow(item)}/>
         </div>
       ))}
 
