@@ -514,7 +514,7 @@ const UpcomingBookingDetails = ({ booking, onBack }) => {
       try {
         setLoading(true);
 
-        const res = await getAcceptedBookingById(booking?.shootId || bookingId?.bookingId);
+        const res = await getAcceptedBookingById(booking?.shootId || bookingId);
 
         if (res?.data?.success) {
           setBookingData(res?.data?.data?.booking);
@@ -526,8 +526,8 @@ const UpcomingBookingDetails = ({ booking, onBack }) => {
       }
     };
 
-    if (booking?.shootId || bookingId?.bookingId) fetchBookingById();
-  }, [booking?.shootId,bookingId?.bookingId]);
+    if (booking?.shootId || bookingId) fetchBookingById();
+  }, [booking?.shootId,bookingId]);
 
   /* ================= FILE SELECT ================= */
 

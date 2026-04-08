@@ -423,7 +423,15 @@ const handleConfirmCancel = async () => {
                   <td>{item.budget}</td>
 
                   {/* VIEW DETAILS ICON */}
-                  <td>
+                  {/* <td>
+                    <FiEye
+                      size={18}
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleViewRequirements(item)}
+                    />
+                  </td> */}
+
+                    <td>
                     <FiEye
                       size={18}
                       style={{ cursor: "pointer" }}
@@ -432,13 +440,26 @@ const handleConfirmCancel = async () => {
                   </td>
 
                   {/* GALLERY */}
-                  <td>
-                    <FiUpload
+                
+
+                         <td>
+  <button
+    disabled
+    className="chat-btn"
+    onClick={() => {
+      setSelectedBooking(item);
+      setShowEditModal(true);
+    }}
+  >
+                       <FiUpload
                       size={18}
                       style={{ cursor: "pointer" }}
                       onClick={() => handleGalleryUpload(item)}
+                      color="white"
+               
                     />
-                  </td>
+  </button>
+</td>
 
                   <td>{item.daysLeft}</td>
                   <td>
@@ -462,7 +483,7 @@ const handleConfirmCancel = async () => {
                  
 
                   
-                  <td>
+                  {/* <td>
                     <FiEdit
                       size={16}
                       style={{ cursor: "pointer" }}
@@ -470,8 +491,21 @@ const handleConfirmCancel = async () => {
                         setSelectedBooking(item);
                         setShowEditModal(true);
                       }}
+                      disabled
                     />
-                  </td>
+                  </td> */}
+                  <td>
+  <button
+    disabled
+    className="chat-btn"
+    onClick={() => {
+      setSelectedBooking(item);
+      setShowEditModal(true);
+    }}
+  >
+    <FiEdit size={16} color="white" />
+  </button>
+</td>
                   {/* OLD EDIT FLOW PRESERVED - COMMENTED */}
                    {/* CANCEL BUTTON */}
                   <td>
