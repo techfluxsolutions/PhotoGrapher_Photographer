@@ -362,6 +362,26 @@ const UpcomingBookingDetails = ({ booking, onBack }) => {
 //  console.log("BOOKING",bookingId?.bookingId)
   /* ===== Helper Function ===== */
 
+
+  const isUploadAllowed = (bookingDate) => {
+  if (!bookingDate) return false;
+
+  const date = new Date(bookingDate);
+
+  if (Number.isNaN(date.getTime())) return false;
+
+  // Remove time part
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const booking = new Date(date);
+  booking.setHours(0, 0, 0, 0);
+
+  // Allow if today or past
+  return booking <= today;
+};
+
+const uploadAllowed = isUploadAllowed(bookingData?.ist_bookingDate);
   const capitalizeFirst = (text) => {
     if (!text) return "";
     return text.charAt(0).toUpperCase() + text.slice(1);
@@ -1086,7 +1106,7 @@ const UpcomingBookingDetails = ({ booking, onBack }) => {
 
       {/* UPLOAD SECTION */}
 
-      <div className="upload-box">
+      {/* <div className="upload-box">
 
         <p>Drag and Drop photos here</p>
         <span>OR</span>
@@ -1144,7 +1164,7 @@ const UpcomingBookingDetails = ({ booking, onBack }) => {
 
         </div>
 
-        {/* VIEW GALLERY BUTTON */}
+       
 
         <button
   className="upload-btn"
@@ -1160,10 +1180,86 @@ const UpcomingBookingDetails = ({ booking, onBack }) => {
   View Gallery
 </button>
 
-      </div>
+      </div> */}
+<div
+  className={`upload-box ${!uploadAllowed ? "disabled-box" : ""}`}
+>
+  {!uploadAllowed && (
+    <p className="disable-message">
+      Upload is allowed only on or after the booking date.
+    </p>
+  )}
+
+  <p>Drag and Drop photos here</p>
+  <span>OR</span>
+
+  <div className="upload-actions">
+
+    <button
+      className="upload-btn"
+      onClick={() => fileInputRef.current.click()}
+      disabled={!uploadAllowed}
+    >
+      Upload to Cloud
+    </button>
+
+    <input
+      ref={fileInputRef}
+      type="file"
+      hidden
+      multiple
+      accept="image/*,video/*"
+      onChange={handleFileSelect}
+      disabled={!uploadAllowed}
+    />
+
+    <label
+      className="upload-btn"
+      style={{ pointerEvents: uploadAllowed ? "auto" : "none", opacity: uploadAllowed ? 1 : 0.5 }}
+    >
+      Select Folder
+
+      <input
+        type="file"
+        hidden
+        multiple
+        webkitdirectory="true"
+        onChange={handleFileSelect}
+        disabled={!uploadAllowed}
+      />
+    </label>
+
+    {files.length > 0 && (
+      <button
+        className="upload-btn"
+        onClick={() => handleUpload(files)}
+        style={{ marginTop: "10px" }}
+        disabled={!uploadAllowed}
+      >
+        Submit Upload ({files.length})
+      </button>
+    )}
+
+     <button
+  className="upload-btn"
+  onClick={() =>
+    navigate(
+      `/gallery/${bookingData._id}/${
+        bookingData.photographer_id?._id || bookingData.photographer_id
+      }/${bookingData.client_id?._id}`
+    )
+  }
+>
+  <FaEye style={{ marginRight: "6px" }} />
+  View Gallery
+</button>
+
+
+  </div>
+      
 
     </div>
-    // </div>
+    </div>
   );
 };
 
