@@ -381,7 +381,7 @@ const UpcomingBookingDetails = ({ booking, onBack }) => {
   return booking <= today;
 };
 
-const uploadAllowed = isUploadAllowed(bookingData?.ist_bookingDate);
+const uploadAllowed = isUploadAllowed(bookingData?.bookingDate);
   const capitalizeFirst = (text) => {
     if (!text) return "";
     return text.charAt(0).toUpperCase() + text.slice(1);

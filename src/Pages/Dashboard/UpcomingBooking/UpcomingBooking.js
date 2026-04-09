@@ -114,13 +114,13 @@ navigate(`/bookings/${item._id}`);
           </div>
 
           <div className="shoot-action-wrapper">
-            {!item?.verified && (
+            {!item?.IsVerified&& (
               <button className="btn-send-otp" onClick={() => handleSendOtp(item)}>
                 {otpLoading ? "Sending OTP.." : "Send OTP"}
               </button>
             )}
 
-            {item?.verified ? (
+            {item?.IsVerified ? (
               <button className="btn-verify-order" disabled>Verified ✅</button>
             ) : (
               <button className="btn-verify-order" onClick={() => { setSelectedBooking(item); setShowOtpModal(true); }}>Verify Order</button>
