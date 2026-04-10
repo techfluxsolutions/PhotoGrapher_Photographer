@@ -103,7 +103,7 @@ useEffect(() => {
         <div className="DineRightLogo_Dashboard">
         {!isSidebarOpen && (
               <img 
-              src="./ProjectLogo/photography_logo.png" 
+              src="/ProjectLogo/photography_logo.png" 
               alt="Veroa Logo" 
               className="navbar-brand-logo navbar-logo-mobile" 
               style={{ height: "70px", cursor: "pointer" }}

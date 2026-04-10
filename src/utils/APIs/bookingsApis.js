@@ -24,6 +24,14 @@ export const getAcceptedBookings = (page = 1, limit = 10) => {
   });
 };
 
+export const getCalenderBookings = (page = 1, limit = 10) => {
+  return withAuthorization(async () => {
+    return await axiosInstance.get(
+      `/api/photographers/bookings/all?page=${page}&limit=${limit}`
+    );
+  });
+};
+
 export const getPendingBookings = (page = 1, limit = 10) => {
   return withAuthorization(async () => {
     return await axiosInstance.get(

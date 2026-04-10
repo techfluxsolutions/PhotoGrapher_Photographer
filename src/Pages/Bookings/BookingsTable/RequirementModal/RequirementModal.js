@@ -29,25 +29,25 @@ const RequirementModal = ({ isOpen, onClose, bookingId }) => {
   // }, [isOpen, bookingId]);
 
   useEffect(() => {
-  const fetchBookingDetails = async () => {
-    try {
-      setLoading(true);
-      const res = await getAcceptedBookingById(bookingId);
+    const fetchBookingDetails = async () => {
+      try {
+        setLoading(true);
+        const res = await getAcceptedBookingById(bookingId);
 
-      if (res?.data?.success) {
-        setRequirements(res.data.data.booking.requirements);
+        if (res?.data?.success) {
+          setRequirements(res.data.data.booking.requirements);
+        }
+      } catch (error) {
+        console.error("Requirement fetch error:", error);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error("Requirement fetch error:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
 
-  if (isOpen && bookingId) {
-    fetchBookingDetails();
-  }
-}, [isOpen, bookingId]);
+    if (isOpen && bookingId) {
+      fetchBookingDetails();
+    }
+  }, [isOpen, bookingId]);
 
   if (!isOpen) return null;
 
@@ -66,7 +66,28 @@ const RequirementModal = ({ isOpen, onClose, bookingId }) => {
           <Loader />
         ) : (
           <div className="requirement-content">
-            {requirements || "No requirements provided."}
+            {requirements ? (
+              <ul className="requirement-list">
+
+                {(Array.isArray(requirements)
+                  ? requirements
+                  : typeof requirements === "string"
+                    ? requirements.includes(",")
+                      ? requirements.split(",")
+                      : requirements.split(/(?=[A-Z])/)
+                    : []
+                ).map((req, index) => (
+
+                  <li key={index}>
+                    {req?.trim?.() || req}
+                  </li>
+
+                ))}
+
+              </ul>
+            ) : (
+              "No requirements provided."
+            )}
           </div>
         )}
 

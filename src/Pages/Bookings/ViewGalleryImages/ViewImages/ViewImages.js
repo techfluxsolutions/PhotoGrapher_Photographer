@@ -612,57 +612,99 @@ const ViewImages = () => {
   const loaderRef = useRef(null);
   const isFetchingRef = useRef(false);
 
+
+  /* =================================== 
+  HANDLE SELECT ALL
+   =================================== */
+
+  const handleSelectAll = () => {
+    if (selectedItems.length === galleryData.length) {
+      // Deselect all
+      setSelectedItems([]);
+    } else {
+      // Select all
+      const allUrls = galleryData.map(item => item.url);
+      setSelectedItems(allUrls);
+    }
+  };
+
+  // const lastSelectedRef = useRef(null);
+
+  // const handleMultiSelect = (url, index, event) => {
+
+  //   if (event.shiftKey && lastSelectedRef.current !== null) {
+
+  //     const start = Math.min(lastSelectedRef.current, index);
+  //     const end = Math.max(lastSelectedRef.current, index);
+
+  //     const range = galleryData
+  //       .slice(start, end + 1)
+  //       .map(item => item.url);
+
+  //     setSelectedItems(prev => [
+  //       ...new Set([...prev, ...range])
+  //     ]);
+
+  //   } else {
+
+  //     toggleSelect(url);
+
+  //   }
+
+  //   lastSelectedRef.current = index;
+  // };
+
   /* ===============================
         FETCH GALLERY
   =============================== */
 
   const fetchGallery = useCallback(async (currentPage) => {
 
-  if (isFetchingRef.current) return;
-  isFetchingRef.current = true;
+    if (isFetchingRef.current) return;
+    isFetchingRef.current = true;
 
-  try {
+    try {
 
-    setLoading(true);
+      setLoading(true);
 
-    const response = await getAllGalleryImages(
-      currentPage,
-      LIMIT,
-      bookingId,
-      photographerId
-    );
-
-    if (response?.data?.success) {
-
-const files = response?.data?.data || [];
-
-     const images = files.map((item, index) => ({
-        id: `${currentPage}-${index}`,
-        key: item.key,
-        url: item.imageUrl
-      }));
-
-
-      setGalleryData((prev) =>
-        currentPage === 1 ? images : [...prev, ...images]
+      const response = await getAllGalleryImages(
+        currentPage,
+        LIMIT,
+        bookingId,
+        photographerId
       );
 
-          setHasMore(response?.data?.pagination?.hasMore);
+      if (response?.data?.success) {
+
+        const files = response?.data?.data || [];
+
+        const images = files.map((item, index) => ({
+          id: `${currentPage}-${index}`,
+          key: item.key,
+          url: item.imageUrl
+        }));
+
+
+        setGalleryData((prev) =>
+          currentPage === 1 ? images : [...prev, ...images]
+        );
+
+        setHasMore(response?.data?.pagination?.hasMore);
+      }
+
+    } catch (error) {
+
+      console.error("Gallery API Error:", error);
+      toast.error("Failed to load gallery");
+
+    } finally {
+
+      setLoading(false);
+      isFetchingRef.current = false;
+
     }
 
-  } catch (error) {
-
-    console.error("Gallery API Error:", error);
-    toast.error("Failed to load gallery");
-
-  } finally {
-
-    setLoading(false);
-    isFetchingRef.current = false;
-
-  }
-
-}, [bookingId, photographerId]);
+  }, [bookingId, photographerId]);
 
   /* ===============================
       DELETE SINGLE IMAGE
@@ -814,12 +856,12 @@ const files = response?.data?.data || [];
 
   useEffect(() => {
 
-  if (page === 1) return;
-  if (!photographerId) return;
+    if (page === 1) return;
+    if (!photographerId) return;
 
-  fetchGallery(page);
+    fetchGallery(page);
 
-}, [page, photographerId, fetchGallery]);
+  }, [page, photographerId, fetchGallery]);
 
   /* ===============================
       INFINITE SCROLL
@@ -854,11 +896,12 @@ const files = response?.data?.data || [];
   =============================== */
 
   const toggleSelect = (url) => {
-    setSelectedItems((prev) =>
-      prev.includes(url)
-        ? prev.filter((item) => item !== url)
-        : [...prev, url]
-    );
+    setSelectedItems(prev => {
+      if (prev.includes(url)) {
+        return prev.filter(item => item !== url);
+      }
+      return [...prev, url];
+    });
   };
 
   const openPreview = (url) => window.open(url, "_blank");
@@ -951,9 +994,8 @@ const files = response?.data?.data || [];
   const GalleryItem = ({ src, isVideo, fileKey }) => (
 
     <div
-      className={`gallery-box video-box ${
-        selectedItems.includes(src) ? "selected" : ""
-      }`}
+      className={`gallery-box video-box ${selectedItems.includes(src) ? "selected" : ""
+        }`}
     >
 
       {isVideo ? (
@@ -1025,30 +1067,30 @@ const files = response?.data?.data || [];
 
   const buildRows = () => {
 
-  const rows = [];
-  const chunkSize = 11;
+    const rows = [];
+    const chunkSize = 11;
 
-  for (let start = 0; start < galleryData.length; start += chunkSize) {
+    for (let start = 0; start < galleryData.length; start += chunkSize) {
 
-    const chunk = galleryData.slice(start, start + chunkSize);
+      const chunk = galleryData.slice(start, start + chunkSize);
 
-    rows.push(
-      <div className="row gallery-row-gap" key={`row-${start}`}>
-        {chunk.map((item) => (
-          <div className="col-md-3 col-6" key={item.id}>
-            <GalleryItem
-              src={item.url}
-              isVideo={isVideoKey(item.key)}
-              fileKey={item.key}
-            />
-          </div>
-        ))}
-      </div>
-    );
-  }
+      rows.push(
+        <div className="row gallery-row-gap" key={`row-${start}`}>
+          {chunk.map((item) => (
+            <div className="col-md-3 col-6" key={item.id}>
+              <GalleryItem
+                src={item.url}
+                isVideo={isVideoKey(item.key)}
+                fileKey={item.key}
+              />
+            </div>
+          ))}
+        </div>
+      );
+    }
 
-  return rows;
-};
+    return rows;
+  };
 
   /* ===============================
       COMING SOON
@@ -1074,7 +1116,7 @@ const files = response?.data?.data || [];
 
       {zipLoading && <Loader />}
 
-      <div className="gallery-header">
+      {/* <div className="gallery-header">
 
         <div className="gallery-left">
 
@@ -1116,7 +1158,72 @@ const files = response?.data?.data || [];
 
         </div>
 
+      </div> */}
+
+      <div className="gallery-header">
+
+        <div className="gallery-left">
+
+          <button
+            className="download-selected-btn"
+            onClick={() => navigate(-1)}
+          >
+            Back
+          </button>
+
+          {/* SELECT ALL CHECKBOX */}
+          {galleryData.length > 0 && (
+            <label className="select-all-label ">
+              <input
+                type="checkbox"
+                checked={
+                  selectedItems.length > 0 &&
+                  selectedItems.length === galleryData.length
+                }
+                onChange={handleSelectAll}
+              />
+              Select All
+            </label>
+          )}
+
+          
+
+          {selectedItems.length > 0 && (
+            <>
+              <button
+                className="download-selected-btn"
+                onClick={downloadSelected}
+              >
+                Download Selected ({selectedItems.length})
+              </button>
+
+              <button
+                className="delete-selected-btn"
+                onClick={deleteSelected}
+              >
+                Delete Selected ({selectedItems.length})
+              </button>
+            </>
+          )}
+
+
+
+
+        </div>
+
+        <div className="gallery-actions">
+          <button
+            className="gallery-btn"
+            onClick={handleDownloadZip}
+            disabled={zipLoading}
+          >
+            {zipLoading ? "Preparing..." : "Download Zip"}
+          </button>
+
+        </div>
       </div>
+
+
 
       {!loading && galleryData.length === 0 && (
         <div className="gallery-no-images">

@@ -9,9 +9,11 @@ const CalenderDisplayDataModal = ({ isOpen, onClose, data }) => {
 
   const handleGoToBooking = () => {
     onClose();              // close modal first
-    navigate("/bookings");  // navigate
+    // navigate("/bookings");  // navigate
+    navigate(`/bookings/${data._id}`);
   };
 
+  console.log("BOOKING CALENDER",data)
   return (
     <div className="calendar-modal-overlay">
       <div className="calendar-modal">
