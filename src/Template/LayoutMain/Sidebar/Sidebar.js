@@ -175,11 +175,22 @@ import {
 } from "react-icons/hi";
 
 import "./Sidebar.css";
+import { useState } from "react";
+import LogoutModal from "../DashboardNavbar/LogoutModal/LogoutModal";
 
 const Sidebar = ({ isOpen, onItemClick }) => {
   const location = useLocation();
   // const [hoveredPath, setHoveredPath] = useState(null);
+const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
+  // Open modal when logout is clicked
+  const handleLogoutClick = () => {
+    setIsModalOpen(true); // Open the modal
+  };
 
+    // Close modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   const isActive = (path) => {
     if (path === "/my-quote") {
       return (
@@ -247,7 +258,7 @@ const Sidebar = ({ isOpen, onItemClick }) => {
   return (
     <div className={`sidebar ${isOpen ? "open" : "closed"}`}>
       <ul className="sidebar-menu" style={{ marginTop: "10vh" }}>
-        {menuItems.map((item) => (
+        {/* {menuItems.map((item) => (
           <Link to={item.path} key={item.path} onClick={onItemClick}>
             <li
               className={`menu-item ${isActive(item.path) ? "active" : ""}`}
@@ -258,8 +269,41 @@ const Sidebar = ({ isOpen, onItemClick }) => {
               {isOpen && <span>{item.name}</span>}
             </li>
           </Link>
-        ))}
+        ))} */}
+
+        {menuItems.map((item) => {
+  // If Logout → open modal instead of navigation
+  if (item.name === "Logout") {
+    return (
+      <li
+        key={item.path}
+        className="menu-item"
+        onClick={handleLogoutClick}
+        style={{ cursor: "pointer" }}
+      >
+        {item.icon}
+        {isOpen && <span>{item.name}</span>}
+      </li>
+    );
+  }
+
+  // Normal navigation items
+  return (
+    <Link to={item.path} key={item.path} onClick={onItemClick}>
+      <li
+        className={`menu-item ${
+          isActive(item.path) ? "active" : ""
+        }`}
+      >
+        {item.icon}
+        {isOpen && <span>{item.name}</span>}
+      </li>
+    </Link>
+  );
+})}
       </ul>
+
+      <LogoutModal isOpen={isModalOpen} onClose={closeModal} />
     </div>
   );
 };

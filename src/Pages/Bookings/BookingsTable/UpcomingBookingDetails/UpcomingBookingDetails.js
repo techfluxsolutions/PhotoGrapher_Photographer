@@ -557,87 +557,7 @@ const uploadAllowed = isUploadAllowed(bookingData?.bookingDate);
 
   /* ================= UPLOAD FUNCTION ================= */
 
-  // const handleUpload = async (selectedFiles) => {
-  //   try {
-  //     setUploading(true);
-  //     setUploadProgress(0);
-
-  //     let totalPartsAllFiles = 0;
-  //     let uploadedParts = 0;
-
-  //     const CHUNK_SIZE = 50 * 1024 * 1024;
-
-  //     selectedFiles.forEach((file) => {
-  //       totalPartsAllFiles += Math.ceil(file.size / CHUNK_SIZE);
-  //     });
-
-  //     for (const file of selectedFiles) {
-
-  //       const startRes = await startUploadAPI({
-  //       fileName: file.name,
-  //       fileType: file.type,
-  //       relativePath: file.webkitRelativePath || file.name,
-  //       veroaBookingId: bookingData.veroaBookingId,
-  //       fileSize: file.size,
-  //     });
-
-  //       const { key, uploadId } = startRes.data;
-
-  //       const totalParts = Math.ceil(file.size / CHUNK_SIZE);
-
-  //       let parts = [];
-
-  //       for (let partNumber = 1; partNumber <= totalParts; partNumber++) {
-
-  //         const start = (partNumber - 1) * CHUNK_SIZE;
-  //         const end = Math.min(start + CHUNK_SIZE, file.size);
-
-  //         const chunkFile = file.slice(start, end);
-
-  //         const formData = new FormData();
-  //         formData.append("key", key);
-  //         formData.append("uploadId", uploadId);
-  //         formData.append("partNumber", partNumber.toString());
-  //         formData.append("chunk", chunkFile);
-
-  //         const chunkRes = await getPartUploadUrlAPI(formData);
-
-  //         parts.push({
-  //           ETag: chunkRes.data?.ETag || chunkRes.data?.data?.ETag,
-  //           PartNumber: partNumber,
-  //         });
-
-  //         uploadedParts++;
-
-  //         const percent = Math.round(
-  //           (uploadedParts / totalPartsAllFiles) * 100
-  //         );
-
-  //         setUploadProgress(percent);
-  //       }
-
-  //       await completeUploadAPI({
-  //         key,
-  //         uploadId,
-  //         parts,
-  //         bookingid: bookingData._id,
-  //         clientId: bookingData.client_id?._id,
-  //         photographerId: bookingData.photographer_id,
-  //         veroaBookingId: bookingData.bookingId,
-  //       });
-  //     }
-
-  //     toast.success("Files uploaded successfully 🎉");
-
-  //     setFiles([]);
-  //     setUploadProgress(0);
-
-  //   } catch {
-  //     toast.error("Upload failed. Please try again.");
-  //   } finally {
-  //     setUploading(false);
-  //   }
-  // };
+  
 
 /* ================= HELPERS ================= */
 
@@ -883,7 +803,7 @@ const uploadAllowed = isUploadAllowed(bookingData?.bookingDate);
   }
 
   return (
-    <div className={`details-container ${isSidebarOpen ? "open" : "closed"}`}>
+    <div className={`content-container ${isSidebarOpen ? "sidebar-open" : "sidebar-closed"} `}>
     {/* <div className="details-container"> */}
 
      

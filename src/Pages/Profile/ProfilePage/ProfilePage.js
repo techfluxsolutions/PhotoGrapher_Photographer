@@ -67,7 +67,14 @@ const handleProfilePhotoChange = (e) => {
     // append remaining data
     formData.append("data", JSON.stringify(profileData));
 
-    await updateProfilePhotographer(formData);
+    const response=await updateProfilePhotographer(formData);
+    if(response?.data?.success){
+      toast.success(response?.data?.message || "Profile updated!")
+      return
+    }
+    else{
+       toast.error(response?.data?.message || "Failed to updated profile!")
+    }
 
     // alert("Profile updated successfully");
   } catch (error) {
@@ -637,7 +644,7 @@ const handleProfilePhotoChange = (e) => {
           />
 
           {/* Account Type */}
-           <label className="profile-label"> Account Type</label>
+           {/* <label className="profile-label"> Account Type</label>
           <div className="radio-group">
             <label className="profile-label">
               <input
@@ -668,7 +675,47 @@ const handleProfilePhotoChange = (e) => {
               />
               Current
             </label>
-          </div>
+          </div> */}
+
+          <div className="account-type-wrapper">
+  <label className="profile-label">
+    Account Type
+  </label>
+
+  <div className="radio-group">
+
+    <label>
+      <input
+        type="radio"
+        name="accountType"
+        checked={profileData?.account_type === "Savings"}
+        onChange={() =>
+          setProfileData({
+            ...profileData,
+            account_type: "Savings",
+          })
+        }
+      />
+      Savings
+    </label>
+
+    <label>
+      <input
+        type="radio"
+        name="accountType"
+        checked={profileData?.account_type === "Current"}
+        onChange={() =>
+          setProfileData({
+            ...profileData,
+            account_type: "Current",
+          })
+        }
+      />
+      Current
+    </label>
+
+  </div>
+</div>
 
         </div>
       </div>

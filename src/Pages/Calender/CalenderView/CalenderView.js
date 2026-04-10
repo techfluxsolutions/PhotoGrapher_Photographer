@@ -167,7 +167,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 
 import "./CalenderView.css";
 import CalenderDisplayDataModal from "../CalenderDisplayDataModal/CalenderDisplayDataModal";
-import { getAcceptedBookings } from "../../../utils/APIs/bookingsApis";
+import { getCalenderBookings } from "../../../utils/APIs/bookingsApis";
 
 const CalenderView = () => {
   const [events, setEvents] = useState([]);
@@ -177,10 +177,12 @@ const CalenderView = () => {
   useEffect(() => {
     const fetchAcceptedBookings = async () => {
       try {
-        const response = await getAcceptedBookings(1, 100);
+        const response = await getCalenderBookings(1, 100);
 
         if (response?.data?.success) {
           const bookings = response.data.data.bookings || [];
+
+
 
           const formattedEvents = bookings
             .map((booking) => {
@@ -199,7 +201,8 @@ const CalenderView = () => {
                   date: booking.date,
                   time: booking.time,
                   city: booking.city,
-                  clientName: booking.client_id?.username,
+                  clientName: booking.clientName,
+                  _id:booking?._id
                 },
               };
             })
