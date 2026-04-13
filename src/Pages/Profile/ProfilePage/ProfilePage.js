@@ -40,7 +40,18 @@ const handleProfilePhotoChange = (e) => {
     try {
       setLoading(true);
       const res = await getProfilePhotographer();
-      setProfileData(res?.data?.photographer);
+      // setProfileData(res?.data?.photographer);
+      setProfileData({
+  basicInfo: {},
+  professionalDetails: {},
+  servicesAndStyles: {
+    services: {},
+    styles: {}
+  },
+  availability: {},
+  photographyAccessories: [],
+  ...res?.data?.photographer
+});
     } catch (error) {
       console.error("Failed to fetch photographer profile", error);
     } finally {
@@ -48,10 +59,100 @@ const handleProfilePhotoChange = (e) => {
     }
   };
 
-  const handleSaveProfile = async () => {
+//   const handleSaveProfile = async () => {
+//   try {
+//     if (profileData?.confirm_account_number !== profileData?.account_number) {
+//       toast.error("Account numbers not matching please check!");
+//       return;
+//     }
+
+//     setLoading(true);
+
+//     const formData = new FormData();
+
+//     // append profile image
+//     if (profileImageFile) {
+//       formData.append("profilePhoto", profileImageFile);
+//     }
+
+//     // append remaining data
+//     formData.append("data", JSON.stringify(profileData));
+
+//     const response=await updateProfilePhotographer(formData);
+//     if(response?.data?.success){
+//       toast.success(response?.data?.message || "Profile updated!")
+//       return
+//     }
+//     else{
+//        toast.error(response?.data?.message || "Failed to updated profile!")
+//     }
+
+//     // alert("Profile updated successfully");
+//   } catch (error) {
+//     console.error("Failed to update profile", error);
+//   } finally {
+//     setLoading(false);
+//   }
+// };
+
+const handleSaveProfile = async () => {
   try {
-    if (profileData?.confirm_account_number !== profileData?.account_number) {
-      toast.error("Account numbers not matching please check!");
+
+    /* ===== Required Fields ===== */
+
+    if (!profileData?.basicInfo?.displayName?.trim()) {
+      toast.error("Display Name is required");
+      return;
+    }
+
+    if (!profileData?.professionalDetails?.photographerType?.trim()) {
+      toast.error("Photographer Type is required");
+      return;
+    }
+
+    if (!profileData?.bank_account_holder?.trim()) {
+      toast.error("Bank Account Holder required");
+      return;
+    }
+
+    if (!profileData?.bank_name?.trim()) {
+      toast.error("Bank Name required");
+      return;
+    }
+
+    if (!profileData?.bank_account_number?.trim()) {
+      toast.error("Account Number required");
+      return;
+    }
+
+    if (!profileData?.bank_ifsc?.trim()) {
+      toast.error("IFSC Code required");
+      return;
+    }
+
+    /* ===== Account Validation ===== */
+
+    const acc =
+      profileData?.bank_account_number?.trim();
+
+    const confirm =
+      profileData?.confirm_account_number?.trim();
+
+    if (acc !== confirm) {
+      toast.error("Account numbers not matching");
+      return;
+    }
+
+    /* ===== Service Validation ===== */
+
+    const services =
+      profileData?.servicesAndStyles?.services || {};
+
+    const hasServiceSelected =
+      Object.values(services).some(v => v === true);
+
+    if (!hasServiceSelected) {
+      toast.error("Select at least one service");
       return;
     }
 
@@ -59,30 +160,325 @@ const handleProfilePhotoChange = (e) => {
 
     const formData = new FormData();
 
-    // append profile image
     if (profileImageFile) {
-      formData.append("profilePhoto", profileImageFile);
+      formData.append(
+        "profilePhoto",
+        profileImageFile
+      );
     }
 
-    // append remaining data
-    formData.append("data", JSON.stringify(profileData));
+    const payload = {
+      basicInfo: {
+        fullName:
+          profileData?.basicInfo?.fullName || "",
 
-    const response=await updateProfilePhotographer(formData);
-    if(response?.data?.success){
-      toast.success(response?.data?.message || "Profile updated!")
-      return
-    }
-    else{
-       toast.error(response?.data?.message || "Failed to updated profile!")
+        displayName:
+          profileData?.basicInfo?.displayName || "",
+
+        phone:
+          profileData?.basicInfo?.phone || ""
+      },
+
+      professionalDetails: {
+        photographerType:
+          profileData?.professionalDetails?.photographerType || "Wedding",
+
+        expertiseLevel:
+          profileData?.professionalDetails?.expertiseLevel || "",
+
+        yearsOfExperience:
+          profileData?.professionalDetails?.yearsOfExperience || "",
+
+        primaryLocation:
+          profileData?.professionalDetails?.primaryLocation || "",
+
+        willingToTravel:
+          profileData?.professionalDetails?.willingToTravel || false,
+
+        languagesSpoken:
+          profileData?.professionalDetails?.languagesSpoken || [],
+
+        team_studio:
+          profileData?.professionalDetails?.team_studio || ""
+      },
+
+      aboutYou:
+        profileData?.aboutYou || "",
+
+      servicesAndStyles: {
+        services:
+          profileData?.servicesAndStyles?.services || {},
+
+        styles:
+          profileData?.servicesAndStyles?.styles || {}
+      },
+
+      bank_account_holder:
+        profileData?.bank_account_holder || "",
+
+      bank_name:
+        profileData?.bank_name || "",
+
+      bank_account_number:
+        acc,
+
+      confirm_account_number:
+        confirm,
+
+      bank_ifsc:
+        profileData?.bank_ifsc || "",
+
+      account_type:
+        profileData?.account_type || "Savings",
+
+      photographyAccessories:
+        profileData?.photographyAccessories || []
+    };
+
+    formData.append(
+      "data",
+      JSON.stringify(payload)
+    );
+
+    const response =
+      await updateProfilePhotographer(formData);
+
+    if (response?.data?.success) {
+
+      toast.success(
+        response?.data?.message ||
+        "Profile updated successfully!"
+      );
+
+      fetchProfile();
+
+    } else {
+
+      toast.error(
+        response?.data?.message ||
+        "Update failed"
+      );
+
+      console.log(
+        "Missing Fields:",
+        response?.data?.missingFields
+      );
     }
 
-    // alert("Profile updated successfully");
   } catch (error) {
-    console.error("Failed to update profile", error);
+
+    console.error(error);
+
+    toast.error("Something went wrong");
+
   } finally {
+
     setLoading(false);
+
   }
 };
+
+// const handleSaveProfile = async () => {
+//   try {
+
+//     /* ===== Validate Account Number ===== */
+// const acc =
+//   profileData?.bank_account_number?.trim();
+
+// const confirm =
+//   profileData?.confirm_account_number?.trim();
+
+// if (acc !== confirm) {
+//   toast.error("Account numbers not matching");
+//   return;
+// }
+
+//     /* ===== Validate At Least One Service ===== */
+
+//     const services =
+//       profileData?.servicesAndStyles?.services || {};
+
+//     const hasServiceSelected =
+//       Object.values(services).some(val => val === true);
+
+//     if (!hasServiceSelected) {
+//       toast.error("Please select at least one service");
+//       return;
+//     }
+
+
+//     if (
+//   !profileData?.basicInfo?.displayName?.trim()
+// ) {
+//   toast.error("Display Name is required");
+//   return;
+// }
+
+// if (
+//   !profileData?.professionalDetails?.photographerType?.trim()
+// ) {
+//   toast.error("Photographer Type is required");
+//   return;
+// }
+
+// if (!profileData?.bank_account_holder?.trim()) {
+//   toast.error("Bank Account Holder required");
+//   return;
+// }
+
+// if (!profileData?.bank_name?.trim()) {
+//   toast.error("Bank Name required");
+//   return;
+// }
+
+// if (!profileData?.bank_account_number?.trim()) {
+//   toast.error("Account Number required");
+//   return;
+// }
+
+// if (!profileData?.bank_ifsc?.trim()) {
+//   toast.error("IFSC Code required");
+//   return;
+// }
+
+//     setLoading(true);
+
+//     const formData = new FormData();
+
+//     /* ===== Profile Image ===== */
+
+//     if (profileImageFile) {
+//       formData.append("profilePhoto", profileImageFile);
+//     }
+
+//     /* ===== Build Payload ===== */
+
+//     const payload = {
+
+//       basicInfo: {
+//         fullName:
+//           profileData?.basicInfo?.fullName || "",
+
+//         displayName:
+//           profileData?.basicInfo?.displayName || "",
+
+//         phone:
+//           profileData?.basicInfo?.phone || ""
+//       },
+
+//       professionalDetails: {
+//         photographerType:
+//           profileData?.professionalDetails?.photographerType || "",
+
+//         expertiseLevel:
+//           profileData?.professionalDetails?.expertiseLevel || "",
+
+//         yearsOfExperience:
+//           profileData?.professionalDetails?.yearsOfExperience || "",
+
+//         primaryLocation:
+//           profileData?.professionalDetails?.primaryLocation || "",
+
+//         willingToTravel:
+//           profileData?.professionalDetails?.willingToTravel || false,
+
+//         languagesSpoken:
+//           profileData?.professionalDetails?.languagesSpoken || [],
+
+//         team_studio:
+//           profileData?.professionalDetails?.team_studio || ""
+//       },
+
+//       aboutYou:
+//         profileData?.aboutYou || "",
+
+//       servicesAndStyles: {
+//         services:
+//           profileData?.servicesAndStyles?.services || {},
+
+//         styles:
+//           profileData?.servicesAndStyles?.styles || {}
+//       },
+
+//       /* ===== Bank Details ===== */
+
+//       bank_account_holder:
+//         profileData?.bank_account_holder ||
+//         profileData?.basicInfo?.fullName || "",
+
+//       bank_name:
+//         profileData?.bank_name || "",
+
+//       bank_account_number:
+//         profileData?.bank_account_number || "",
+
+//       confirm_account_number:
+//         profileData?.confirm_account_number || "",
+
+//       bank_ifsc:
+//         profileData?.bank_ifsc || "",
+
+//       account_type:
+//         profileData?.account_type || "Savings",
+
+//       /* ===== Accessories ===== */
+
+//       photographyAccessories:
+//         profileData?.photographyAccessories || []
+//     };
+
+//     console.log("FINAL PAYLOAD:", payload);
+
+//     /* ===== Append JSON ===== */
+
+//     formData.append(
+//       "data",
+//       JSON.stringify(payload)
+//     );
+
+//     /* ===== API Call ===== */
+
+//     const response =
+//       await updateProfilePhotographer(formData);
+
+//     if (response?.data?.success) {
+
+//       toast.success(
+//         response?.data?.message ||
+//         "Profile updated successfully!"
+//       );
+
+//       fetchProfile();
+
+//     } else {
+
+//       toast.error(
+//         response?.data?.message ||
+//         "Failed to update profile"
+//       );
+
+//       console.log(
+//         "Missing Fields:",
+//         response?.data?.missingFields
+//       );
+//     }
+
+//   } catch (error) {
+
+//     console.error(
+//       "Failed to update profile",
+//       error
+//     );
+
+//     toast.error("Something went wrong!");
+
+//   } finally {
+
+//     setLoading(false);
+
+//   }
+// };
+
 
   const handleCheckboxChange = (section, field) => {
     setProfileData((prev) => ({
@@ -355,7 +751,12 @@ const handleProfilePhotoChange = (e) => {
           <input
             className="input-box"
             placeholder="Languages Spoken (comma separated)"
-            value={profileData?.professionalDetails?.languagesSpoken?.join(", ") || ""}
+            // value={profileData?.professionalDetails?.languagesSpoken?.join(", ") || ""}
+            value={
+  profileData?.professionalDetails?.languagesSpoken
+    ? profileData.professionalDetails.languagesSpoken.join(", ")
+    : ""
+}
             onChange={(e) =>
               setProfileData({
                 ...profileData,
@@ -570,21 +971,19 @@ const handleProfilePhotoChange = (e) => {
 
        
         <div className="card-body">
-          <label className="profile-label">Full Name</label>
+          <label className="profile-label">Bank Account Holder Name</label>
           {/* Account Holder Name */}
           <input
             className="input-box"
             placeholder="Account Holder Name"
-            value={profileData?.basicInfo?.fullName || ""}
-            onChange={(e) =>
-              setProfileData({
-                ...profileData,
-                basicInfo: {
-                  ...profileData.basicInfo,
-                  fullName: e.target.value,
-                },
-              })
-            }
+          value={profileData?.bank_account_holder || ""}
+
+onChange={(e) =>
+  setProfileData({
+    ...profileData,
+    bank_account_holder: e.target.value,
+  })
+}
           />
 
           {/* Bank Name */}
@@ -606,11 +1005,12 @@ const handleProfilePhotoChange = (e) => {
           <input
             className="input-box"
             placeholder="Account Number"
-            value={profileData?.account_number || ""}
+            value={profileData?.bank_account_number || ""}
+
             onChange={(e) =>
               setProfileData({
                 ...profileData,
-                account_number: e.target.value,
+                bank_account_number: e.target.value,
               })
             }
           />
@@ -621,6 +1021,7 @@ const handleProfilePhotoChange = (e) => {
             className="input-box"
             placeholder="Confirm Account Number"
             value={profileData?.confirm_account_number || ""}
+
             onChange={(e) =>
               setProfileData({
                 ...profileData,
@@ -634,11 +1035,12 @@ const handleProfilePhotoChange = (e) => {
           <input
             className="input-box"
             placeholder="IFSC Code"
-            value={profileData?.ifsc_code || ""}
+            value={profileData?.bank_ifsc || ""}
+
             onChange={(e) =>
               setProfileData({
                 ...profileData,
-                ifsc_code: e.target.value,
+                bank_ifsc: e.target.value,
               })
             }
           />

@@ -103,7 +103,8 @@ const BookingHistoryTable = ({ page: initialPage = 1, limit = 10 }) => {
   /* ================= HELPERS ================= */
 
   const handleGalleryUpload = (booking) => {
-    navigate(`/bookings/gallery-upload/${booking.shoot_id}`, {
+    console.log("BOOKING HISTORY",booking)
+    navigate(`/bookings/gallery-upload/${booking.shootId}`, {
       state: { booking },
     });
   };
