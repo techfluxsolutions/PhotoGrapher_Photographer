@@ -147,8 +147,8 @@ const BookingHistoryTable = ({ page: initialPage = 1, limit = 10 }) => {
               <th>Sr.</th>
               <th>Booking ID</th>
               <th>Client Name</th>
-              <th>Email</th>
-              <th>Mobile</th>
+              {/* <th>Email</th>
+              <th>Mobile</th> */}
               <th>Event Type</th>
               <th>Date</th>
               {/* <th>Time</th> */}
@@ -174,8 +174,8 @@ const BookingHistoryTable = ({ page: initialPage = 1, limit = 10 }) => {
                 <tr key={item.shootId}>
                   <td>{(page - 1) * limit + index + 1}</td>
                   <td>{item.shoot_id}</td>
-                  <td>{item.client_name}</td>
-                  <td>{item.client_email}</td>
+                  {/* <td>{item.client_name}</td>
+                  <td>{item.client_email}</td> */}
                   <td>{item.client_mobile}</td>
                   <td>{item.shoot_type}</td>
                   <td>{item.event_date}</td>

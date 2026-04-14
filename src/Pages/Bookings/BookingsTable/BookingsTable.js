@@ -362,8 +362,8 @@ const handleConfirmCancel = async () => {
               <th>Sr.</th>
               <th>Booking ID</th>
               <th>Client Name</th>
-              <th>Email</th>
-              <th>Mobile</th>
+              {/* <th>Email</th>
+              <th>Mobile</th> */}
               <th>Event Type</th>
               <th>Date</th>
               {/* <th>Time</th> */}
@@ -413,8 +413,8 @@ const handleConfirmCancel = async () => {
                   </span>
                   </td>
 
-                  <td>{item.client_name}</td>
-                  <td>{item.client_email}</td>
+                  {/* <td>{item.client_name}</td>
+                  <td>{item.client_email}</td> */}
                   <td>{item.client_mobile}</td>
                   <td>{item.shoot_type}</td>
                   <td>{item.event_date}</td>
