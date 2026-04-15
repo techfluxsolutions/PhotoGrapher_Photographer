@@ -826,19 +826,48 @@ const uploadAllowed = isUploadAllowed(bookingData?.bookingDate);
             <p>{capitalizeFirst(bookingData.client_id?.username)}</p>
           </div>
 
-          <div>
+          {/* <div>
             <label>Email</label>
             <p>{bookingData.client_id?.email}</p>
-          </div>
+          </div> */}
 
-          <div>
+          {/* <div>
             <label>Mobile</label>
             <p>{bookingData.client_id?.mobileNumber}</p>
-          </div>
+          </div> */}
 
           <div>
             <label>Service</label>
             <p>{capitalizeFirst(bookingData.service_id?.serviceName)}</p>
+          </div>
+
+           <div>
+            <label>Requirements</label>
+            <div className="requirement-content">
+            {bookingData?.requirements ? (
+              <ul className="requirement-list">
+
+                {(Array.isArray(bookingData?.requirements)
+                  ? bookingData?.requirements
+                  : typeof requirements === "string"
+                    ? bookingData?.requirements.includes(",")
+                      ? bookingData?.requirements.split(",")
+                      : bookingData?.requirements.split(/(?=[A-Z])/)
+                    : []
+                ).map((req, index) => (
+
+                  <li key={index}>
+                    {req?.trim?.() || req}
+                  </li>
+
+                ))}
+
+              </ul>
+            ) : (
+              "No requirements provided."
+            )}
+          </div>
+
           </div>
         </div>
 
