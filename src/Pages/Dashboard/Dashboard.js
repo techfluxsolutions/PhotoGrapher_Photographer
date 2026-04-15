@@ -100,6 +100,8 @@ import "./Dashboard.css";
 import { getProfilePhotographer } from "../../utils/APIs/profileApis";
 import Loader from "../../Template/Loader/Loader";
 import { getDashboardRatingsAPI } from "../../utils/APIs/dashboardApis";
+import BookingRequest from "./BookingRequest/BookingRequest";
+import PendingGalleryUpload from "./PendingGalleryUpload/PendingGalleryUpload";
 
 const Dashboard = () => {
 
@@ -257,6 +259,18 @@ const Dashboard = () => {
 
           <div className="col-12 col-lg-6">
             <LatestQuotes />
+          </div>
+
+        </div>
+
+        <div className="row g-4 mb-4">
+
+          <div className="col-12 col-lg-6">
+            <BookingRequest />
+          </div>
+
+          <div className="col-12 col-lg-6">
+            <PendingGalleryUpload />
           </div>
 
         </div>

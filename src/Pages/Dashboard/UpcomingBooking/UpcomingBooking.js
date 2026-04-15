@@ -25,7 +25,7 @@ navigate(`/bookings/${item._id}`);
   const fetchTodaysBookings = async () => {
     try {
       setLoading(true);
-      const response = await getTodaysBookingAPI(1, 10);
+      const response = await getTodaysBookingAPI(1, 5);
       const data = response?.data?.data || [];
       setBookings(data);
     } catch (error) {

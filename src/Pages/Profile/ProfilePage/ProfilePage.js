@@ -593,6 +593,7 @@ const handleSaveProfile = async () => {
                 },
               })
             }
+             disabled
           />
 
           {/* <div className="input-box">
@@ -612,6 +613,7 @@ const handleSaveProfile = async () => {
                 },
               })
             }
+            disabled
           />
           {/* <div className="input-box">
             {profileData?.basicInfo?.email || "Email"}
@@ -675,6 +677,7 @@ const handleSaveProfile = async () => {
                 },
               })
             }
+            disabled
           />
 
           {/* <div className="input-box dropdown">
@@ -804,6 +807,7 @@ const handleSaveProfile = async () => {
               type="checkbox"
               checked={profileData?.servicesAndStyles?.services?.weddingPhotography || false}
               onChange={() => handleCheckboxChange("services", "weddingPhotography")}
+              disabled
             />
             Wedding Photography
           </label>
@@ -813,6 +817,7 @@ const handleSaveProfile = async () => {
               type="checkbox"
               checked={profileData?.servicesAndStyles?.services?.preWeddingPhotography || false}
               onChange={() => handleCheckboxChange("services", "preWeddingPhotography")}
+              disabled
             />
             Pre-Wedding Photography
           </label>
@@ -822,6 +827,7 @@ const handleSaveProfile = async () => {
               type="checkbox"
               checked={profileData?.servicesAndStyles?.services?.fashionPhotography || false}
               onChange={() => handleCheckboxChange("services", "fashionPhotography")}
+              disabled
             />
             Fashion Photography
           </label>
@@ -831,6 +837,7 @@ const handleSaveProfile = async () => {
               type="checkbox"
               checked={profileData?.servicesAndStyles?.services?.corporatePhotography || false}
               onChange={() => handleCheckboxChange("services", "corporatePhotography")}
+              disabled
             />
             Corporate Photography
           </label>
@@ -840,6 +847,7 @@ const handleSaveProfile = async () => {
               type="checkbox"
               checked={profileData?.servicesAndStyles?.services?.foodPhotography || false}
               onChange={() => handleCheckboxChange("services", "foodPhotography")}
+              disabled
             />
             Food Photography
           </label>
@@ -849,6 +857,7 @@ const handleSaveProfile = async () => {
               type="checkbox"
               checked={profileData?.servicesAndStyles?.services?.productPhotography || false}
               onChange={() => handleCheckboxChange("services", "productPhotography")}
+              disabled
             />
             Product Photography
           </label>
@@ -858,6 +867,7 @@ const handleSaveProfile = async () => {
               type="checkbox"
               checked={profileData?.servicesAndStyles?.styles?.documentary || false}
               onChange={() => handleCheckboxChange("styles", "documentary")}
+              disabled
             />
             Documentary
           </label>
@@ -867,6 +877,7 @@ const handleSaveProfile = async () => {
               type="checkbox"
               checked={profileData?.servicesAndStyles?.styles?.candid || false}
               onChange={() => handleCheckboxChange("styles", "candid")}
+              disabled
             />
             Candid
           </label>
@@ -876,6 +887,7 @@ const handleSaveProfile = async () => {
               type="checkbox"
               checked={profileData?.servicesAndStyles?.styles?.editorial || false}
               onChange={() => handleCheckboxChange("styles", "editorial")}
+              disabled
             />
             Editorial
           </label>

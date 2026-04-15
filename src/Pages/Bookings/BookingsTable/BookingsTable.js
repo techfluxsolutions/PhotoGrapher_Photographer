@@ -420,7 +420,7 @@ const handleConfirmCancel = async () => {
                   <td>{item.event_date}</td>
                   {/* <td>{item.event_time}</td> */}
                   <td>{item.event_location}</td>
-                  <td>{item.budget}</td>
+                  <td>₹ {item.budget}</td>
 
                   {/* VIEW DETAILS ICON */}
                   {/* <td>

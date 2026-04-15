@@ -74,6 +74,7 @@ const [isModalOpen, setIsModalOpen] = useState(false);
         event_date: item.date || "N/A",
         event_time: item.time || "N/A",
         event_location: item.city || "N/A",
+        budget:item.budget || "-",
         photography_requirements: item.requirements || "N/A",
         bookingStatus: item.bookingStatus || "N/A",
       }));
@@ -153,6 +154,8 @@ const [isModalOpen, setIsModalOpen] = useState(false);
               <th>Date</th>
               {/* <th>Time</th> */}
               <th>City</th>
+               <th>Budget</th>
+              
               <th>Requirements</th>
                <th>Days Left</th>
               <th>Status</th> {/* ✅ ADDED */} 
@@ -179,6 +182,7 @@ const [isModalOpen, setIsModalOpen] = useState(false);
         <td>{item.event_date}</td>
         {/* <td>{item.event_time}</td> */}
         <td>{item.event_location}</td>
+          <td>₹ {item.budget || "-"}</td>
         <td>{item.photography_requirements}</td>
         <td>{calculateDaysRemaining(item.event_date)}</td>
 

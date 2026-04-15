@@ -52,7 +52,7 @@
 .payout-right {
   display: flex;
   align-items: center;
-  gap: 18px;
+  /* gap: 18px; */
 }
 
 .payout-amount {

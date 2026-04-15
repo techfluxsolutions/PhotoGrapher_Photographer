@@ -81,12 +81,12 @@ import Loader from "../../../Template/Loader/Loader";
 
 const EditBookingModal = ({ booking, isOpen, onClose, onSave }) => {
   const [galleryStatus, setGalleryStatus] = useState("");
-  const [notes, setNotes] = useState("");
+  // const [notes, setNotes] = useState("");
   const [loading, setLoading] = useState(false);
 
   const resetForm = () => {
   setGalleryStatus(booking?.galleryStatus || "Upload Pending");
-  setNotes(booking?.photography_requirements || "");
+  // setNotes(booking?.photography_requirements || "");
 };
 
   const GALLERY_STATUSES = [
@@ -97,7 +97,7 @@ const EditBookingModal = ({ booking, isOpen, onClose, onSave }) => {
   useEffect(() => {
     if (booking) {
       setGalleryStatus(booking.galleryStatus || "Upload Pending");
-      setNotes(booking.photography_requirements || "");
+      // setNotes(booking.photography_requirements || "");
     }
   }, [booking]);
 
@@ -111,7 +111,7 @@ const EditBookingModal = ({ booking, isOpen, onClose, onSave }) => {
 
       const payload = {
         galleryStatus: galleryStatus,
-        notes: notes,
+        // notes: notes,
       };
 
       const res = await updateBookingStatus(booking.shootId, payload);
@@ -160,14 +160,14 @@ const EditBookingModal = ({ booking, isOpen, onClose, onSave }) => {
       </div>
 
       {/* Notes */}
-      <div className="form-group">
+      {/* <div className="form-group">
         <label>Notes</label>
         <textarea
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           rows={3}
         />
-      </div>
+      </div> */}
 
       <div className="modal-actions">
         <button className="btn-secondary" onClick={() => {resetForm(); onClose();}}>

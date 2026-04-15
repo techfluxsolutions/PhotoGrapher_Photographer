@@ -23,12 +23,27 @@ export const getTodaysBookingAPI = (page,limit) => {
 };
 
 
-export const getUpcommingBookingAPI = (page = 1, limit = 10) => {
+export const getUpcommingBookingAPI = (page = 1, limit = 5) => {
   return withAuthorization(() =>
     axiosInstance.get(`/api/mobile/photographer/bookings/upcoming?page=${page}&limit=${limit}`)
   );
 };
 
+// https://api-photographer.techfluxsolutions.com/api/photographers/bookings/upload-pending
+
+export const getGallerUploadPendingAPI = (page = 1, limit = 5) => {
+  return withAuthorization(() =>
+    axiosInstance.get(`/api/photographers/bookings/upload-pending?page=${page}&limit=${limit}`)
+  );
+};
+
+
+// {{local}}/api/photographers/bookings/dashboard-counts
+export const getDashboardCountsAPI = (page = 1, limit = 5) => {
+  return withAuthorization(() =>
+    axiosInstance.get(`/api/photographers/bookings/dashboard-counts?page=${page}&limit=${limit}`)
+  );
+};
 
 // ✅ Send OTP
 export const sendOtpAPI = (mobile,bookingId) =>{

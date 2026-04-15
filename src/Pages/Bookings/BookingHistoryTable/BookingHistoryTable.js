@@ -156,7 +156,7 @@ const BookingHistoryTable = ({ page: initialPage = 1, limit = 10 }) => {
               <th>Budget</th>
               <th>Requirements</th>
               <th>Gallery</th>
-              <th>Days Left</th>
+              {/* <th>Days Left</th> */}
               <th>Status</th>
               <th>Action</th>
             </tr>
@@ -181,7 +181,7 @@ const BookingHistoryTable = ({ page: initialPage = 1, limit = 10 }) => {
                   <td>{item.event_date}</td>
                   {/* <td>{item.event_time}</td> */}
                   <td>{item.event_location}</td>
-                  <td>{item.budget}</td>
+                  <td>₹ {item.budget}</td>
                   <td>{item.photography_requirements}</td>
 
                   <td>
@@ -192,7 +192,7 @@ const BookingHistoryTable = ({ page: initialPage = 1, limit = 10 }) => {
                     />
                   </td>
 
-                  <td>{item.daysLeft}</td>
+                  {/* <td>{item.daysLeft}</td> */}
 
                   <td>
                     <span className={`status status-${item.status}`}>
