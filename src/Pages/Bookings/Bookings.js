@@ -194,12 +194,16 @@ const Bookings = () => {
 
         {activeTab === "bookingHistory" && <BookingHistoryTable />}
 
-        {activeTab === "bookingDetails" && selectedBooking && (
-          <UpcomingBookingDetails
-            booking={selectedBooking}
-            onBack={handleBackToBookings}
-          />
-        )}
+      {activeTab === "bookingDetails" && !selectedBooking && (
+  <BookingsTable onViewDetails={handleOpenDetails} />
+)}
+
+{activeTab === "bookingDetails" && selectedBooking && (
+  <UpcomingBookingDetails
+    booking={selectedBooking}
+    onBack={handleBackToBookings}
+  />
+)}
       </div>
     </div>
   );

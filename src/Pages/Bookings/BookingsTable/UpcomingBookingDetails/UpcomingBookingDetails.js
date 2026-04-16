@@ -393,6 +393,18 @@ const uploadAllowed = isUploadAllowed(bookingData?.bookingDate);
     return value;
   };
 
+  const capitalizeWords = (text) => {
+  if (!text) return "";
+
+  return text
+    .toLowerCase()
+    .split(" ")
+    .map(word =>
+      word.charAt(0).toUpperCase() + word.slice(1)
+    )
+    .join(" ");
+};
+
   const formatList = (list, fallback = "N/A") => {
     if (!Array.isArray(list) || list.length === 0) return fallback;
     return list.join(", ");
@@ -455,13 +467,19 @@ const uploadAllowed = isUploadAllowed(bookingData?.bookingDate);
 
 
 
-  //  const handleBack = () => {
-  //     if (uploading) {
-  //       toast.warning("Upload in progress. Please pause or cancel before going back.");
-  //       return;
-  //     }
-  //     navigate(-1);
-  //   };
+   const handleBack = () => {
+      if (uploading) {
+        toast.warning("Upload in progress. Please pause or cancel before going back.");
+        return;
+      }
+      if(onBack){
+        onBack()
+      }
+      else{
+           navigate("/bookings");
+      }
+   
+    };
   
     // Sync states to local storage
     useEffect(() => {
@@ -809,7 +827,7 @@ const uploadAllowed = isUploadAllowed(bookingData?.bookingDate);
      
 
       <div className="details-header">
-        <button onClick={onBack} className="back-btn">
+        <button onClick={handleBack} className="back-btn">
           ← Back
         </button>
 
@@ -968,7 +986,7 @@ const uploadAllowed = isUploadAllowed(bookingData?.bookingDate);
 
           <div>
             <label>Payment Status</label>
-            <p>{formatValue(bookingData.paymentStatus)}</p>
+            <p>{formatValue(capitalizeWords(bookingData.paymentStatus))}</p>
           </div>
 
           {!(String(bookingData.paymentStatus || "").toLowerCase().includes("full") ||
@@ -992,7 +1010,7 @@ const uploadAllowed = isUploadAllowed(bookingData?.bookingDate);
 
           <div>
             <label>Payment Mode</label>
-            <p>{formatValue(bookingData.paymentMode)}</p>
+            <p>{capitalizeWords(bookingData.paymentMode)}</p>
           </div>
 
           <div>

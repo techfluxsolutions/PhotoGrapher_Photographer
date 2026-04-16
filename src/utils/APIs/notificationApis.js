@@ -23,6 +23,29 @@ export const getNotification = () => {
   });
 };
 
+// {{local}}/api/photographers/notifications/unread-count
+
+export const getNotificationUnreadCount = () => {
+  return withAuthorization(async () => {
+    return await axiosInstance.get(
+      `/api/photographers/notifications/unread-count`
+    );
+  });
+};
+
+// {{local}}/api/photographers/notifications/:id/read
+
+// patch
+
+export const UpdateNotificationReadStatus = (notificationId) => {
+  return withAuthorization(async () => {
+    return await axiosInstance.patch(
+      `/api/photographers/notifications/${notificationId}/read`
+    );
+  });
+};
+
+
 
 
 

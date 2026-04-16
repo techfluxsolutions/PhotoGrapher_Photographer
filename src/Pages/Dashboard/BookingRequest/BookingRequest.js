@@ -47,9 +47,16 @@ navigate(`/bookingRequest`);
      <div className="todays-shoot-wrapper">
       <h4 className="todays-title">Booking Request</h4>
    {!loading && bookingRequest.length === 0 && <p>No Booking Request</p>}
- 
+      { bookingRequest.length !== 0 &&(
+        <div
+        className="booking-id-link "
+        onClick={() => handleArrow()}
+        style={{textAlign:"right", marginBottom:"10px", position:"relative", right:"10px"}}
+      >
+       View More
+      </div>)}
        {bookingRequest.map((item, index) => (
-         <div key={index} className="payout-card">
+         <div key={index} className="shoot-card">
            
            {/* Left */}
            <div>

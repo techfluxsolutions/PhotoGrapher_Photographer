@@ -180,6 +180,60 @@
 .toggle-switch.on .toggle-knob {
   transform: translateX(18px);
 }
+
+/* .notification-wrapper {
+  position: relative;
+  display: inline-block;
+} */
+
+.notification-wrapper {
+  position: relative;
+      top: 3px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notification-badge {
+  position: absolute;
+
+  top: -6px;     /* move above icon */
+  right: -6px;   /* move right outside */
+
+  background-color: var(--primary-color);
+  color: white;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  padding: 2px 6px;
+  border-radius: 50px;
+
+  min-width: 18px;
+  height: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notification-badge {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+
+  background-color: var(--primary-color);
+  color: white;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  padding: 2px 6px;
+  border-radius: 50px;
+
+  min-width: 18px;
+  text-align: center;
+}
 /* For mobile devices */
 @media (max-width: 768px) {
   .navbar-icon{

@@ -32,7 +32,7 @@ const StatsCards = () => {
             value: data?.requests || 0,
           },
           {
-            label: "Upcomming Bookings",
+            label: "Upcoming Bookings",
             value: data?.upcoming || 0,
           },
           {

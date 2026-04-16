@@ -52,7 +52,7 @@
 
 /* Time */
 .notification-time {
-  font-size: 12px;
+  font-size: 15px;
   color: #9ca3af;
   white-space: nowrap;
 }
@@ -60,6 +60,18 @@ notification-icon-action-centre{
   width: 10px !important;
   height: 10px !important;
   object-fit: contain;
+}
+
+.notification-item.unread .notification-text {
+  font-weight: 600;   /* Bold text */
+
+}
+.notification-item.unread {
+background-color: var(--color-bg-secondary);
+}
+
+.notification-item .notification-text {
+  font-weight: 400;   /* Normal text */
 }
 /* Mobile */
 @media (max-width: 768px) {

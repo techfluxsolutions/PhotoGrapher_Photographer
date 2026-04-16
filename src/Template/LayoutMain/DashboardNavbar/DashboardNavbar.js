@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../../Loader/Loader";
 import { toast } from "react-toastify";
 import { getPhotographerStatus, postPhotographerStatus } from "../../../utils/APIs/navbarApis";
+// import { getNotificationUnreadCount } from "../../../utils/APIs/notificationApis";
+import { Socket } from "../../../Socket/Socket";
 
 
 const DashboardNavbar = ({ toggleSidebar, isSidebarOpen }) => {
@@ -15,10 +17,70 @@ const DashboardNavbar = ({ toggleSidebar, isSidebarOpen }) => {
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState(false);
 const [loading, setLoading] = useState(false);
-
+const [notificationCount, setNotificationCount] = useState(0);
   // const toggleDropdown = () => {
   //   setIsDropdownOpen(!isDropdownOpen);
   // };
+
+//    const fetchUnreadCount = async () => {
+//     try {
+//       const res = await getNotificationUnreadCount();
+
+//       if (res?.data?.success) {
+//         setNotificationCount(res?.data?.data?.unreadCount || 0);
+//       }
+//     } catch (error) {
+//       console.error("Failed to fetch unread count");
+//     }
+//   };
+//   useEffect(() => {
+//   const handleStorageChange = () => {
+//     fetchUnreadCount();
+//   };
+
+//   window.addEventListener("storage", handleStorageChange);
+
+//   return () =>
+//     window.removeEventListener("storage", handleStorageChange);
+// }, []);
+
+// useEffect(() => {
+//   const handleFocus = () => {
+//     fetchUnreadCount();
+//   };
+
+//   window.addEventListener("focus", handleFocus);
+
+//   return () =>
+//     window.removeEventListener("focus", handleFocus);
+// }, []);
+
+// useEffect(() => {
+//   const interval = setInterval(() => {
+//     fetchUnreadCount();
+//   }, 30000); // every 30 sec
+
+//   return () => clearInterval(interval);
+// }, []);
+
+useEffect(() => {
+  const socket = Socket(); // ✅ get instance
+
+  // Request count
+  socket.emit("get_unread_notification_count");
+
+  // Listen for updates
+  socket.on("unread_notification_count", ({ count }) => {
+    console.log("New unread count:", count);
+    setNotificationCount(count);
+  });
+
+  return () => {
+    socket.off("unread_notification_count");
+  };
+}, []);
+
+
 const handleToggleStatus = async () => {
   const newStatus = isActive ? "inactive" : "active";
 
@@ -143,7 +205,7 @@ useEffect(() => {
         
         <div className="profile-dropdown" ref={dropdownRef}>
      
-           <img
+           {/* <img
           src="/Icons/Notification-navbar.png"
           alt="Notifications"
           className="navbar-icon"
@@ -153,7 +215,33 @@ useEffect(() => {
             cursor: "pointer",
           }}
           onClick={() => navigate("/notification")}
-        />
+        /> */}
+
+        <div
+  className="notification-wrapper"
+  // onClick={() => navigate("/notification")}
+  onClick={() => {
+  navigate("/notification");
+  setNotificationCount(0);
+}}
+>
+  <img
+    src="/Icons/Notification-navbar.png"
+    alt="Notifications"
+    className="navbar-icon"
+    style={{
+      height: "50px",
+      width: "50px",
+      cursor: "pointer",
+    }}
+  />
+
+  {notificationCount > 0 && (
+    <span className="notification-badge">
+      {notificationCount > 99 ? "99+" : notificationCount}
+    </span>
+  )}
+</div>
         <div className="status-toggle-wrapper">
             
 

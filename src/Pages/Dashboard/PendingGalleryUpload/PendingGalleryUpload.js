@@ -2,19 +2,23 @@ import React, { useEffect, useState } from 'react'
 // import { useNavigate } from 'react-router-dom';
 import { getGallerUploadPendingAPI } from '../../../utils/APIs/dashboardApis';
 import { IoChevronForward } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
 
 const PendingGalleryUpload = () => {
     const [bookingRequest, setBookingRequest] = useState([]);
+    const navigate = useNavigate();
         const [loading, setLoading] = useState(false);
         //  const navigate=useNavigate()
        useEffect(() => {
          fetchUpcomingBookings();
        }, []);
+
+       
  
-//         const handleArrow = ()=>{
+        const handleArrow = (item)=>{
    
-//  navigate(`/bookingRequest`);
-//    }
+ navigate(`/bookings/${item?._id}`);
+   }
      
        const fetchUpcomingBookings = async () => {
          try {
@@ -42,12 +46,25 @@ const PendingGalleryUpload = () => {
             setLoading(false)
          }
        };
+
+        const  handleViewDetails = () =>{
+    navigate(`/bookings`);
+  }
+ 
      
    return (
       <div className="todays-shoot-wrapper">
        <h4 className="todays-title">Gallery Upload</h4>
     {!loading && bookingRequest.length === 0 && <p>No Gallery Upload</p>}
-  
+ { bookingRequest.length !== 0 &&(
+      <div
+        className="booking-id-link "
+        onClick={() => handleViewDetails()}
+        style={{textAlign:"right", marginBottom:"10px", position:"relative", right:"10px"}}
+      >
+       View More
+      </div>
+ )}
         {bookingRequest.map((item, index) => (
           <div key={index} className="shoot-card">
             
@@ -77,7 +94,7 @@ const PendingGalleryUpload = () => {
               </div> */}
   
               <IoChevronForward className="arrow-icon"  
-            //   onClick={() => handleArrow()} 
+              onClick={() => handleArrow(item)} 
                  />
             </div>
           </div>
