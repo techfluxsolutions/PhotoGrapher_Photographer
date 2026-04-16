@@ -61,8 +61,9 @@
 import React, { useEffect, useState } from "react";
 import "./ActionCentreMain.css";
 import { toast } from "react-toastify";
-import { getNotification } from "../../../utils/APIs/notificationApis";
+import { getNotification, UpdateNotificationReadStatus } from "../../../utils/APIs/notificationApis";
 import Loader from "../../../Template/Loader/Loader";
+import { Socket } from "../../../Socket/Socket";
 
 
 const ActionCentreMain = () => {
@@ -93,6 +94,31 @@ const ActionCentreMain = () => {
     fetchNotifications();
   }, []);
 
+
+const handleMarkAsRead = async (id) => {
+  try {
+    await UpdateNotificationReadStatus(id);
+
+    // Update UI instantly
+    setNotifications((prev) =>
+      prev.map((item) =>
+        item._id === id
+          ? { ...item, read_status: true }
+          : item
+      )
+    );
+
+    // ✅ Get socket instance
+    const socket = Socket();
+
+    // ✅ Request updated unread count
+    socket.emit("get_unread_notification_count");
+
+  } catch (error) {
+    console.error("Failed to mark notification read");
+  }
+};
+
   return (
     <div className="action-centre-wrapper">
       <div className="action-centre-card">
@@ -109,14 +135,27 @@ const ActionCentreMain = () => {
             className={`notification-item ${
               !item.read_status ? "unread" : ""
             }`}
+             onClick={() => handleMarkAsRead(item._id)}
           >
             <div className="notification-left">
               <div className="icon-box">
-                <img
+                {/* <img
                   src="/Icons/Notification-action-centre.png"
                   alt="notification"
                   className="notification-icon-action-centre"
-                />
+                /> */}
+
+                  <img
+    src="/Icons/Notification-navbar.png"
+    alt="Notifications"
+    className="navbar-icon"
+    style={{
+      height: "50px",
+      width: "50px",
+      cursor: "pointer",
+    }}
+  />
+
               </div>
 
               <p className="notification-text">

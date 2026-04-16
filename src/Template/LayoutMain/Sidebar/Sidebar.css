@@ -56,9 +56,35 @@
   /* justify-content: center ; */
 }
 
-.sidebar.closed .menu-item {
+/* .sidebar.closed .menu-item {
   justify-content: center ;
 
+} */
+
+.sidebar.closed .menu-item {
+  flex-direction: column;   /* Stack icon + text */
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 5px;
+}
+
+/* Show text under icon */
+.sidebar.closed .menu-item span {
+  display: block;
+  font-size: 10px;
+  text-align: center;
+  line-height: 12px;
+
+
+   max-width: 60px;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.sidebar.closed .menu-item svg {
+  font-size: 20px;
+  margin-bottom: 2px;
 }
 
 .menu-item i {
@@ -85,9 +111,9 @@ a {
   /* right: 4px; */
 }
 
-.sidebar.closed .menu-item span {
-  display: none; /* Hide text when sidebar is closed */
-}
+/* .sidebar.closed .menu-item span {
+  display: none; 
+} */
 /* Bottom section */
 .sidebar-bottom {
   background-color: #ffffff;

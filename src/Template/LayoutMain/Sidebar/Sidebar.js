@@ -282,7 +282,8 @@ const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal
         style={{ cursor: "pointer" }}
       >
         {item.icon}
-        {isOpen && <span>{item.name}</span>}
+        <span>{item.name}</span>
+        {/* {isOpen && <span>{item.name}</span>} */}
       </li>
     );
   }
@@ -296,7 +297,8 @@ const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal
         }`}
       >
         {item.icon}
-        {isOpen && <span>{item.name}</span>}
+         <span>{item.name}</span>
+        {/* {isOpen && <span>{item.name}</span>} */}
       </li>
     </Link>
   );
