@@ -613,7 +613,7 @@ const handleSaveProfile = async () => {
                 },
               })
             }
-            disabled
+            // disabled
           />
           {/* <div className="input-box">
             {profileData?.basicInfo?.email || "Email"}
