@@ -230,8 +230,8 @@ useEffect(() => {
     alt="Notifications"
     className="navbar-icon"
     style={{
-      height: "50px",
-      width: "50px",
+      height: "60px",
+      width: "60px",
       cursor: "pointer",
     }}
   />
