@@ -53,7 +53,7 @@
 //             Upcomming Bookings
 //           </div>
 
-         
+
 //           <div
 //             className={`tab-item ${
 //               activeTab === "bookingHistory" ? "active" : ""
@@ -82,6 +82,7 @@ import "./Bookings.css";
 import BookingHistoryTable from "./BookingHistoryTable/BookingHistoryTable";
 import BookingsTable from "./BookingsTable/BookingsTable";
 import UpcomingBookingDetails from "./BookingsTable/UpcomingBookingDetails/UpcomingBookingDetails";
+import HourlyBookingsTable from "./HourlyBookingsTable/HourlyBookingsTable";
 
 const Bookings = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
@@ -93,6 +94,8 @@ const Bookings = () => {
     const savedTab = localStorage.getItem("bookingsActiveTab");
     return savedTab ? savedTab : "myBookings";
   });
+
+  const [activeSubTab, setActiveSubTab] = useState("service");
 
   const [selectedBooking, setSelectedBooking] = useState(null);
 
@@ -119,21 +122,13 @@ const Bookings = () => {
 
   /* ================= RESTORE BOOKING AFTER REFRESH ================= */
 
-  // useEffect(() => {
-  //   const savedBookingId = localStorage.getItem("selectedBookingId");
-
-  //   if (savedBookingId && activeTab === "bookingDetails") {
-  //     setSelectedBooking({ shootId: savedBookingId });
-  //   }
-  // }, []);
-
   useEffect(() => {
-  const savedBookingId = localStorage.getItem("selectedBookingId");
+    const savedBookingId = localStorage.getItem("selectedBookingId");
 
-  if (savedBookingId && activeTab === "bookingDetails") {
-    setSelectedBooking({ shootId: savedBookingId });
-  }
-}, [activeTab]);
+    if (savedBookingId && activeTab === "bookingDetails") {
+      setSelectedBooking({ shootId: savedBookingId });
+    }
+  }, [activeTab]);
 
   /* ================= HANDLE DETAILS ================= */
 
@@ -152,9 +147,8 @@ const Bookings = () => {
 
   return (
     <div
-      className={`content-container ${
-        isSidebarOpen ? "sidebar-open" : "sidebar-closed"
-      }`}
+      className={`content-container ${isSidebarOpen ? "sidebar-open" : "sidebar-closed"
+        }`}
       style={{ marginTop: "100px" }}
     >
       <div className="page-inner-wrapper">
@@ -166,21 +160,35 @@ const Bookings = () => {
 
             <div className="custom-tabs">
               <div
-                className={`tab-item ${
-                  activeTab === "myBookings" ? "active" : ""
-                }`}
+                className={`tab-item ${activeTab === "myBookings" ? "active" : ""
+                  }`}
                 onClick={() => setActiveTab("myBookings")}
               >
                 Upcoming Bookings
               </div>
 
               <div
-                className={`tab-item ${
-                  activeTab === "bookingHistory" ? "active" : ""
-                }`}
+                className={`tab-item ${activeTab === "bookingHistory" ? "active" : ""
+                  }`}
                 onClick={() => setActiveTab("bookingHistory")}
               >
                 Booking History
+              </div>
+            </div>
+
+            {/* Sub Tabs */}
+            <div className="booking-tabs" style={{ marginBottom: "20px" }}>
+              <div
+                className={`tab-item ${activeSubTab === "service" ? "active" : ""}`}
+                onClick={() => setActiveSubTab("service")}
+              >
+                Service
+              </div>
+              <div
+                className={`tab-item ${activeSubTab === "hourly" ? "active" : ""}`}
+                onClick={() => setActiveSubTab("hourly")}
+              >
+                Hourly Shoot
               </div>
             </div>
           </>
@@ -188,22 +196,28 @@ const Bookings = () => {
 
         {/* TAB CONTENT */}
 
-        {activeTab === "myBookings" && (
+        {activeTab === "myBookings" && activeSubTab === "service" && (
           <BookingsTable onViewDetails={handleOpenDetails} />
         )}
 
-        {activeTab === "bookingHistory" && <BookingHistoryTable />}
+        {activeTab === "bookingHistory" && activeSubTab === "service" && (
+          <BookingHistoryTable />
+        )}
 
-      {activeTab === "bookingDetails" && !selectedBooking && (
-  <BookingsTable onViewDetails={handleOpenDetails} />
-)}
+        {activeSubTab === "hourly" && activeTab !== "bookingDetails" && (
+          <HourlyBookingsTable />
+        )}
 
-{activeTab === "bookingDetails" && selectedBooking && (
-  <UpcomingBookingDetails
-    booking={selectedBooking}
-    onBack={handleBackToBookings}
-  />
-)}
+        {activeTab === "bookingDetails" && !selectedBooking && (
+          <BookingsTable onViewDetails={handleOpenDetails} />
+        )}
+
+        {activeTab === "bookingDetails" && selectedBooking && (
+          <UpcomingBookingDetails
+            booking={selectedBooking}
+            onBack={handleBackToBookings}
+          />
+        )}
       </div>
     </div>
   );
