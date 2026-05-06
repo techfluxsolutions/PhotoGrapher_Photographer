@@ -22,16 +22,16 @@ const withAuthorization = async (apiFunction, ...args) => {
 
 export const getPaymentsAPI = (page = 1, limit = 10) => {
   return withAuthorization(() =>
-    axiosInstance.get(`/api/admins/completelyPaidBookings?page=${page}&limit=${limit}`)
+    axiosInstance.get(`/api/photographers/payouts?page=${page}&limit=${limit}`)
   );
 };
 
 
 // /api/admins/invoices/6969d90b4c3993209c584052
 
-export const downloadInvoiceAPI = (invoiceId) => {
+export const downloadInvoiceAPI = (bookingId) => {
   return withAuthorization(() =>
-    axiosInstance.get(`/api/admins/invoices/${invoiceId}`, {
+    axiosInstance.get(`/api/photographers/photographer-invoice/${bookingId}`, {
       responseType: "blob", // IMPORTANT for file download
     })
   );
