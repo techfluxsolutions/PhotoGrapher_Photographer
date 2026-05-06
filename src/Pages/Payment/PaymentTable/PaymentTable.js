@@ -1,8 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { downloadInvoiceAPI } from "../../../utils/APIs/paymentApis";
 import "./PaymentTable.css";
-
-const ROWS_PER_PAGE = 10;
 
 const PaymentTable = ({ data = [], startIndex = 0 }) => {
   const handleDownload = async (invoiceId) => {

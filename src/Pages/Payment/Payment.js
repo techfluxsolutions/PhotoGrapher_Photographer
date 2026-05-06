@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { getPaymentsAPI } from "../../utils/APIs/paymentApis";
 import PaymentTable from "./PaymentTable/PaymentTable";
 import Loader from "../../Template/Loader/Loader";
@@ -39,14 +39,12 @@ const Payment = () => {
       invoiceDbId: item.booking_id_raw,
     }));
 
-  const fetchPayments = async () => {
+  const fetchPayments = useCallback(async () => {
     setLoading(true);
     try {
       const res = await getPaymentsAPI(page, 10);
       if (res?.data?.success) {
         setPayments(mapPaymentsResponse(res.data.data));
-        // Note: Backend getAll doesn't seem to return meta for pagination yet, 
-        // but we can set total based on data length for now or adjust backend.
         setTotal(res.data.data.length); 
       }
     } catch (err) {
@@ -54,11 +52,11 @@ const Payment = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [page]);
 
   useEffect(() => {
     fetchPayments();
-  }, [page]);
+  }, [fetchPayments]);
 
   const LIMIT = 10;
   const totalPages = Math.ceil(total / LIMIT);
