@@ -218,6 +218,7 @@ import { useNavigate } from "react-router-dom";
 import RequirementModal from "./RequirementModal/RequirementModal";
 import CancelBookingModal from "../CancelBookingModal/CancelBookingModal";
 import Loader from "../../../Template/Loader/Loader";
+import { downloadInvoiceAPI } from "../../../utils/APIs/paymentApis";
 
 const BookingsTable = ({
   page: initialPage = 1,
@@ -324,6 +325,24 @@ const handleConfirmCancel = async () => {
     setCancelLoading(false);
   }
 };
+
+const handleDownloadInvoice = async (bookingId) => {
+  try {
+    const res = await downloadInvoiceAPI(bookingId);
+    const blob = new Blob([res.data], { type: "application/pdf" });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `receipt-${bookingId}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(url);
+  } catch (err) {
+    console.error("Invoice download failed", err);
+    toast.error("Failed to download receipt");
+  }
+};
   /* ================= PAGINATION ================= */
 
   const renderPagination = () => {
@@ -375,6 +394,7 @@ const handleConfirmCancel = async () => {
               <th>Booking Status</th>
               <th>Gallery Status</th>
               <th>Edit Status</th>
+              <th>Invoice</th>
               <th>Cancel Booking</th>
 
               {/* <th>Action</th> OLD ACTION COLUMN - COMMENTED */}
@@ -507,6 +527,16 @@ const handleConfirmCancel = async () => {
   </button>
 </td>
                   {/* OLD EDIT FLOW PRESERVED - COMMENTED */}
+                  <td>
+                    <button
+                      className="download-btn"
+                      onClick={() => handleDownloadInvoice(item.shootId)}
+                      style={{ background: "#007bff", color: "white", border: "none", borderRadius: "4px", padding: "5px 10px", cursor: "pointer" }}
+                    >
+                      ⬇
+                    </button>
+                  </td>
+
                    {/* CANCEL BUTTON */}
                   <td>
                     <button
